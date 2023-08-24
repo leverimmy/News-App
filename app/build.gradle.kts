@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    namespace = "com.example.newsapp"
+    namespace = "com.java.xiongzeen"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.newsapp"
-        minSdk = 24
+        applicationId = "com.java.xiongzeen"
+        minSdk = 28
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -46,4 +46,13 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    constraints {
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
+            because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
+        }
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0") {
+            because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
+        }
+    }
 }

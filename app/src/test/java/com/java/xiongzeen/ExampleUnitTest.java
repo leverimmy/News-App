@@ -1,4 +1,4 @@
-package com.example.newsapp;
+package com.java.xiongzeen;
 
 import org.junit.Test;
 

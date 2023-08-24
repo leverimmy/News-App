@@ -1,4 +1,4 @@
-package com.example.newsapp;
+package com.java.xiongzeen;
 
 import android.os.Bundle;
 
@@ -10,7 +10,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.newsapp.databinding.ActivityMainBinding;
+import com.java.xiongzeen.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
