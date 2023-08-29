@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/posts"
+        android:icon="@drawable/ic_baseline_article_24"
+        android:title="News" />
+    <item
+        android:id="@+id/search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Search" />
+    <item
+        android:id="@+id/user"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:title="User" />
+</menu>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+       <!-- android:id="@+id/tab_layout"-->
+
+    <CheckBox
+        android:id="@+id/edit_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+
+        android:background="?colorSurface"
+        android:button="@drawable/ic_baseline_menu_24"
+        android:buttonTint="@color/purple_700"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/subject_tabs"
+        android:layout_width="0dp"
+        app:tabTextAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/edit_menu"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabMinWidth="0dp"
+        app:tabMode="scrollable"
+        app:tabPadding="0dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
