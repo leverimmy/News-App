@@ -130,7 +130,10 @@ public class News {
             for (String image : images) {
                 list.append(image).append(", ");
             }
-            list = new StringBuilder("[" + list.substring(0, list.length() - 2) + "]");
+            if (list.length() == 0)
+                list = new StringBuilder("[]");
+            else
+                list = new StringBuilder("[" + list.substring(0, list.length() - 2) + "]");
             jsonObject.put("image", list.toString());
 
             jsonObject.put("video", video);

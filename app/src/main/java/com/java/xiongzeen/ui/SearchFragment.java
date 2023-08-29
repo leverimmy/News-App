@@ -65,12 +65,22 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         String rawStartTime = startTime.getText().toString();
         String rawEndTime = endTime.getText().toString();
 
-        String begin_time = rawStartTime.substring(0, 4) + "-" +
-                rawStartTime.substring(4, 6) + "-" +
-                rawStartTime.substring(6);
-        String end_time = rawEndTime.substring(0, 4) + "-" +
-                rawEndTime.substring(4, 6) + "-" +
-                rawEndTime.substring(6);
+        String begin_time, end_time;
+
+        if (rawStartTime.length() == 0)
+            begin_time = "";
+        else {
+            begin_time = rawStartTime.substring(0, 4) + "-" +
+                    rawStartTime.substring(4, 6) + "-" +
+                    rawStartTime.substring(6);
+        }
+        if (rawEndTime.length() == 0)
+            end_time = "";
+        else {
+            end_time = rawEndTime.substring(0, 4) + "-" +
+                    rawEndTime.substring(4, 6) + "-" +
+                    rawEndTime.substring(6);
+        }
 
         Log.d("SearchFragment", queryText + categories + begin_time + end_time);
         FetchFromAPIManager.getInstance().handleSearch(categories, begin_time, end_time, queryText);

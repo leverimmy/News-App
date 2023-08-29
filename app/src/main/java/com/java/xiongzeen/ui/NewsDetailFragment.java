@@ -54,13 +54,13 @@ public class NewsDetailFragment extends Fragment {
 
         button1 = view.findViewById(R.id.favoriteFloatingActionButton);
         button2 = view.findViewById(R.id.favoriteFloatingActionButton2);
-        Log.d("NewsDetailFragment","open_a_news" + newsToShow.getId());
+        Log.d("NewsDetailFragment","open_a_news: " + newsToShow.getId());
         news_title.setText(newsToShow.getTitle());
         news_description.setText(newsToShow.getPublisher() + "     " + newsToShow.getPublishTime());
         news_content.setText(newsToShow.getContent());
 
-        button1.setOnClickListener(v->{handle_favorite_click(1);});
-        button2.setOnClickListener(v->{handle_favorite_click(2);});
+        button1.setOnClickListener(v-> handle_favorite_click(1));
+        button2.setOnClickListener(v-> handle_favorite_click(2));
 
         if (!newsToShow.isFavorites()) {
             button2.setVisibility(View.GONE);
@@ -96,17 +96,32 @@ public class NewsDetailFragment extends Fragment {
             containerView.setVisibility(View.GONE);
         }
 
+        Log.d("detailsPage", "true");
         MyApplication.getBottomNavigationView().setVisibility(View.GONE);
         MyApplication.getTopFragmentContainer().setVisibility(View.GONE);
+
         return view;
     }
 
     @Override
     public void onStop() {
         super.onStop();
+
+        Log.d("detailsPage", "false");
         MyApplication.getBottomNavigationView().setVisibility(View.VISIBLE);
-        if(MyApplication.newsPage && !MyApplication.newsPageIsSearchingPage)
+        if (MyApplication.newsPage && !MyApplication.newsPageIsSearchingPage)
             MyApplication.getTopFragmentContainer().setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.d("detailsPage", "true");
+        MyApplication.getBottomNavigationView().setVisibility(View.GONE);
+        MyApplication.getTopFragmentContainer().setVisibility(View.GONE);
+
     }
 
     private void handle_favorite_click(int i) {

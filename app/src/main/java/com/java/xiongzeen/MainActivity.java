@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
     private NewsListFragment newsListFragment;
 
 
-
     @Override
     public void selectPaddleConfirmed(){
         drawerLayout.closeDrawer(Gravity.LEFT);
@@ -142,6 +141,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
             MyApplication.newsPage = true;
             MyApplication.searchPage = false;
             MyApplication.userPage = false;
+            MyApplication.detailsPage = false;
 
             tabs.setVisibility(View.VISIBLE);
 
@@ -152,36 +152,30 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
             MyApplication.newsPageIsSearchingPage = false;
 
             return true;
-        } else if (item.getItemId() == R.id.user) {
-            if(! MyApplication.userPage) replaceFragment(UserPageFragment.class);
-            MyApplication.newsPage = false;
-            MyApplication.searchPage = false;
-            MyApplication.userPage = true;
-
-            tabs.setVisibility(View.GONE);
-
-            return true;
         } else if (item.getItemId() == R.id.search) {
             if(!MyApplication.searchPage)
                 replaceFragment(SearchFragment.class);
             MyApplication.newsPage = false;
             MyApplication.searchPage = true;
             MyApplication.userPage = false;
+            MyApplication.detailsPage = false;
 
             tabs.setVisibility(View.GONE);
 
-           return true;
+            return true;
+        } else if (item.getItemId() == R.id.user) {
+            if(! MyApplication.userPage)
+                replaceFragment(UserPageFragment.class);
+            MyApplication.newsPage = false;
+            MyApplication.searchPage = false;
+            MyApplication.userPage = true;
+            MyApplication.detailsPage = false;
+
+            tabs.setVisibility(View.GONE);
+
+            return true;
         }
         return false;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        /*if (MyApplication.newsPage) {
-            MyApplication.getBottomNavigationView().setVisibility(View.GONE);
-            MyApplication.getTopFragmentContainer().setVisibility(View.GONE);
-        }*/
     }
 
     @Override
