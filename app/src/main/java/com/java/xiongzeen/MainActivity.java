@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
     private FragmentManager fragmentManager;
     private DrawerLayout drawerLayout;
     private TabListFragment tabListFragment;
-    private NewsListFragment newsListFragment;
+    private NewsListFragment NewsListFragment;
 
 
     @Override
@@ -59,9 +60,11 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
     @Override
     public void tabSelected(String tag) {
-        Log.d("MainActivity", "menu tab"+ tag);
+
+        Log.d("MainActivity", "menu tab: " + tag);
         FetchFromAPIManager.getInstance().setCategory(tag);
-        newsListFragment.reloadNews();
+        NewsListFragment.reloadNews();
+
     }
 
     @Override
@@ -90,7 +93,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         selectPaddleFragment = (SelectPaddleFragment) fragmentManager.findFragmentById(R.id.select_paddle);
 
         tabListFragment = (TabListFragment) fragmentManager.findFragmentByTag("upper_fragment_in_container");
-        newsListFragment = (NewsListFragment) fragmentManager.findFragmentByTag("fragment_in_container");
+        NewsListFragment = (NewsListFragment) fragmentManager.findFragmentByTag("fragment_in_container");
 
         MyApplication.setTopFragmentContainer(tabs);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -146,7 +149,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
             tabs.setVisibility(View.VISIBLE);
 
             if (MyApplication.newsPageIsSearchingPage) {
-                newsListFragment.reloadNews();
+                NewsListFragment.reloadNews();
                 FetchFromAPIManager.reset();
             }
             MyApplication.newsPageIsSearchingPage = false;
@@ -164,7 +167,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
             return true;
         } else if (item.getItemId() == R.id.user) {
-            if(! MyApplication.userPage)
+            if(!MyApplication.userPage)
                 replaceFragment(UserPageFragment.class);
             MyApplication.newsPage = false;
             MyApplication.searchPage = false;
@@ -180,12 +183,26 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
     @Override
     public void finished() {
-        if(! MyApplication.newsPage) replaceFragment(NewsListFragment.class);
+        if(!MyApplication.newsPage)
+            replaceFragment(NewsListFragment.class);
         Log.d("finished searching Input", "newsPageIsSearchingPage = true");
         MyApplication.newsPage = true;
         MyApplication.searchPage = false;
         MyApplication.userPage = false;
         MyApplication.newsPageIsSearchingPage = true;
-        newsListFragment.reloadNews();
+        NewsListFragment.reloadNews();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+//        Toast.makeText(MyApplication.getContext(), "再按一次返回键退出", Toast.LENGTH_SHORT).show();
+        Log.d("MainActivity", "onBackPressed");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d("MainActivity", "onStop");
     }
 }

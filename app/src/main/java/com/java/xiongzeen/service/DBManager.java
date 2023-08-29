@@ -53,11 +53,11 @@ public final class DBManager {
         Cursor c = db.rawQuery("SELECT * FROM myNews", null);
         try {
             while (c.moveToNext()) {
-                Log.d("DBManager", "aaa" + c.getString(1));
+                Log.d("DBManager", "[Raw Data]" + c.getString(1));
                 News item = new News(new JSONObject(c.getString(1)));
                 ans.add(item);
             }
-            Log.d("DBManager", "Read" + ans.toArray().length + "records from database");
+            Log.d("DBManager", "Read " + ans.toArray().length + " records from database");
             return ans;
         } catch (JSONException e) {
             e.printStackTrace();

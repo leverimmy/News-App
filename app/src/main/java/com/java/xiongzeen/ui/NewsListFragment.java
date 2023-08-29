@@ -37,7 +37,7 @@ public class NewsListFragment extends Fragment {
     private SwipeRefreshLayout listContainer;
     private ConstraintLayout mainArea;
     private float mPosX, mPosY, mCurPosX, mCurPosY;
-    private int page  = 1;
+    private int page = 1;
 
 
     @Override
@@ -45,9 +45,9 @@ public class NewsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         Log.d("NewsList", "onCreateView");
 
-        if(MyApplication.NewsList != null) {
+        if (MyApplication.NewsList != null)
             return MyApplication.NewsList;
-        }
+
 
         View view = inflater.inflate(R.layout.fragment_news_list, container, false);
         context = view.getContext();
@@ -73,6 +73,7 @@ public class NewsListFragment extends Fragment {
         reloadNews();
 
         MyApplication.NewsList = view;
+
         return view;
     }
 

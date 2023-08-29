@@ -125,13 +125,14 @@ public class NewsDetailFragment extends Fragment {
     }
 
     private void handle_favorite_click(int i) {
-        Toast.makeText(context,""+ i, Toast.LENGTH_SHORT);
         if(i == 1) {
             NewsManager.getInstance().favorite_triggered(news_id,true);
+            Toast.makeText(context, "添加收藏成功！", Toast.LENGTH_SHORT).show();
             button2.setVisibility(View.VISIBLE);
             button1.setVisibility(View.GONE);
         } else {
             NewsManager.getInstance().favorite_triggered(news_id,false);
+            Toast.makeText(context, "取消收藏成功！", Toast.LENGTH_SHORT).show();
             button1.setVisibility(View.VISIBLE);
             button2.setVisibility(View.GONE);
         }

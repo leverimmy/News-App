@@ -79,7 +79,7 @@ public final class FetchFromAPIManager {
     public List<News> getNews(int offset, int pageSize) {
 
         String url = getNewsUrl(startDate, endDate, keyWords, categories, offset / pageSize + 1);
-        Log.d("Trying to get from ", url);
+        Log.d("FetchFromAPI", "Trying to get from " + url);
 
         try {
 
@@ -115,8 +115,8 @@ public final class FetchFromAPIManager {
         FetchFromAPIManager.keyWords = keyWords;
         FetchFromAPIManager.startDate = startDate;
         FetchFromAPIManager.endDate = endDate;
-        Log.d("FetchFromAPI", "categories:" + categories + " key = " + keyWords +
-                "startDate = " + startDate + " endDate = " + endDate);
+        Log.d("FetchFromAPI", "categories: " + categories + " key = " + keyWords +
+                " startDate = " + startDate + " endDate = " + endDate);
     }
 
     public static FetchFromAPIManager getInstance() {

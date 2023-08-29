@@ -24,7 +24,7 @@ public class TabListFragment extends Fragment {
 
 
     // TODO: Rename and change types of parameters
-    public List<String> tabs = new ArrayList<String>();
+    public List<String> tabs = new ArrayList<>();
 
 
   //  private List<TabFragment> tabFragmentList = new ArrayList<>();
@@ -35,9 +35,6 @@ public class TabListFragment extends Fragment {
 
     private onTabBarListener mListener;
 
-    public TabListFragment() {
-        // Required empty public constructor
-    }
 
     public interface onTabBarListener {
         void menuBarClicked();
@@ -49,8 +46,7 @@ public class TabListFragment extends Fragment {
         if (context instanceof onTabBarListener) {
             mListener = (onTabBarListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(context + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -71,12 +67,9 @@ public class TabListFragment extends Fragment {
         tabLayout = view.findViewById(R.id.subject_tabs);
         selectMenu = view.findViewById(R.id.edit_menu);
 
-        selectMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mListener != null){
-                    mListener.menuBarClicked();
-                }
+        selectMenu.setOnClickListener(view -> {
+            if(mListener != null) {
+                mListener.menuBarClicked();
             }
         });
 
@@ -97,15 +90,15 @@ public class TabListFragment extends Fragment {
             }
         });
 
-       update_list();
+        update_list();
         return view;
     }
 
-    public void update_list(){
+    public void update_list() {
         Log.d("TabListFragment", "update called");
         tabs.clear();
         tabs.add("综合");
-        if(MyApplication.myUser.selected != null){
+        if(MyApplication.myUser.selected != null) {
             for(Category a : MyApplication.myUser.selected) {
                 tabs.add(a.name());
             }
@@ -117,5 +110,11 @@ public class TabListFragment extends Fragment {
             tab.setText(tabs.get(i));
             tabLayout.addTab(tab);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("TabListFragment", "onDestroy");
     }
 }

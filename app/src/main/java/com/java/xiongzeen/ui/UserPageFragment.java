@@ -43,7 +43,7 @@ public class UserPageFragment extends Fragment {
     }
 
     public void history_button_click() {
-        Toast.makeText(context, "click history", Toast.LENGTH_SHORT);
+//        Toast.makeText(context, "click history", Toast.LENGTH_SHORT).show();
         Log.d("history button", "click");
         Bundle mode_config = new Bundle();
         mode_config.putInt("mode", 0);
@@ -51,7 +51,7 @@ public class UserPageFragment extends Fragment {
     }
 
     public void favorite_button_click() {
-        Toast.makeText(context, "click favorites", Toast.LENGTH_SHORT);
+//        Toast.makeText(context, "click favorites", Toast.LENGTH_SHORT).show();
         Log.d("favorite button", "click");
         Bundle mode_config = new Bundle();
         mode_config.putInt("mode", 1);
