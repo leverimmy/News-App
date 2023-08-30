@@ -6,11 +6,8 @@ import android.util.Log;
 import androidx.fragment.app.Fragment;
 
 import com.java.xiongzeen.R;
-import com.java.xiongzeen.data.News;
 import com.java.xiongzeen.service.NewsManager;
 
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
 

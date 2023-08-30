@@ -34,7 +34,7 @@ public final class DBManager {
 
         int cnt = 0;
         try {
-            for (Long i = k0; i < k; i++) {
+            for (long i = k0; i < k; i++) {
                 News item = news.get(i);
                 news_already.put(i, item);
                 cnt++;

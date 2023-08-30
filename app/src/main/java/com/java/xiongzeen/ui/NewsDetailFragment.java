@@ -97,6 +97,7 @@ public class NewsDetailFragment extends Fragment {
         }
 
         Log.d("detailsPage", "true");
+        MyApplication.detailsPageFromHome = true;
         MyApplication.getBottomNavigationView().setVisibility(View.GONE);
         MyApplication.getTopFragmentContainer().setVisibility(View.GONE);
 
@@ -109,7 +110,7 @@ public class NewsDetailFragment extends Fragment {
 
         Log.d("detailsPage", "false");
         MyApplication.getBottomNavigationView().setVisibility(View.VISIBLE);
-        if (MyApplication.newsPage && !MyApplication.newsPageIsSearchingPage)
+        if (MyApplication.newsPage && !MyApplication.detailsPageFromSearch)
             MyApplication.getTopFragmentContainer().setVisibility(View.VISIBLE);
 
     }

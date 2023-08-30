@@ -21,8 +21,10 @@ public class MyApplication extends Application {
     public static boolean newsPage = true;
     public static boolean searchPage = false;
     public static boolean userPage = false;
-    public static boolean detailsPage = false;
-    public static boolean newsPageIsSearchingPage = false;
+    public static boolean detailsPageFromHome = false;
+    public static boolean detailsPageFromSearch = false;
+    public static boolean historyPage = false;
+    public static boolean favoritePage = false;
     public static MySQLiteOpenHelper mySQLiteOpenHelper;
     public static DBManager dbManager;
 
@@ -51,7 +53,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        // mySQLiteOpenHelper = new MySQLiteOpenHelper(this);
+
         context = getApplicationContext();
         myUser = new User();
         mySQLiteOpenHelper = new MySQLiteOpenHelper(context);

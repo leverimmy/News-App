@@ -21,7 +21,7 @@ public class RecordListFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private NewsListAdapter listAdapter;
-    private int mode = 0; // 0 for history, 1 for favorite;
+    private boolean mode = false; // 0 for history, 1 for favorite
 
 
     private Context context;
@@ -30,7 +30,7 @@ public class RecordListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mode = getArguments().getInt("mode");
+            mode = getArguments().getBoolean("mode");
         }
         Log.d("record list", "mode" + mode);
     }
@@ -55,7 +55,5 @@ public class RecordListFragment extends Fragment {
         listAdapter.notifyDataSetChanged();
         return view;
     }
-
-
 
 }

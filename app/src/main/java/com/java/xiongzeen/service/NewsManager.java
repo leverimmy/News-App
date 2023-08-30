@@ -17,34 +17,36 @@ public final class NewsManager {
     private static Map<Long, News> news = new HashMap<>();
     private static Map<String, Long> id_convert = new HashMap<>();
     private static Map<Long, String> id_re_convert = new HashMap<>();
-    private static List<Long> read_history = new ArrayList<>();
-    private static List<Long> favorite_history = new ArrayList<>();
+    private static List<Long> historyNews = new ArrayList<>();
+    private static List<Long> favoriteNews = new ArrayList<>();
     private static boolean read = false;
 
     public static void writeFavPreference() {
-
-        SharedPreferences preferences_fav = MyApplication.getContext().getSharedPreferences("fav",0);
         Log.d("preferenceTest","fav");
+        SharedPreferences preferences_fav = MyApplication.getContext().getSharedPreferences("fav",0);
 
-        preferences_fav.edit().putString("fav", Utils.listToString(favorite_history)).apply();
+        preferences_fav.edit().putString("fav", Utils.listToString(favoriteNews)).apply();
 
     }
     public static void writeHisPreference() {
         Log.d("preferenceTest","his");
         SharedPreferences preferences_his = MyApplication.getContext().getSharedPreferences("his",0);
 
-        preferences_his.edit().putString("his", Utils.listToString(read_history)).apply();
+        preferences_his.edit().putString("his", Utils.listToString(historyNews)).apply();
 
     }
 
-    private static void readHistoryFromPreference() {
+    private static void readNewsFromPreference() {
         Log.d("preferenceTest","read");
         SharedPreferences preferences_his = MyApplication.getContext().getSharedPreferences("his",0);
         SharedPreferences preferences_fav = MyApplication.getContext().getSharedPreferences("fav",0);
-        read_history = Utils.stringToList(preferences_his.getString("his",""));
-        favorite_history = Utils.stringToList(preferences_fav.getString("fav",""));
-        Log.d("preferenceTest","read" + read_history.size() + " " + favorite_history.size());
-        for(Long a : favorite_history){
+
+        historyNews = Utils.stringToList(preferences_his.getString("his",""));
+        favoriteNews = Utils.stringToList(preferences_fav.getString("fav",""));
+
+        Log.d("preferenceTest","read" + historyNews.size() + " " + favoriteNews.size());
+
+        for(long a : favoriteNews) {
             news.get(a).setFavorites(true);
         }
     }
@@ -57,34 +59,34 @@ public final class NewsManager {
             id_convert.put(item.getNewsID(),id);
             id_re_convert.put(id,item.getNewsID());
         }
-        readHistoryFromPreference();
+        readNewsFromPreference();
         read = true;
     }
 
-    public static Long convert_id(String newsID){
+    public static long convert_id(String newsID) {
         if(!read)
             read_from_disk();
         if(id_convert.containsKey(newsID)) {
             return id_convert.get(newsID);
-        }else{
+        } else {
             return -1L;
         }
     }
 
-    public List<News> get_record(int mode){ // 0 for history
+    public List<News> get_record(boolean mode) { // 0 for history, 1 for favorite
         if(!read)
             read_from_disk();
-       // Log.d("NewsManager", "Trying to get news");
+        Log.d("NewsManager", "Trying to get news");
         List<News> response = new ArrayList<>();
-        if(mode == 0){
-            for(Long l : read_history){
+        if(!mode) {
+            for(long l : historyNews) {
                 News temp = news.get(l);
                 if(temp != null) {
                     response.add(temp);
                 }
             }
         } else {
-            for(Long l : favorite_history){
+            for(long l : favoriteNews) {
                 News temp = news.get(l);
                 if(temp != null) {
                     response.add(temp);
@@ -103,13 +105,13 @@ public final class NewsManager {
         if (!operating.isFavorites()) {
             if(like) {
                 operating.setFavorites(true);
-                favorite_history.add(id);
+                favoriteNews.add(id);
                 Log.d("favourite","like");
             }
         } else {
             if (!like) {
                 operating.setFavorites(false);
-                favorite_history.remove(id);
+                favoriteNews.remove(id);
                 Log.d("favourite", "dislike");
             }
         }
@@ -121,8 +123,8 @@ public final class NewsManager {
             read_from_disk();
         if(id_convert.containsKey(a_temp_news.getNewsID())){
             Long id_ = id_convert.get(a_temp_news.getNewsID());
-            read_history.add(id_);
-            read_history.remove(id_);
+            historyNews.add(id_);
+            historyNews.remove(id_);
             writeHisPreference();
             return id_;
         }
@@ -136,7 +138,7 @@ public final class NewsManager {
         news.put(id,a_new_one);
         id_convert.put(a_new_one.getNewsID(),id);
         id_re_convert.put(id, a_new_one.getNewsID());
-        read_history.add(id);
+        historyNews.add(id);
         writeHisPreference();
         DBManager.add(news);
 

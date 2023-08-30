@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
     private DrawerLayout drawerLayout;
     private TabListFragment tabListFragment;
     private NewsListFragment NewsListFragment;
+    private long firstTime = -1L;
 
 
     @Override
@@ -144,15 +145,17 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
             MyApplication.newsPage = true;
             MyApplication.searchPage = false;
             MyApplication.userPage = false;
-            MyApplication.detailsPage = false;
+            MyApplication.detailsPageFromHome = false;
+            MyApplication.historyPage = false;
+            MyApplication.favoritePage = false;
 
             tabs.setVisibility(View.VISIBLE);
 
-            if (MyApplication.newsPageIsSearchingPage) {
+            if (MyApplication.detailsPageFromSearch) {
                 NewsListFragment.reloadNews();
                 FetchFromAPIManager.reset();
             }
-            MyApplication.newsPageIsSearchingPage = false;
+            MyApplication.detailsPageFromSearch = false;
 
             return true;
         } else if (item.getItemId() == R.id.search) {
@@ -161,7 +164,10 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
             MyApplication.newsPage = false;
             MyApplication.searchPage = true;
             MyApplication.userPage = false;
-            MyApplication.detailsPage = false;
+            MyApplication.detailsPageFromHome = false;
+            MyApplication.detailsPageFromSearch = false;
+            MyApplication.historyPage = false;
+            MyApplication.favoritePage = false;
 
             tabs.setVisibility(View.GONE);
 
@@ -172,7 +178,10 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
             MyApplication.newsPage = false;
             MyApplication.searchPage = false;
             MyApplication.userPage = true;
-            MyApplication.detailsPage = false;
+            MyApplication.detailsPageFromHome = false;
+            MyApplication.detailsPageFromSearch = false;
+            MyApplication.historyPage = false;
+            MyApplication.favoritePage = false;
 
             tabs.setVisibility(View.GONE);
 
@@ -185,20 +194,66 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
     public void finished() {
         if(!MyApplication.newsPage)
             replaceFragment(NewsListFragment.class);
-        Log.d("finished searching Input", "newsPageIsSearchingPage = true");
+        Log.d("finished searching Input", "detailsPageFromSearch = true");
         MyApplication.newsPage = true;
         MyApplication.searchPage = false;
         MyApplication.userPage = false;
-        MyApplication.newsPageIsSearchingPage = true;
+        MyApplication.detailsPageFromHome = false;
+        MyApplication.detailsPageFromSearch = true;
+        MyApplication.historyPage = false;
+        MyApplication.favoritePage = false;
         NewsListFragment.reloadNews();
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-//        Toast.makeText(MyApplication.getContext(), "再按一次返回键退出", Toast.LENGTH_SHORT).show();
+
         Log.d("MainActivity", "onBackPressed");
+        Log.d("MainActivity", "news? " + MyApplication.newsPage);
+        Log.d("MainActivity", "search? " + MyApplication.searchPage);
+        Log.d("MainActivity", "user? " + MyApplication.userPage);
+        Log.d("MainActivity", "detailsFromHome? " + MyApplication.detailsPageFromHome);
+        Log.d("MainActivity", "detailsPageFromSearch? " + MyApplication.detailsPageFromSearch);
+        Log.d("MainActivity", "history? " + MyApplication.historyPage);
+        Log.d("MainActivity", "favorite? " + MyApplication.favoritePage);
+
+        if (MyApplication.detailsPageFromHome) {
+
+            MyApplication.detailsPageFromHome = false;
+            super.onBackPressed();
+
+        } else if (MyApplication.detailsPageFromSearch) {
+
+            MyApplication.detailsPageFromSearch = false;
+            Log.d("MainActivity", "&news? " + MyApplication.newsPage);
+            MyApplication.newsPage = false;
+            MyApplication.searchPage = true;
+            super.onBackPressed();
+
+        } else if (MyApplication.historyPage) {
+
+            MyApplication.historyPage = false;
+            super.onBackPressed();
+
+        } else if (MyApplication.favoritePage) {
+
+            MyApplication.favoritePage = false;
+            super.onBackPressed();
+
+        } else {
+
+            long secondTime = System.currentTimeMillis();
+            if (secondTime - firstTime >= 2000) {
+                Toast.makeText(MainActivity.this, "再按一次返回键退出", Toast.LENGTH_SHORT).show();
+                firstTime = secondTime;
+            } else {
+                // TODO: 保存数据再退出？
+                System.exit(0);
+            }
+
+        }
     }
+
 
     @Override
     public void onStop() {
