@@ -25,14 +25,14 @@ public final class NewsManager {
         Log.d("preferenceTest","fav");
         SharedPreferences preferences_fav = MyApplication.getContext().getSharedPreferences("fav",0);
 
-        preferences_fav.edit().putString("fav", Utils.listToString(favoriteNews)).apply();
+        preferences_fav.edit().putString("fav", Utils.longListToString(favoriteNews)).apply();
 
     }
     public static void writeHisPreference() {
         Log.d("preferenceTest","his");
         SharedPreferences preferences_his = MyApplication.getContext().getSharedPreferences("his",0);
 
-        preferences_his.edit().putString("his", Utils.listToString(historyNews)).apply();
+        preferences_his.edit().putString("his", Utils.longListToString(historyNews)).apply();
 
     }
 
@@ -41,8 +41,8 @@ public final class NewsManager {
         SharedPreferences preferences_his = MyApplication.getContext().getSharedPreferences("his",0);
         SharedPreferences preferences_fav = MyApplication.getContext().getSharedPreferences("fav",0);
 
-        historyNews = Utils.stringToList(preferences_his.getString("his",""));
-        favoriteNews = Utils.stringToList(preferences_fav.getString("fav",""));
+        historyNews = Utils.stringToLongList(preferences_his.getString("his",""));
+        favoriteNews = Utils.stringToLongList(preferences_fav.getString("fav",""));
 
         Log.d("preferenceTest","read" + historyNews.size() + " " + favoriteNews.size());
 
@@ -106,13 +106,13 @@ public final class NewsManager {
             if(like) {
                 operating.setFavorites(true);
                 favoriteNews.add(id);
-                Log.d("favourite","like");
+                Log.d("favorite","like");
             }
         } else {
             if (!like) {
                 operating.setFavorites(false);
                 favoriteNews.remove(id);
-                Log.d("favourite", "dislike");
+                Log.d("favorite", "dislike");
             }
         }
         writeFavPreference();

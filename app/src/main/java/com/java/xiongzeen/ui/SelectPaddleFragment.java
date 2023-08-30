@@ -61,6 +61,7 @@ public class SelectPaddleFragment extends Fragment {
     public void upload() {
         MyApplication.myUser.selected = selected;
         MyApplication.myUser.unselected = unselected;
+        MyApplication.myUser.writeSelectPreference();
     }
 
     public interface onSelectPaddleListener {

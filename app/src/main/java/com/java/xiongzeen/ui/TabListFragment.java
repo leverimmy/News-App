@@ -21,18 +21,11 @@ import java.util.List;
 
 public class TabListFragment extends Fragment {
 
-
-
-    // TODO: Rename and change types of parameters
     public List<String> tabs = new ArrayList<>();
 
-
-  //  private List<TabFragment> tabFragmentList = new ArrayList<>();
     private View view;
-    //private LinearLayout linearLayout;
     private TabLayout tabLayout;
     private CheckBox selectMenu;
-
     private onTabBarListener mListener;
 
 
@@ -106,7 +99,6 @@ public class TabListFragment extends Fragment {
         tabLayout.removeAllTabs();
         for(int i = 0; i < tabs.size(); i++){
             TabLayout.Tab tab = tabLayout.newTab();
-
             tab.setText(tabs.get(i));
             tabLayout.addTab(tab);
         }

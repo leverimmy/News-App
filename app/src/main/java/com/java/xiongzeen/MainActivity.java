@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
     public void reportCurrent(List<Category> selected, List<Category> unselected) {
         MyApplication.myUser.selected = selected;
         MyApplication.myUser.unselected = unselected;
+        MyApplication.myUser.writeSelectPreference();
     }
 
     @Override
@@ -253,7 +254,6 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
         }
     }
-
 
     @Override
     public void onStop() {

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">NewsApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="favorites">Favorites</string>
+    <string name="history">History</string>
+    <string name="credit">This is Ze-en Xiong\'s homework for\nPrograming and Training(2023, Java), Tsinghua University.</string>
 </resources>
