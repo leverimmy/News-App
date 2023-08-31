@@ -19,28 +19,29 @@ public final class DBManager {
 
     private static MySQLiteOpenHelper helper;
     private static SQLiteDatabase db;
-    private static final Map<Long, News> news_already = new HashMap<>();
-    public DBManager(){
+    private static final Map<String, News> news_already = new HashMap<>();
+    public DBManager() {
         helper = new MySQLiteOpenHelper(MyApplication.getContext());
         db = helper.getWritableDatabase();
         helper.onCreate(db);
     }
 
-    public static void add(Map<Long, News> news){
+    public static void add(Map<String, News> news) {
+
         long k = news.size();
-        long k0 = news_already.size();
         Log.d("DBManager", "Trying to add " + k + " records");
         db.beginTransaction();
 
         int cnt = 0;
         try {
-            for (long i = k0; i < k; i++) {
-                News item = news.get(i);
-                news_already.put(i, item);
+            for (String newsID : news.keySet()) {
+                News currentNews = news.get(newsID);
+                news_already.put(newsID, currentNews);
                 cnt++;
-                db.execSQL("insert OR IGNORE into myNews VALUES(?,?)", new Object[]{(int)((long)i), item.toString()});
+                db.execSQL("insert OR IGNORE into myNews VALUES(?,?)", new Object[]{newsID.hashCode(), currentNews.toString()});
             }
             db.setTransactionSuccessful();
+
         } finally {
             db.endTransaction();
             Log.d("DBManager", "Actually added " + cnt + " records");

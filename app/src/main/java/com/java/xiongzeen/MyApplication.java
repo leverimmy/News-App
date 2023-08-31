@@ -29,7 +29,6 @@ public class MyApplication extends Application {
     public static DBManager dbManager;
 
 
-
     public static Context getContext(){
         return context;
     }

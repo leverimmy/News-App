@@ -24,19 +24,20 @@ import com.java.xiongzeen.service.PictureLoader;
 public class NewsDetailFragment extends Fragment {
     private Context context;
     private ImageView news_image, news_image2, news_image3, news_image4;
-    private Long news_id = -1L;
+    private String newsID = null;
     private FloatingActionButton button1, button2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.reading_news_one_pic, container, false);
+        // TODO
         if (getArguments() != null) {
-            news_id = getArguments().getLong("newsId",-1);
+            newsID = getArguments().getString("newsID",null);
         }
         News newsToShow;
-        if (news_id >= 0) {
-            newsToShow = NewsManager.getInstance().getNews(news_id);
+        if (newsID != null) {
+            newsToShow = NewsManager.getInstance().getNews(newsID);
         } else {
             newsToShow = new News();
         }
@@ -54,18 +55,18 @@ public class NewsDetailFragment extends Fragment {
 
         button1 = view.findViewById(R.id.favoriteFloatingActionButton);
         button2 = view.findViewById(R.id.favoriteFloatingActionButton2);
-        Log.d("NewsDetailFragment","open_a_news: " + newsToShow.getId());
+        Log.d("NewsDetailFragment","open_a_news: " + newsToShow.getNewsID());
         news_title.setText(newsToShow.getTitle());
         news_description.setText(newsToShow.getPublisher() + "     " + newsToShow.getPublishTime());
         news_content.setText(newsToShow.getContent());
 
-        button1.setOnClickListener(v-> handle_favorite_click(1));
-        button2.setOnClickListener(v-> handle_favorite_click(2));
+        button1.setOnClickListener(v-> handle_favorite_click(true));
+        button2.setOnClickListener(v-> handle_favorite_click(false));
 
-        if (!newsToShow.isFavorites()) {
-            button2.setVisibility(View.GONE);
-        } else {
+        if (NewsManager.isFavorites(newsID)) {
             button1.setVisibility(View.GONE);
+        } else {
+            button2.setVisibility(View.GONE);
         }
 
         if (newsToShow.getImages().length >= 1) {
@@ -127,14 +128,14 @@ public class NewsDetailFragment extends Fragment {
 
     }
 
-    private void handle_favorite_click(int i) {
-        if(i == 1) {
-            NewsManager.getInstance().favorite_triggered(news_id,true);
+    private void handle_favorite_click(boolean flag) {
+        if(flag) {
+            NewsManager.getInstance().favorite_triggered(newsID);
             Toast.makeText(context, "添加收藏成功！", Toast.LENGTH_SHORT).show();
             button2.setVisibility(View.VISIBLE);
             button1.setVisibility(View.GONE);
         } else {
-            NewsManager.getInstance().favorite_triggered(news_id,false);
+            NewsManager.getInstance().favorite_triggered(newsID);
             Toast.makeText(context, "取消收藏成功！", Toast.LENGTH_SHORT).show();
             button1.setVisibility(View.VISIBLE);
             button2.setVisibility(View.GONE);

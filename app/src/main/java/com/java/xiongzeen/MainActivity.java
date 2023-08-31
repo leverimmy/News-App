@@ -137,8 +137,9 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
                 .commit();
     }
 
-    private boolean onNavItemSelected(@NonNull MenuItem item) {
+    private boolean onNavItemSelected(MenuItem item) {
 
+        firstTime = -1;
         if (item.getItemId() == R.id.posts) {
 
             if(!MyApplication.newsPage)
@@ -248,8 +249,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
                 Toast.makeText(MainActivity.this, "再按一次返回键退出", Toast.LENGTH_SHORT).show();
                 firstTime = secondTime;
             } else {
-                // TODO: 保存数据再退出？
-                System.exit(0);
+                finish();
             }
 
         }

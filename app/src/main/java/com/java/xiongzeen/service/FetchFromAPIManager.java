@@ -20,7 +20,7 @@ import java.util.List;
 public final class FetchFromAPIManager {
     private final static FetchFromAPIManager instance = new FetchFromAPIManager();
     private static String startDate = "";
-    private static String endDate;
+    private static String endDate = "";
     private static String keyWords = "";
 
     private static List<String> categories = new ArrayList<>();
@@ -88,9 +88,9 @@ public final class FetchFromAPIManager {
 
             for (int i = 0; i < data.length(); i++) {
                 JSONObject jsonObject = data.getJSONObject(i);
-                jsonObject.put("id", -1);
-                jsonObject.put("isFavorites", false);
-                jsonObject.put("beenRead", false);
+
+                jsonObject.put("isFavorites", NewsManager.isFavorites((String) jsonObject.get("newsID")));
+                jsonObject.put("beenRead", NewsManager.isRead((String) jsonObject.get("newsID")));
                 newsFeed.add(new News(jsonObject));
             }
 

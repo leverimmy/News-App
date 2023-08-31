@@ -10,7 +10,6 @@ import java.util.Objects;
 
 
 public class News {
-    private long id = -1;
     private String title = "Error";
     private String publisher = "";
     private String publishTime = "";
@@ -22,9 +21,6 @@ public class News {
     private boolean isFavorites = false;
     private boolean beenRead = false;
 
-    public long getId() {
-        return id;
-    }
 
     public String getTitle() {
         return title;
@@ -54,37 +50,18 @@ public class News {
         return newsID;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public boolean isFavorites() {
-        return isFavorites;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setFavorites(boolean isFavorites) {
-        this.isFavorites = isFavorites;
-    }
-
-    public void setBeenRead(boolean beenRead) {
-        this.beenRead = beenRead;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass())
+            return false;
         News that = (News) o;
-        return (id == that.id) && (newsID.equals(that.newsID));
+        return newsID.equals(that.newsID);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id + "HashCode" + newsID);
+        return Objects.hash("HashCode" + newsID);
     }
 
     public News() {
@@ -93,7 +70,6 @@ public class News {
 
     public News(JSONObject data) {
         try {
-            id = data.getLong("id");
             title = data.getString("title");
             publisher = data.getString("publisher");
             publishTime = data.getString("publishTime");
@@ -120,7 +96,6 @@ public class News {
     public String toString() {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("id", id);
             jsonObject.put("title", title);
             jsonObject.put("publisher", publisher);
             jsonObject.put("publishTime", publishTime);

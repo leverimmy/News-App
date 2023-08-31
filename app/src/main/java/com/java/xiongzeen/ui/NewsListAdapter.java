@@ -94,28 +94,27 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
             News news = newsList.get(position);
             String title = news.getTitle();
 
-            if (Utils.is_an_api_id_read(news.getNewsID())){
+            if (NewsManager.isRead(news.getNewsID())) {
                 this.title.setText(Html.fromHtml("<font color=\"#999999\">" + title + "</font>"));
             } else {
                 this.title.setText(title);
             }
             this.description.setText(news.getPublisher() + "     " + news.getPublishTime());
-            Log.d("Making", title);
+            Log.d("NewsListAdapter", "Making" + title);
 
             if(type != 0) {
                 PictureLoader.loadPictureWithPlaceHolder(mainActivity, news.getImages()[0], picture);
             }
-            if(type >= 2){
+            if(type >= 2) {
                 PictureLoader.loadPictureWithPlaceHolder(mainActivity, news.getImages()[1], picture2);
             }
             itemView.setOnClickListener(v -> {
 
-                long id = NewsManager.getInstance().createNews(news);
-                news.setId(id);
+                NewsManager.getInstance().createNews(news);
                 notifyItemChanged(position);
                 // download picture
                 Bundle bundle = new Bundle();
-                bundle.putLong("newsId",id);
+                bundle.putString("newsID", news.getNewsID());
                 Utils.replaceFragment(fragment, NewsDetailFragment.class, bundle);
             });
         }

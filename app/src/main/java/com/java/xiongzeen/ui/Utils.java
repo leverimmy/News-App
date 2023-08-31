@@ -10,7 +10,9 @@ import com.java.xiongzeen.data.Category;
 import com.java.xiongzeen.service.NewsManager;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public final class Utils {
 
@@ -22,32 +24,30 @@ public final class Utils {
                 .commit();
     }
 
-    public static boolean is_an_api_id_read(String id_from_API) {
-        return NewsManager.convert_id(id_from_API) >= 0;
-    }
-
-    public static String longListToString(List<Long> input) {
+    public static String stringSetToString(Set<String> input) {
         StringBuilder ans = new StringBuilder();
-        for(Long value : input){
-            ans.append(value.toString());
+        for(String value : input) {
+            ans.append(value);
             ans.append(",");
         }
         String to_return = new String(ans);
-        Log.d("Utils longListToString", to_return);
+        Log.d("Utils stringListToString", to_return);
         return to_return;
     }
 
-    public static List<Long> stringToLongList(String input) {
-        Log.d("Utils stringToLongList", input);
+    public static Set<String> stringToStringSet(String input) {
+
         try {
+            Log.d("Utils stringToStringList", input);
             String[] temp = input.split(",");
-            List<Long> ans = new ArrayList<>();
-            for(String sub : temp){
-                ans.add(Long.valueOf(sub));
+            Set<String> ans = new HashSet<>();
+            for(String sub : temp) {
+                ans.add(sub);
             }
             return ans;
         } catch (Exception e) {
-            return new ArrayList<>();
+            Log.d("Utils stringToStringList", "null");
+            return new HashSet<>();
         }
     }
 
