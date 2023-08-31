@@ -34,6 +34,7 @@ public class NewsListFragment extends Fragment {
     private ProgressBar loadingBar;
     private SwipeRefreshLayout listContainer;
     private int page = 1;
+    private View mView = null;
 
 
     @Override
@@ -41,17 +42,21 @@ public class NewsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         Log.d("NewsList", "onCreateView");
 
-        if (MyApplication.newsList != null)
-            return MyApplication.newsList;
+        if (mView == null) {
+            mView = inflater.inflate(R.layout.fragment_news_list, container, false);
+        } else {
+            ViewGroup group = (ViewGroup) mView.getParent();
+            if (group != null) {
+                group.removeView(mView);
+            }
+        }
 
+        context = mView.getContext();
 
-        View view = inflater.inflate(R.layout.fragment_news_list, container, false);
-        context = view.getContext();
-
-        listContainer = view.findViewById(R.id.news_list_container);
+        listContainer = mView.findViewById(R.id.news_list_container);
         listContainer.setOnRefreshListener(this::reloadNews);
 
-        recyclerView = view.findViewById(R.id.news_list);
+        recyclerView = mView.findViewById(R.id.news_list);
 
         LinearLayoutManager llm = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(llm);
@@ -62,15 +67,12 @@ public class NewsListFragment extends Fragment {
         listAdapter = new NewsListAdapter(this, context, newsList);
         recyclerView.setAdapter(listAdapter);
 
-        loadingBar = view.findViewById(R.id.loading_bar);
+        loadingBar = mView.findViewById(R.id.loading_bar);
         loadingBar.setVisibility(View.VISIBLE);
-
 
         reloadNews();
 
-        MyApplication.newsList = view;
-
-        return view;
+        return mView;
     }
 
     private void loadNextPage() { //这个函数来自2022年科协暑培的代码
@@ -114,4 +116,15 @@ public class NewsListFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        if (mView != null) {
+            ViewGroup group = (ViewGroup) mView.getParent();
+
+            if (group != null) {
+                group.removeAllViews();
+            }
+        }
+        super.onDestroyView();
+    }
 }

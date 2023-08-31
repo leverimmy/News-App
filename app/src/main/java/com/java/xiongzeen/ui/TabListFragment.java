@@ -23,11 +23,10 @@ public class TabListFragment extends Fragment {
 
     public List<String> tabs = new ArrayList<>();
 
-    private View view;
     private TabLayout tabLayout;
     private CheckBox selectMenu;
     private onTabBarListener mListener;
-
+    private View mView = null;
 
     public interface onTabBarListener {
         void menuBarClicked();
@@ -43,22 +42,20 @@ public class TabListFragment extends Fragment {
         }
     }
 
-
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_tab_list, container, false);
-        tabLayout = view.findViewById(R.id.subject_tabs);
-        selectMenu = view.findViewById(R.id.edit_menu);
+        if (mView == null) {
+            mView = inflater.inflate(R.layout.fragment_tab_list, container, false);
+        } else {
+            ViewGroup group = (ViewGroup) mView.getParent();
+            if (group != null)
+                group.removeView(mView);
+        }
+
+        tabLayout = mView.findViewById(R.id.subject_tabs);
+        selectMenu = mView.findViewById(R.id.edit_menu);
 
         selectMenu.setOnClickListener(view -> {
             if(mListener != null) {
@@ -84,7 +81,7 @@ public class TabListFragment extends Fragment {
         });
 
         update_list();
-        return view;
+        return mView;
     }
 
     public void update_list() {
@@ -105,8 +102,14 @@ public class TabListFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d("TabListFragment", "onDestroy");
+    public void onDestroyView() {
+        if (mView != null) {
+            ViewGroup group = (ViewGroup) mView.getParent();
+
+            if (group != null) {
+                group.removeAllViews();
+            }
+        }
+        super.onDestroyView();
     }
 }

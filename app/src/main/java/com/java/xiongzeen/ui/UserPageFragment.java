@@ -15,23 +15,26 @@ import com.java.xiongzeen.R;
 
 public class UserPageFragment extends Fragment {
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    private View mView = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) { //这个函数来自2022年科协暑培的代码
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_user_page, container, false);
-        Button historyButton = view.findViewById(R.id.history_button);
-        Button favoriteButton = view.findViewById(R.id.favorite_button);
+        if (mView == null) {
+            mView = inflater.inflate(R.layout.fragment_user_page, container, false);
+        } else {
+            ViewGroup group = (ViewGroup) mView.getParent();
+            if (group != null)
+                group.removeView(mView);
+        }
+
+        Button historyButton = mView.findViewById(R.id.history_button);
+        Button favoriteButton = mView.findViewById(R.id.favorite_button);
         historyButton.setOnClickListener(v -> history_button_click());
         favoriteButton.setOnClickListener(v -> favorite_button_click());
 
-        return view;
+        return mView;
     }
 
     public void history_button_click() {
@@ -52,5 +55,17 @@ public class UserPageFragment extends Fragment {
         Bundle mode_config = new Bundle();
         mode_config.putBoolean("mode", true);
         Utils.replaceFragment(this, RecordListFragment.class ,mode_config);
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mView != null) {
+            ViewGroup group = (ViewGroup) mView.getParent();
+
+            if (group != null) {
+                group.removeAllViews();
+            }
+        }
+        super.onDestroyView();
     }
 }

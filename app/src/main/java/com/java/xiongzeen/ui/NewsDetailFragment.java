@@ -26,30 +26,38 @@ public class NewsDetailFragment extends Fragment {
     private ImageView news_image, news_image2, news_image3, news_image4;
     private String newsID = null;
     private FloatingActionButton unfavoriteButton, favoriteButton;
+    private View mView = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.reading_news_one_pic, container, false);
+
+        if (mView == null) {
+            mView = inflater.inflate(R.layout.reading_news_one_pic, container, false);
+        } else {
+            ViewGroup group = (ViewGroup) mView.getParent();
+            if (group != null)
+                group.removeView(mView);
+        }
 
         if (getArguments() != null)
             newsID = getArguments().getString("newsID",null);
         News newsToShow = (newsID == null) ?
                 new News() : NewsManager.getInstance().getNews(newsID);
 
-        context = view.getContext();
+        context = mView.getContext();
 
-        TextView news_title = view.findViewById(R.id.detail_title);
-        TextView news_description = view.findViewById(R.id.detail_description);
-        TextView news_content = view.findViewById(R.id.detail_content);
-        news_image = view.findViewById(R.id.detail_image1);
-        news_image2 = view.findViewById(R.id.detail_image2);
-        news_image3 = view.findViewById(R.id.detail_image3);
-        news_image4 = view.findViewById(R.id.detail_image4);
-        FragmentContainerView containerView = view.findViewById(R.id.fragment_to_contain_video);
+        TextView news_title = mView.findViewById(R.id.detail_title);
+        TextView news_description = mView.findViewById(R.id.detail_description);
+        TextView news_content = mView.findViewById(R.id.detail_content);
+        news_image = mView.findViewById(R.id.detail_image1);
+        news_image2 = mView.findViewById(R.id.detail_image2);
+        news_image3 = mView.findViewById(R.id.detail_image3);
+        news_image4 = mView.findViewById(R.id.detail_image4);
+        FragmentContainerView containerView = mView.findViewById(R.id.fragment_to_contain_video);
 
-        unfavoriteButton = view.findViewById(R.id.favoriteFloatingActionButton);
-        favoriteButton = view.findViewById(R.id.favoriteFloatingActionButton2);
+        unfavoriteButton = mView.findViewById(R.id.favoriteFloatingActionButton);
+        favoriteButton = mView.findViewById(R.id.favoriteFloatingActionButton2);
         Log.d("NewsDetailFragment","open_a_news: " + newsToShow.getNewsID());
         news_title.setText(newsToShow.getTitle());
         news_description.setText(newsToShow.getPublisher() + "     " + newsToShow.getPublishTime());
@@ -120,7 +128,7 @@ public class NewsDetailFragment extends Fragment {
         MyApplication.getBottomNavigationView().setVisibility(View.GONE);
         MyApplication.getTopFragmentContainer().setVisibility(View.GONE);
 
-        return view;
+        return mView;
     }
 
     @Override
@@ -158,5 +166,17 @@ public class NewsDetailFragment extends Fragment {
             unfavoriteButton.setVisibility(View.VISIBLE);
             favoriteButton.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mView != null) {
+            ViewGroup group = (ViewGroup) mView.getParent();
+
+            if (group != null) {
+                group.removeAllViews();
+            }
+        }
+        super.onDestroyView();
     }
 }

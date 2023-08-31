@@ -18,6 +18,7 @@ import com.java.xiongzeen.R;
 public class VideoFragment extends Fragment {
 
     private String videoWebPath = "";
+    private View mView = null;
 
 
     public VideoFragment() {
@@ -44,11 +45,16 @@ public class VideoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        View view = inflater.inflate(R.layout.fragment_video, container, false);
+        if (mView == null) {
+            mView = inflater.inflate(R.layout.fragment_video, container, false);
+        } else {
+            ViewGroup group = (ViewGroup) mView.getParent();
+            if (group != null)
+                group.removeView(mView);
+        }
 
         try {
-            VideoView videoView = view.findViewById(R.id.videoView);
+            VideoView videoView = mView.findViewById(R.id.videoView);
             Uri uri = Uri.parse(videoWebPath);
 
             videoView.setVideoURI(uri);
@@ -65,6 +71,18 @@ public class VideoFragment extends Fragment {
             Log.d("VideoFragment", "failed" );
         }
 
-        return view;
+        return mView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mView != null) {
+            ViewGroup group = (ViewGroup) mView.getParent();
+
+            if (group != null) {
+                group.removeAllViews();
+            }
+        }
+        super.onDestroyView();
     }
 }

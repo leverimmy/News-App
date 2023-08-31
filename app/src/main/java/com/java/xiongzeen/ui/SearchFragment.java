@@ -27,10 +27,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     private EditText startTime, endTime;
     private String queryText = "";
     private OnSearchInputFinished mListener;
-
-    public SearchFragment() {
-        // Required empty public constructor
-    }
+    private View mView = null;
 
     public interface OnSearchInputFinished {
         void finished();
@@ -92,16 +89,23 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_search, container, false);
-        SearchView searchView = view.findViewById(R.id.searchBar);
-        gridLayout = view.findViewById(R.id.selections);
-        startTime = view.findViewById(R.id.editTextDateStart);
-        endTime = view.findViewById(R.id.editTextDateEnd);
-        Button searchButton = view.findViewById(R.id.search_button);
+        if (mView == null) {
+            mView = inflater.inflate(R.layout.fragment_search, container, false);
+        } else {
+            ViewGroup group = (ViewGroup) mView.getParent();
+            if (group != null)
+                group.removeView(mView);
+        }
+
+        SearchView searchView = mView.findViewById(R.id.searchBar);
+        gridLayout = mView.findViewById(R.id.selections);
+        startTime = mView.findViewById(R.id.editTextDateStart);
+        endTime = mView.findViewById(R.id.editTextDateEnd);
+        Button searchButton = mView.findViewById(R.id.search_button);
         searchView.setOnQueryTextListener(this);
         searchButton.setOnClickListener(view1 -> collectInformation());
 
-        return view;
+        return mView;
     }
 
     @Override
@@ -117,5 +121,17 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         queryText = s;
         Log.d("onQueryTextChange", s);
         return false;
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mView != null) {
+            ViewGroup group = (ViewGroup) mView.getParent();
+
+            if (group != null) {
+                group.removeAllViews();
+            }
+        }
+        super.onDestroyView();
     }
 }

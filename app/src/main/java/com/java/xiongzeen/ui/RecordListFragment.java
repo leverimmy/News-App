@@ -15,16 +15,12 @@ import com.java.xiongzeen.R;
 import com.java.xiongzeen.service.NewsManager;
 
 public class RecordListFragment extends Fragment {
-    public static final int PAGE_SIZE = 10;
-    public static final String LOG_TAG = RecordListFragment.class.getSimpleName();
-
 
     private RecyclerView recyclerView;
     private NewsListAdapter listAdapter;
     private boolean mode = false; // 0 for history, 1 for favorite
-
-
     private Context context;
+    private View mView = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,17 +31,20 @@ public class RecordListFragment extends Fragment {
         Log.d("record list", "mode" + mode);
     }
 
-    public RecordListFragment() {
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_record_list, container, false);
-        context = view.getContext();
-        recyclerView = view.findViewById(R.id.news_list);
+        if (mView == null) {
+            mView = inflater.inflate(R.layout.fragment_record_list, container, false);
+        } else {
+            ViewGroup group = (ViewGroup) mView.getParent();
+            if (group != null)
+                group.removeView(mView);
+        }
+
+        context = mView.getContext();
+        recyclerView = mView.findViewById(R.id.news_list);
         LinearLayoutManager llm = new LinearLayoutManager(context);
         llm.setStackFromEnd(true);
         llm.setReverseLayout(true);
@@ -53,7 +52,18 @@ public class RecordListFragment extends Fragment {
         listAdapter = new NewsListAdapter(this, context, NewsManager.getInstance().get_record(mode));
         recyclerView.setAdapter(listAdapter);
         listAdapter.notifyDataSetChanged();
-        return view;
+        return mView;
     }
 
+    @Override
+    public void onDestroyView() {
+        if (mView != null) {
+            ViewGroup group = (ViewGroup) mView.getParent();
+
+            if (group != null) {
+                group.removeAllViews();
+            }
+        }
+        super.onDestroyView();
+    }
 }
