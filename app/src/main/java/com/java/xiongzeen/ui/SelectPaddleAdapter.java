@@ -15,7 +15,7 @@ import java.util.List;
 public class SelectPaddleAdapter extends BaseAdapter {
     private final List<Category> list_to_show;
     private final Context mContext;
-    private boolean isSelected;
+    private final boolean isSelected;
     private final Interface mInterface;
 
     public SelectPaddleAdapter(Interface listener, List<Category> list_to_show, Context mContext, boolean isSelected) {

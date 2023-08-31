@@ -19,7 +19,6 @@ public final class NewsManager {
     private static Map<String, News> news = new HashMap<>();
     private static Set<String> historyNews = new HashSet<>();
     private static Set<String> favoriteNews = new HashSet<>();
-    private static boolean read = false;
 
     public static void writeFavPreference() {
         Log.d("preferenceTest","fav");
@@ -47,19 +46,17 @@ public final class NewsManager {
         Log.d("preferenceTest","read" + historyNews.size() + " " + favoriteNews.size());
     }
 
-    public static void read_from_disk() {
+    public static void initialize() {
         List<News> temp = DBManager.query();
         for(News item : temp) {
             String newsID = item.getNewsID();
             news.put(newsID, item);
         }
         readNewsFromPreference();
-        read = true;
     }
 
     public List<News> get_record(boolean mode) { // 0 for history, 1 for favorite
-        if(!read)
-            read_from_disk();
+
         Log.d("NewsManager", "Trying to get news");
         List<News> response = new ArrayList<>();
         if(!mode) {
@@ -81,8 +78,6 @@ public final class NewsManager {
     }
 
     public void favorite_triggered(String newsID) {
-        if(!read)
-            read_from_disk();
 
         if (isFavorites(newsID)) {
             favoriteNews.remove(newsID);
@@ -96,8 +91,6 @@ public final class NewsManager {
     }
 
     public void createNews(News currentNews) {
-        if(!read)
-            read_from_disk();
 
         String newsID = currentNews.getNewsID();
 
@@ -113,20 +106,17 @@ public final class NewsManager {
     }
 
     public News getNews(String newsID) {
-        if(!read)
-            read_from_disk();
+
         return news.get(newsID);
     }
 
     public void newsList(int offset, int pageSize, TaskRunner.Callback<List<News>> callback) {
-        if(!read)
-            read_from_disk();
+
         TaskRunner.getInstance().execute(() -> applyForNews(offset, pageSize), callback);
     }
 
     private List<News> applyForNews(int offset, int pageSize) {
-        if(!read)
-            read_from_disk();
+
         return FetchFromAPIManager.getInstance().getNews(offset, pageSize);
     }
 
@@ -139,6 +129,7 @@ public final class NewsManager {
     }
 
     public static NewsManager getInstance() {
+        initialize();
         return instance;
     }
 }

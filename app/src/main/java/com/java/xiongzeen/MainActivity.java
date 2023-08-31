@@ -33,10 +33,8 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
     private ActivityMainBinding binding;
     public BottomNavigationView navView;
-    public SearchView searchView;
     public FragmentContainerView mainArea;
     public FragmentContainerView tabs;
-    private SelectPaddleFragment selectPaddleFragment;
     private FragmentManager fragmentManager;
     private DrawerLayout drawerLayout;
     private TabListFragment tabListFragment;
@@ -46,14 +44,15 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
     @Override
     public void selectPaddleConfirmed(){
-        drawerLayout.closeDrawer(Gravity.LEFT);
 
+        drawerLayout.closeDrawer(Gravity.LEFT);
         tabListFragment.update_list();
 
     }
 
     @Override
     public void menuBarClicked() {
+
         Log.d("MainActivity", "menu clicked");
         drawerLayout.openDrawer(Gravity.LEFT);
 
@@ -70,6 +69,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
     @Override
     public void reportCurrent(List<Category> selected, List<Category> unselected) {
+
         MyApplication.myUser.selected = selected;
         MyApplication.myUser.unselected = unselected;
         MyApplication.myUser.writeSelectPreference();
@@ -92,7 +92,6 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         mainArea.setLongClickable(true);
 
         fragmentManager = getSupportFragmentManager();
-        selectPaddleFragment = (SelectPaddleFragment) fragmentManager.findFragmentById(R.id.select_paddle);
 
         tabListFragment = (TabListFragment) fragmentManager.findFragmentByTag("upper_fragment_in_container");
         NewsListFragment = (NewsListFragment) fragmentManager.findFragmentByTag("fragment_in_container");
@@ -103,7 +102,6 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED,Gravity.LEFT);
 
         drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener(){
-
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
 

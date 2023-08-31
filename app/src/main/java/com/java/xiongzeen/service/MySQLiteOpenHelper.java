@@ -5,11 +5,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
 
 public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
-    public MySQLiteOpenHelper(@Nullable Context context) {
+    public MySQLiteOpenHelper(Context context) {
         super(context, "myNews.db", null, 1);
     }
 

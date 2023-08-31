@@ -37,7 +37,7 @@ public class UserPageFragment extends Fragment {
         return mView;
     }
 
-    public void history_button_click() {
+    private void history_button_click() {
 
         Log.d("history button", "click");
         MyApplication.userPage = false;
@@ -47,7 +47,7 @@ public class UserPageFragment extends Fragment {
         Utils.replaceFragment(this, RecordListFragment.class, mode_config);
     }
 
-    public void favorite_button_click() {
+    private void favorite_button_click() {
 
         Log.d("favorite button", "click");
         MyApplication.userPage = false;

@@ -16,10 +16,7 @@ import com.java.xiongzeen.service.NewsManager;
 
 public class RecordListFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private NewsListAdapter listAdapter;
     private boolean mode = false; // 0 for history, 1 for favorite
-    private Context context;
     private View mView = null;
 
     @Override
@@ -43,13 +40,13 @@ public class RecordListFragment extends Fragment {
                 group.removeView(mView);
         }
 
-        context = mView.getContext();
-        recyclerView = mView.findViewById(R.id.news_list);
+        Context context = mView.getContext();
+        RecyclerView recyclerView = mView.findViewById(R.id.news_list);
         LinearLayoutManager llm = new LinearLayoutManager(context);
         llm.setStackFromEnd(true);
         llm.setReverseLayout(true);
         recyclerView.setLayoutManager(llm);
-        listAdapter = new NewsListAdapter(this, context, NewsManager.getInstance().get_record(mode));
+        NewsListAdapter listAdapter = new NewsListAdapter(this, context, NewsManager.getInstance().get_record(mode));
         recyclerView.setAdapter(listAdapter);
         listAdapter.notifyDataSetChanged();
         return mView;

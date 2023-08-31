@@ -27,10 +27,8 @@ public class NewsListFragment extends Fragment {
     public static final int PAGE_SIZE = 10;
     public static final String LOG_TAG = NewsListFragment.class.getSimpleName();
     private final List<News> newsList = new ArrayList<>();
-    private RecyclerView recyclerView;
     private NewsListAdapter listAdapter;
     private EndlessRecyclerViewScrollListener listScrollListener;
-    private Context context;
     private ProgressBar loadingBar;
     private SwipeRefreshLayout listContainer;
     private int page = 1;
@@ -51,12 +49,12 @@ public class NewsListFragment extends Fragment {
             }
         }
 
-        context = mView.getContext();
+        Context context = mView.getContext();
 
         listContainer = mView.findViewById(R.id.news_list_container);
         listContainer.setOnRefreshListener(this::reloadNews);
 
-        recyclerView = mView.findViewById(R.id.news_list);
+        RecyclerView recyclerView = mView.findViewById(R.id.news_list);
 
         LinearLayoutManager llm = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(llm);

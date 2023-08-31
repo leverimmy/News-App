@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,9 +42,9 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         return newsList.get(position).getImages().length;
     }
 
-    @NonNull
+
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) { //这个函数来自2022年科协暑培的代码
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) { //这个函数来自2022年科协暑培的代码
         View itemView;
         if(viewType == 0) {
             itemView = inflater.inflate(R.layout.news_title_no_image, parent, false);
@@ -58,7 +57,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) { //这个函数来自2022年科协暑培的代码
+    public void onBindViewHolder(ViewHolder holder, int position) { //这个函数来自2022年科协暑培的代码
         holder.bindData(position);
     }
 

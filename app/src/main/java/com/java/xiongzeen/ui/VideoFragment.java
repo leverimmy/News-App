@@ -26,11 +26,11 @@ public class VideoFragment extends Fragment {
     }
 
     public static VideoFragment newInstance(String path) {
-        VideoFragment fragment = new VideoFragment();
+        VideoFragment videoFragment = new VideoFragment();
         Bundle args = new Bundle();
         args.putString("video", path);
-        fragment.setArguments(args);
-        return fragment;
+        videoFragment.setArguments(args);
+        return videoFragment;
     }
 
     @Override
