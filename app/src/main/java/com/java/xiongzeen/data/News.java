@@ -61,7 +61,7 @@ public class News {
 
     @Override
     public int hashCode() {
-        return Objects.hash("HashCode" + newsID);
+        return Objects.hash(newsID);
     }
 
     public News() {

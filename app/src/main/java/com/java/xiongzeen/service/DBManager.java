@@ -26,26 +26,18 @@ public final class DBManager {
         helper.onCreate(db);
     }
 
-    public static void add(Map<String, News> news) {
+    public static void add(News currentNews) {
 
-        long k = news.size();
-        Log.d("DBManager", "Trying to add " + k + " records");
+        Log.d("DBManager", "Trying to add a record");
+
+        String newsID = currentNews.getNewsID();
+
         db.beginTransaction();
+        db.execSQL("insert OR IGNORE into myNews VALUES(?,?)", new Object[]{newsID.hashCode(), currentNews.toString()});
+        db.setTransactionSuccessful();
+        db.endTransaction();
 
-        int cnt = 0;
-        try {
-            for (String newsID : news.keySet()) {
-                News currentNews = news.get(newsID);
-                news_already.put(newsID, currentNews);
-                cnt++;
-                db.execSQL("insert OR IGNORE into myNews VALUES(?,?)", new Object[]{newsID.hashCode(), currentNews.toString()});
-            }
-            db.setTransactionSuccessful();
-
-        } finally {
-            db.endTransaction();
-            Log.d("DBManager", "Actually added " + cnt + " records");
-        }
+        Log.d("DBManager", "Added a record successfully");
     }
 
     public static List<News> query() {

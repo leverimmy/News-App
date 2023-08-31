@@ -99,24 +99,17 @@ public final class NewsManager {
         if(!read)
             read_from_disk();
 
-//        if (news.containsKey(currentNews.getNewsID()) && news.get(currentNews.getNewsID()).beenRead())
-//            return;
-        /*if(id_convert.containsKey(currentNews.getNewsID())) {
-            Long id_ = id_convert.get(currentNews.getNewsID());
-            historyNews.add(id_);
-            historyNews.remove(id_);
-            writeHisPreference();
-            return id_;
-        }*/
         String newsID = currentNews.getNewsID();
 
-        Log.d("NewsManager::createNews(from temp news)", currentNews.toString());
+        if (isRead(newsID))
+            return;
+
+        Log.d("NewsManager", "Created: [Raw Data]" + currentNews);
         news.put(newsID, currentNews);
         historyNews.add(newsID);
-        writeHisPreference();
-        // TODO
-        DBManager.add(news);
 
+        writeHisPreference();
+        DBManager.add(currentNews);
     }
 
     public News getNews(String newsID) {
