@@ -29,7 +29,7 @@ import com.java.xiongzeen.ui.UserPageFragment;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity  implements TabListFragment.onTabBarListener,
-        SelectPaddleFragment.onSelectPaddleListener, SearchFragment.OnSearchInputFinished{
+        SelectPaddleFragment.onSelectPaddleListener, SearchFragment.OnSearchInputFinished {
 
     private ActivityMainBinding binding;
     public BottomNavigationView navView;
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         if(!MyApplication.newsPage)
             replaceFragment(NewsListFragment.class);
         Log.d("finished searching Input", "detailsPageFromSearch = true");
-        MyApplication.newsPage = true;
+        MyApplication.newsPage = false;
         MyApplication.searchPage = false;
         MyApplication.userPage = false;
         MyApplication.detailsPageFromHome = false;
@@ -222,24 +222,25 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         if (MyApplication.detailsPageFromHome) {
 
             MyApplication.detailsPageFromHome = false;
+            MyApplication.newsPage = true;
             super.onBackPressed();
 
         } else if (MyApplication.detailsPageFromSearch) {
 
             MyApplication.detailsPageFromSearch = false;
-            Log.d("MainActivity", "&news? " + MyApplication.newsPage);
-            MyApplication.newsPage = false;
             MyApplication.searchPage = true;
             super.onBackPressed();
 
         } else if (MyApplication.historyPage) {
 
             MyApplication.historyPage = false;
+            MyApplication.userPage = true;
             super.onBackPressed();
 
         } else if (MyApplication.favoritePage) {
 
             MyApplication.favoritePage = false;
+            MyApplication.userPage = true;
             super.onBackPressed();
 
         } else {

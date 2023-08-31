@@ -22,7 +22,6 @@ public final class FetchFromAPIManager {
     private static String startDate = "";
     private static String endDate = "";
     private static String keyWords = "";
-
     private static List<String> categories = new ArrayList<>();
 
 

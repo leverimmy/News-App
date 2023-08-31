@@ -30,6 +30,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
 
 
     public NewsListAdapter(Fragment fragment, Context context, List<News> newsList) {
+
         this.newsList = newsList;
         this.fragment = fragment;
         this.inflater = LayoutInflater.from(context);

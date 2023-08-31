@@ -60,9 +60,9 @@ public class VideoFragment extends Fragment {
             videoView.setOnErrorListener((mp, what, extra) -> false);
             videoView.start();
 
-            Log.d("Video View", "isPlaying: " + videoView.isPlaying());
+            Log.d("VideoFragment", "isPlaying: " + videoView.isPlaying());
         } catch (Exception e) {
-            Log.d("Video View", "failed." );
+            Log.d("VideoFragment", "failed" );
         }
 
         return view;

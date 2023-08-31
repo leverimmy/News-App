@@ -54,8 +54,6 @@ public class SelectPaddleFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        upload();
-        mListener.selectPaddleConfirmed();
     }
 
     public void upload() {

@@ -32,7 +32,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         // Required empty public constructor
     }
 
-    public interface OnSearchInputFinished{
+    public interface OnSearchInputFinished {
         void finished();
     }
 

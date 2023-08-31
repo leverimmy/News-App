@@ -26,17 +26,13 @@ import java.util.List;
 public class NewsListFragment extends Fragment {
     public static final int PAGE_SIZE = 10;
     public static final String LOG_TAG = NewsListFragment.class.getSimpleName();
-
-    private List<News> newsList = new ArrayList<>();
+    private final List<News> newsList = new ArrayList<>();
     private RecyclerView recyclerView;
     private NewsListAdapter listAdapter;
     private EndlessRecyclerViewScrollListener listScrollListener;
-
     private Context context;
     private ProgressBar loadingBar;
     private SwipeRefreshLayout listContainer;
-    private ConstraintLayout mainArea;
-    private float mPosX, mPosY, mCurPosX, mCurPosY;
     private int page = 1;
 
 
@@ -45,8 +41,8 @@ public class NewsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         Log.d("NewsList", "onCreateView");
 
-        if (MyApplication.NewsList != null)
-            return MyApplication.NewsList;
+        if (MyApplication.newsList != null)
+            return MyApplication.newsList;
 
 
         View view = inflater.inflate(R.layout.fragment_news_list, container, false);
@@ -72,7 +68,7 @@ public class NewsListFragment extends Fragment {
 
         reloadNews();
 
-        MyApplication.NewsList = view;
+        MyApplication.newsList = view;
 
         return view;
     }
