@@ -13,8 +13,6 @@
         android:id="@+id/text_in_subject_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="科技"
-        android:textSize="18dp" />
+        android:layout_gravity="center" />
 
 </androidx.cardview.widget.CardView>

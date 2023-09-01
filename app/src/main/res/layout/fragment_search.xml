@@ -15,8 +15,9 @@
             android:id="@+id/searchBar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="88dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -24,7 +25,6 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="TextView" />
         </SearchView>
 
@@ -35,7 +35,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="10dp"
-            android:text="请选择您希望查找的分类。不选将对所有分类进行查找。"
+            android:text="请选择您希望查找的分类。\n不选将对所有分类进行查找。"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -216,12 +216,14 @@
 
         <Button
             android:id="@+id/search_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="219dp"
+            android:layout_height="69dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="15dp"
-            android:text="Search"
+            android:text="搜索"
+            android:textSize="30sp"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextDateEnd" />
