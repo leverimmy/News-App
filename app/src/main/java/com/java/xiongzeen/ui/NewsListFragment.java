@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsListFragment extends Fragment {
-    public static final int PAGE_SIZE = 10;
+    public static final int PAGE_SIZE = 15;
     public static final String LOG_TAG = NewsListFragment.class.getSimpleName();
     private final List<News> newsList = new ArrayList<>();
     private NewsListAdapter listAdapter;
@@ -33,6 +34,7 @@ public class NewsListFragment extends Fragment {
     private SwipeRefreshLayout listContainer;
     private int page = 1;
     private View mView = null;
+    private Context context;
 
 
     @Override
@@ -49,7 +51,7 @@ public class NewsListFragment extends Fragment {
             }
         }
 
-        Context context = mView.getContext();
+        context = mView.getContext();
 
         listContainer = mView.findViewById(R.id.news_list_container);
         listContainer.setOnRefreshListener(this::reloadNews);
@@ -110,6 +112,7 @@ public class NewsListFragment extends Fragment {
                 listAdapter.notifyDataSetChanged();
             } else {
                 Log.e(LOG_TAG, "Post fetch failed due to exception", res.getError());
+                Toast.makeText(context, "没有网络连接，请稍后重试！", Toast.LENGTH_SHORT).show();
             }
         }
     }

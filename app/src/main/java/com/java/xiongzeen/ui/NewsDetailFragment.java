@@ -133,7 +133,7 @@ public class NewsDetailFragment extends Fragment {
 
     @Override
     public void onStop() {
-        // TODO:
+
         super.onStop();
 
         Log.d("detailsPage", "false");
@@ -145,7 +145,7 @@ public class NewsDetailFragment extends Fragment {
 
     @Override
     public void onResume() {
-        // TODO:
+
         super.onResume();
 
         Log.d("detailsPage", "true");

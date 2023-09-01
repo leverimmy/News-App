@@ -48,9 +48,9 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         View itemView;
         if(viewType == 0) {
             itemView = inflater.inflate(R.layout.news_title_no_image, parent, false);
-        }else if(viewType == 1){
+        } else if(viewType == 1) {
             itemView = inflater.inflate(R.layout.news_title_one_image, parent, false);
-        }else{
+        } else {
             itemView = inflater.inflate(R.layout.news_title_two_image, parent, false);
         }
         return new ViewHolder(itemView, viewType);
@@ -94,7 +94,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
             News news = newsList.get(position);
             String title = news.getTitle();
 
-            if (NewsManager.isRead(news.getNewsID())) {
+            if (NewsManager.isRead(news.getNewsID()) && MyApplication.newsPage) {
                 this.title.setText(Html.fromHtml("<font color=\"#999999\">" + title + "</font>"));
             } else {
                 this.title.setText(title);
@@ -118,7 +118,5 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
                 Utils.replaceFragment(fragment, NewsDetailFragment.class, bundle);
             });
         }
-
     }
-
 }

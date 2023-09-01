@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         setContentView(binding.getRoot());
         navView = binding.navView;
 
-        tabs = binding.fragmentContainerup;
+        tabs = binding.fragmentContainerUp;
         mainArea = binding.fragmentContainer;
         navView.setOnItemSelectedListener(this::onNavItemSelected);
         MyApplication.setBottomNavigationView(navView);

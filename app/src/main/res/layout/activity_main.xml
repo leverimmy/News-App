@@ -8,16 +8,14 @@
 
 
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerup"
+        android:id="@+id/fragmentContainerUp"
         android:name="com.java.xiongzeen.ui.TabListFragment"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -37,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentContainerup" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentContainerUp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navView"
@@ -53,13 +51,14 @@
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/select_paddle"
         android:name="com.java.xiongzeen.ui.SelectPaddleFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="left"
         android:tag="LEFT"
-        tools:layout="@layout/fragment_select_paddle" />
+        tools:layout="@layout/fragment_select_paddle"
+        tools:ignore="RtlHardcoded" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

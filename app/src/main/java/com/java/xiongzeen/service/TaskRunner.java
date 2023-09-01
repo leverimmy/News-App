@@ -63,7 +63,11 @@ public class TaskRunner {
         workers.execute(() -> {
             try {
                 final R res = task.call();
-                uiThread.post(() -> callback.complete(Result.ofResult(res)));
+                if (res != null) {
+                    uiThread.post(() -> callback.complete(Result.ofResult(res)));
+                } else {
+                    throw new Exception();
+                }
             } catch (Exception e) {
                 uiThread.post(() -> callback.complete(Result.ofError(e)));
             }
