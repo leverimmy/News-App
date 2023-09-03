@@ -28,7 +28,7 @@ public final class DBManager {
 
     public static void add(News currentNews) {
 
-        Log.d("DBManager", "Trying to add a record");
+        Log.d("DBManager", "Trying to add a record.");
 
         String newsID = currentNews.getNewsID();
 
@@ -37,7 +37,7 @@ public final class DBManager {
         db.setTransactionSuccessful();
         db.endTransaction();
 
-        Log.d("DBManager", "Added a record successfully");
+        Log.d("DBManager", "Added a record successfully.");
     }
 
     public static List<News> query() {
@@ -50,7 +50,7 @@ public final class DBManager {
                 News item = new News(new JSONObject(c.getString(1)));
                 ans.add(item);
             }
-            Log.d("DBManager", "Read " + ans.toArray().length + " records from database");
+            Log.d("DBManager", "Read " + ans.toArray().length + " records from database.");
             return ans;
         } catch (JSONException e) {
             e.printStackTrace();

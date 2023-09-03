@@ -14,7 +14,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        Log.d("CreateTable","myNews");
+        Log.d("MySQLiteOpenHelper","Create a able in myNews.db");
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS myNews" + " (_id INTEGER PRIMARY KEY UNIQUE, info TEXT)");
     }
 

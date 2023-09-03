@@ -37,7 +37,7 @@ public class NewsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("NewsList", "onCreateView");
+        Log.d("NewsListFragment", "onCreateView");
 
         if (MyApplication.NewsList != null)
             return MyApplication.NewsList;

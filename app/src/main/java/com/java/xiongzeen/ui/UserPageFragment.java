@@ -28,15 +28,15 @@ public class UserPageFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_user_page, container, false);
         Button historyButton = view.findViewById(R.id.history_button);
         Button favoriteButton = view.findViewById(R.id.favorite_button);
-        historyButton.setOnClickListener(v -> history_button_click());
-        favoriteButton.setOnClickListener(v -> favorite_button_click());
+        historyButton.setOnClickListener(v -> historyButtonClicked());
+        favoriteButton.setOnClickListener(v -> favoriteButtonClicked());
 
         return view;
     }
 
-    public void history_button_click() {
+    public void historyButtonClicked() {
 
-        Log.d("history button", "click");
+        Log.d("UserPageFragment", "historyButtonClicked");
         MyApplication.userPage = false;
         MyApplication.historyPage = true;
         Bundle mode_config = new Bundle();
@@ -44,9 +44,9 @@ public class UserPageFragment extends Fragment {
         Utils.replaceFragment(this, RecordListFragment.class, mode_config);
     }
 
-    public void favorite_button_click() {
+    public void favoriteButtonClicked() {
 
-        Log.d("favorite button", "click");
+        Log.d("UserPageFragment", "favoriteButtonClicked");
         MyApplication.userPage = false;
         MyApplication.favoritePage = true;
         Bundle mode_config = new Bundle();

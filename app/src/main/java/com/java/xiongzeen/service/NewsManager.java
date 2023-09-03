@@ -57,9 +57,9 @@ public final class NewsManager {
         read = true;
     }
 
-    public List<News> get_record(boolean mode) { // 0 for history, 1 for favorite
+    public List<News> getRecords(boolean mode) { // 0 for history, 1 for favorite
 
-        Log.d("NewsManager", "Trying to get news");
+        Log.d("NewsManager", "Trying to get news records.");
         List<News> response = new ArrayList<>();
         if(!mode) {
             for(String l : historyNews) {
@@ -79,14 +79,14 @@ public final class NewsManager {
         return response;
     }
 
-    public void favorite_triggered(String newsID) {
+    public void favoriteTriggered(String newsID) {
 
         if (isFavorites(newsID)) {
             favoriteNews.remove(newsID);
-            Log.d("favorite", "dislike");
+            Log.d("NewsManager", "favorite : dislike");
         } else {
             favoriteNews.add(newsID);
-            Log.d("favorite","like");
+            Log.d("NewsManager","favorite: like");
         }
 
         writeFavPreference();
@@ -99,7 +99,7 @@ public final class NewsManager {
         if (isRead(newsID))
             return;
 
-        Log.d("NewsManager", "Created: [Raw Data]" + currentNews);
+        Log.d("NewsManager", "Created: [Raw Data = ]" + currentNews);
         news.put(newsID, currentNews);
         historyNews.add(newsID);
 

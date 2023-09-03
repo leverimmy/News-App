@@ -79,7 +79,7 @@ public final class FetchFromAPIManager {
     public List<News> getNews(int offset, int pageSize) {
 
         String url = getNewsUrl(startDate, endDate, keyWords, categories, offset / pageSize + 1);
-        Log.d("FetchFromAPI", "Trying to get from " + url);
+        Log.d("FetchFromAPIManager", "Trying to get from " + url + " .");
 
         try {
 
@@ -110,7 +110,7 @@ public final class FetchFromAPIManager {
         reset();
         if (!category.equals("综合"))
             categories.add(category);
-        Log.d("FetchFromAPI", "categories:" + categories);
+        Log.d("FetchFromAPIManager", "categories:" + categories);
     }
 
     public void handleSearch(List<String> categories, String startDate, String endDate, String keyWords) {
@@ -118,7 +118,7 @@ public final class FetchFromAPIManager {
         FetchFromAPIManager.keyWords = keyWords;
         FetchFromAPIManager.startDate = startDate;
         FetchFromAPIManager.endDate = endDate;
-        Log.d("FetchFromAPI", "categories: " + categories + " key = " + keyWords +
+        Log.d("FetchFromAPIManager", "categories: " + categories + " key = " + keyWords +
                 " startDate = " + startDate + " endDate = " + endDate);
     }
 

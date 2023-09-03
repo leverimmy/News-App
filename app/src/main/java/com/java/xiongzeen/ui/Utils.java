@@ -32,20 +32,20 @@ public final class Utils {
         }
         String to_return = ans.length() == 0 ?
                 "" : ans.substring(0, ans.length() - 1);
-        Log.d("Utils stringListToString", to_return);
+        Log.d("Utils", "stringListToString = " + to_return);
         return to_return;
     }
 
     public static Set<String> stringToStringSet(String input) {
 
         try {
-            Log.d("Utils stringToStringList", input);
+            Log.d("Utils", "stringToStringList = " + input);
             String[] strings = input.split(",");
             Set<String> ans = new HashSet<>();
             Collections.addAll(ans, strings);
             return ans;
         } catch (Exception e) {
-            Log.d("Utils stringToStringList", "null");
+            Log.d("Utils", "stringToStringList = null");
             return new HashSet<>();
         }
     }
@@ -58,12 +58,12 @@ public final class Utils {
         }
         String to_return = ans.length() == 0 ?
                 "" : ans.substring(0, ans.length() - 1);
-        Log.d("Utils categoryListToString", to_return);
+        Log.d("Utils", "categoryListToString = " + to_return);
         return to_return;
     }
 
     public static List<Category> stringToCategoryList(String input) {
-        Log.d("Utils stringToCategoryList", input);
+        Log.d("Utils", "stringToCategoryList = " + input);
         try {
             String[] categories = input.split(",");
             List<Category> ans = new ArrayList<>();

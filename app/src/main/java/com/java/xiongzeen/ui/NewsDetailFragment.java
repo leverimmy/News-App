@@ -50,7 +50,7 @@ public class NewsDetailFragment extends Fragment {
 
         unfavoriteButton = view.findViewById(R.id.favoriteFloatingActionButton);
         favoriteButton = view.findViewById(R.id.favoriteFloatingActionButton2);
-        Log.d("NewsDetailFragment","open_a_news: " + newsToShow.getNewsID());
+        Log.d("NewsDetailFragment","Open news: " + newsToShow.getNewsID());
         news_title.setText(newsToShow.getTitle());
         news_description.setText(newsToShow.getPublisher() + "     " + newsToShow.getPublishTime());
         news_content.setText(newsToShow.getContent());
@@ -92,7 +92,7 @@ public class NewsDetailFragment extends Fragment {
             containerView.setVisibility(View.GONE);
         }
 
-        Log.d("detailsPage", "true");
+        Log.d("NewsDetailFragment", "detailsPageFrom... = true");
 
         if (MyApplication.newsPage) {
 
@@ -126,7 +126,7 @@ public class NewsDetailFragment extends Fragment {
     public void onStop() {
 
         super.onStop();
-        Log.d("detailsPage", "false");
+        Log.d("NewsDetailFragment", "onStop");
         MyApplication.getBottomNavigationView().setVisibility(View.VISIBLE);
         if (MyApplication.newsPage)
             MyApplication.getTopFragmentContainer().setVisibility(View.VISIBLE);
@@ -137,7 +137,7 @@ public class NewsDetailFragment extends Fragment {
     public void onResume() {
 
         super.onResume();
-        Log.d("detailsPage", "true");
+        Log.d("NewsDetailFragment", "onResume");
         MyApplication.getBottomNavigationView().setVisibility(View.GONE);
         MyApplication.getTopFragmentContainer().setVisibility(View.GONE);
 
@@ -145,12 +145,12 @@ public class NewsDetailFragment extends Fragment {
 
     private void handle_favorite_click(boolean isFavorite) {
         if(isFavorite) {
-            NewsManager.getInstance().favorite_triggered(newsID);
+            NewsManager.getInstance().favoriteTriggered(newsID);
             Toast.makeText(context, "添加收藏成功！", Toast.LENGTH_SHORT).show();
             favoriteButton.setVisibility(View.VISIBLE);
             unfavoriteButton.setVisibility(View.GONE);
         } else {
-            NewsManager.getInstance().favorite_triggered(newsID);
+            NewsManager.getInstance().favoriteTriggered(newsID);
             Toast.makeText(context, "取消收藏成功！", Toast.LENGTH_SHORT).show();
             unfavoriteButton.setVisibility(View.VISIBLE);
             favoriteButton.setVisibility(View.GONE);

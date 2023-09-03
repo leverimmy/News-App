@@ -82,11 +82,11 @@ public class TabListFragment extends Fragment {
             }
         });
 
-        update_list();
+        updateList();
         return view;
     }
 
-    public void update_list() {
+    public void updateList() {
         Log.d("TabListFragment", "update called");
         tabs.clear();
         tabs.add("综合");
@@ -101,11 +101,5 @@ public class TabListFragment extends Fragment {
             tab.setText(tabs.get(i));
             tabLayout.addTab(tab);
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d("TabListFragment", "onDestroy");
     }
 }

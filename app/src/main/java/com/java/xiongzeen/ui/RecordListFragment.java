@@ -41,7 +41,7 @@ public class RecordListFragment extends Fragment {
         llm.setStackFromEnd(true);
         llm.setReverseLayout(true);
         recyclerView.setLayoutManager(llm);
-        listAdapter = new NewsListAdapter(this, context, NewsManager.getInstance().get_record(mode));
+        listAdapter = new NewsListAdapter(this, context, NewsManager.getInstance().getRecords(mode));
         recyclerView.setAdapter(listAdapter);
         listAdapter.notifyDataSetChanged();
         return view;

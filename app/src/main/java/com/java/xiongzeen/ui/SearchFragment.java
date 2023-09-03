@@ -117,7 +117,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     @Override
     public boolean onQueryTextSubmit(String s) {
         queryText = s;
-        Log.d("onQueryTextSubmit", s);
+        Log.d("SearchFragment", "onQueryTextSubmit:" + s);
         collectInformation();
         return false;
     }
@@ -125,7 +125,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     @Override
     public boolean onQueryTextChange(String s) {
         queryText = s;
-        Log.d("onQueryTextChange", s);
+        Log.d("SearchFragment", "onQueryTextChange:" + s);
         return false;
     }
 }

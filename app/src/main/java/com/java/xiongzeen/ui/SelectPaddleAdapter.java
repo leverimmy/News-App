@@ -49,7 +49,7 @@ public class SelectPaddleAdapter  extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        if (i < 0 && i > list_to_show.size()) {
+        if (i < 0 || i > list_to_show.size()) {
             return null;
         }
         if (isSelected) {
