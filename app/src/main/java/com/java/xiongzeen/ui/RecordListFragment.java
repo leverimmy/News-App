@@ -32,13 +32,13 @@ public class RecordListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment_record_list, container, false);
-        } else {
+        if (mView != null) {
             ViewGroup group = (ViewGroup) mView.getParent();
             if (group != null)
                 group.removeView(mView);
         }
+
+        mView = inflater.inflate(R.layout.fragment_record_list, container, false);
 
         Context context = mView.getContext();
         RecyclerView recyclerView = mView.findViewById(R.id.news_list);

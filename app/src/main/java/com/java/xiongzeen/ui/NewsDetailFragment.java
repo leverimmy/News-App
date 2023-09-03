@@ -32,13 +32,7 @@ public class NewsDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        if (mView == null) {
-            mView = inflater.inflate(R.layout.reading_news_one_pic, container, false);
-        } else {
-            ViewGroup group = (ViewGroup) mView.getParent();
-            if (group != null)
-                group.removeView(mView);
-        }
+        mView = inflater.inflate(R.layout.reading_news_one_pic, container, false);
 
         if (getArguments() != null)
             newsID = getArguments().getString("newsID",null);

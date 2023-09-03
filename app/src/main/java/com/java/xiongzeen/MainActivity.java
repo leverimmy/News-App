@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         Log.d("MainActivity", "menu tab: " + tag);
         FetchFromAPIManager.getInstance().setCategory(tag);
         newsListFragment.reloadNews();
+        Log.d("MainActivity", "finished reload");
 
     }
 

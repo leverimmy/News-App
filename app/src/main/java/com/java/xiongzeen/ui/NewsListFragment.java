@@ -29,6 +29,7 @@ public class NewsListFragment extends Fragment {
     public static final String LOG_TAG = NewsListFragment.class.getSimpleName();
     private final List<News> newsList = new ArrayList<>();
     private RecyclerView recyclerView;
+    private Fragment fragment;
     private NewsListAdapter listAdapter;
     private EndlessRecyclerViewScrollListener listScrollListener;
     private Context context;
@@ -41,37 +42,31 @@ public class NewsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("NewsList", "onCreateView");
+        Log.d("NewsListFragment", "onCreateView");
 
-        if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment_news_list, container, false);
-            context = mView.getContext();
+        mView = inflater.inflate(R.layout.fragment_news_list, container, false);
+        context = mView.getContext();
 
-            listContainer = mView.findViewById(R.id.news_list_container);
-            listContainer.setOnRefreshListener(this::reloadNews);
+        listContainer = mView.findViewById(R.id.news_list_container);
+        listContainer.setOnRefreshListener(this::reloadNews);
 
-            recyclerView = mView.findViewById(R.id.news_list);
+        recyclerView = mView.findViewById(R.id.news_list);
 
-            LinearLayoutManager llm = new LinearLayoutManager(context);
-            recyclerView.setLayoutManager(llm);
+        LinearLayoutManager llm = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(llm);
 
-            listScrollListener = new EndlessRecyclerViewScrollListener(llm, (page, totalItemsCount, view1) -> loadNextPage());
-            recyclerView.addOnScrollListener(listScrollListener);
+        listScrollListener = new EndlessRecyclerViewScrollListener(llm, (page, totalItemsCount, view1) -> loadNextPage());
+        recyclerView.addOnScrollListener(listScrollListener);
 
-            listAdapter = new NewsListAdapter(this, context, newsList);
-            recyclerView.setAdapter(listAdapter);
+        fragment = this;
+        listAdapter = new NewsListAdapter(this, context, newsList);
+        recyclerView.setAdapter(listAdapter);
 
-            loadingBar = mView.findViewById(R.id.loading_bar);
-            loadingBar.setVisibility(View.VISIBLE);
+        loadingBar = mView.findViewById(R.id.loading_bar);
+        loadingBar.setVisibility(View.VISIBLE);
 
 
-            reloadNews();
-        } else {
-            ViewGroup group = (ViewGroup) mView.getParent();
-            if (group != null) {
-                group.removeView(mView);
-            }
-        }
+        reloadNews();
 
         return mView;
     }
@@ -110,10 +105,15 @@ public class NewsListFragment extends Fragment {
                     newsList.clear();
                 }
                 newsList.addAll(res.getResult());
+                /*for (News i : listAdapter.newsList)
+                    Log.d("NEWS-OLD", i.toString());*/
                 listAdapter.notifyDataSetChanged();
+                /*for (News i : listAdapter.newsList)
+                    Log.d("NEWS-NEW", i.toString());*/
+
                 Log.d(LOG_TAG, "Post fetch succeeded, reload=" + reload);
-                for (News i : newsList)
-                    Log.d(LOG_TAG, i.toString());
+                /*for (News i : newsList)
+                    Log.d(LOG_TAG, i.toString());*/
 
             } else {
                 Log.e(LOG_TAG, "Post fetch failed due to exception", res.getError());

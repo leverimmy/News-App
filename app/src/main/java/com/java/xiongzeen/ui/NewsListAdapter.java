@@ -22,7 +22,7 @@ import com.java.xiongzeen.service.PictureLoader;
 import java.util.List;
 
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHolder> {
-    private final List<News> newsList;
+    public List<News> newsList;
     private final Fragment fragment;
     private final LayoutInflater inflater;
     private final Context mainActivity;
@@ -32,7 +32,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         this.newsList = newsList;
         this.fragment = fragment;
         this.inflater = LayoutInflater.from(context);
-        this.mainActivity =  MyApplication.getContext();
+        this.mainActivity = MyApplication.getContext();
 
     }
     
@@ -56,6 +56,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) { //这个函数来自2022年科协暑培的代码
+        Log.d("NewsListAdapter", "onBindViewHolder");
         holder.bindData(position);
     }
 

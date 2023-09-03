@@ -45,13 +45,14 @@ public class VideoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment_video, container, false);
-        } else {
+
+        if (mView != null) {
             ViewGroup group = (ViewGroup) mView.getParent();
             if (group != null)
                 group.removeView(mView);
         }
+
+        mView = inflater.inflate(R.layout.fragment_video, container, false);
 
         try {
             VideoView videoView = mView.findViewById(R.id.videoView);

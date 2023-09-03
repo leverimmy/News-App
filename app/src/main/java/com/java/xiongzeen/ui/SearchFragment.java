@@ -99,13 +99,13 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment_search, container, false);
-        } else {
+        if (mView != null) {
             ViewGroup group = (ViewGroup) mView.getParent();
             if (group != null)
                 group.removeView(mView);
         }
+
+        mView = inflater.inflate(R.layout.fragment_search, container, false);
 
         SearchView searchView = mView.findViewById(R.id.searchBar);
         gridLayout = mView.findViewById(R.id.selections);

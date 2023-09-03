@@ -46,13 +46,10 @@ public class TabListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment_tab_list, container, false);
-        } else {
-            ViewGroup group = (ViewGroup) mView.getParent();
-            if (group != null)
-                group.removeView(mView);
-        }
+
+        Log.d("TabListFragment", "onCreateView");
+
+        mView = inflater.inflate(R.layout.fragment_tab_list, container, false);
 
         tabLayout = mView.findViewById(R.id.subject_tabs);
         selectMenu = mView.findViewById(R.id.edit_menu);
@@ -99,11 +96,5 @@ public class TabListFragment extends Fragment {
             tab.setText(tabs.get(i));
             tabLayout.addTab(tab);
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d("TabListFragment", "onDestroy");
     }
 }

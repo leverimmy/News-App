@@ -84,13 +84,13 @@ public class SelectPaddleFragment extends Fragment {
 
         // Inflate the layout for this fragment
 
-        if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment_select_paddle, container, false);
-        } else {
+        if (mView != null) {
             ViewGroup group = (ViewGroup) mView.getParent();
             if (group != null)
                 group.removeView(mView);
         }
+
+        mView = inflater.inflate(R.layout.fragment_select_paddle, container, false);
 
         GridView selected_grid_view = mView.findViewById(R.id.selected);
         GridView unselected_grid_view = mView.findViewById(R.id.unselected);

@@ -21,13 +21,13 @@ public class UserPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) { //这个函数来自2022年科协暑培的代码
         // Inflate the layout for this fragment
-        if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment_user_page, container, false);
-        } else {
+        if (mView != null) {
             ViewGroup group = (ViewGroup) mView.getParent();
             if (group != null)
                 group.removeView(mView);
         }
+
+        mView = inflater.inflate(R.layout.fragment_user_page, container, false);
 
         Button historyButton = mView.findViewById(R.id.history_button);
         Button favoriteButton = mView.findViewById(R.id.favorite_button);
