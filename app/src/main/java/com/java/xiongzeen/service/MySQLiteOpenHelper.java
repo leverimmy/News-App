@@ -5,17 +5,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
 
 public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
-    public MySQLiteOpenHelper(@Nullable Context context) {
+    public MySQLiteOpenHelper(Context context) {
         super(context, "myNews.db", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        Log.d("createtable","mynews");
+        Log.d("CreateTable","myNews");
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS myNews" + " (_id INTEGER PRIMARY KEY UNIQUE, info TEXT)");
     }
 

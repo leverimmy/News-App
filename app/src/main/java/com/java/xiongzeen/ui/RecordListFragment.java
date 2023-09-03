@@ -15,15 +15,10 @@ import com.java.xiongzeen.R;
 import com.java.xiongzeen.service.NewsManager;
 
 public class RecordListFragment extends Fragment {
-    public static final int PAGE_SIZE = 10;
-    public static final String LOG_TAG = RecordListFragment.class.getSimpleName();
-
 
     private RecyclerView recyclerView;
     private NewsListAdapter listAdapter;
     private boolean mode = false; // 0 for history, 1 for favorite
-
-
     private Context context;
 
     @Override
@@ -32,11 +27,7 @@ public class RecordListFragment extends Fragment {
         if (getArguments() != null) {
             mode = getArguments().getBoolean("mode");
         }
-        Log.d("record list", "mode" + mode);
-    }
-
-    public RecordListFragment() {
-
+        Log.d("RecordListFragment", "mode" + mode);
     }
 
     @Override

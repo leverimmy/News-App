@@ -21,8 +21,10 @@ public class MyApplication extends Application {
     public static boolean newsPage = true;
     public static boolean searchPage = false;
     public static boolean userPage = false;
-    public static boolean detailsPageFromHome = false;
+    public static boolean detailsPageFromNews = false;
     public static boolean detailsPageFromSearch = false;
+    public static boolean detailsPageFromHistory = false;
+    public static boolean detailsPageFromFavorite = false;
     public static boolean historyPage = false;
     public static boolean favoritePage = false;
     public static MySQLiteOpenHelper mySQLiteOpenHelper;

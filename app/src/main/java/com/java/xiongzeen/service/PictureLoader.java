@@ -41,8 +41,4 @@ public final class PictureLoader {
                 Glide.with(context).asBitmap().error(R.drawable.news5).placeholder(R.drawable.loading).load(url).into(picture);break;
         }
     }
-
-    public PictureLoader getInstance() {
-        return instance;
-    }
 }

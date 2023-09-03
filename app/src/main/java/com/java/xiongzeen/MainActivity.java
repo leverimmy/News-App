@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
     private FragmentManager fragmentManager;
     private DrawerLayout drawerLayout;
     private TabListFragment tabListFragment;
-    private NewsListFragment NewsListFragment;
+    private NewsListFragment newsListFragment;
     private long firstTime = -1L;
 
 
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
         Log.d("MainActivity", "menu tab: " + tag);
         FetchFromAPIManager.getInstance().setCategory(tag);
-        NewsListFragment.reloadNews();
+        newsListFragment.reloadNews();
 
     }
 
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         selectPaddleFragment = (SelectPaddleFragment) fragmentManager.findFragmentById(R.id.select_paddle);
 
         tabListFragment = (TabListFragment) fragmentManager.findFragmentByTag("upper_fragment_in_container");
-        NewsListFragment = (NewsListFragment) fragmentManager.findFragmentByTag("fragment_in_container");
+        newsListFragment = (NewsListFragment) fragmentManager.findFragmentByTag("fragment_in_container");
 
         MyApplication.setTopFragmentContainer(tabs);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -139,72 +139,82 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
     private boolean onNavItemSelected(MenuItem item) {
 
-        firstTime = -1;
-        if (item.getItemId() == R.id.posts) {
+    firstTime = -1;
+    if (item.getItemId() == R.id.posts) {
 
-            if(!MyApplication.newsPage)
-                replaceFragment(NewsListFragment.class);
-            MyApplication.newsPage = true;
-            MyApplication.searchPage = false;
-            MyApplication.userPage = false;
-            MyApplication.detailsPageFromHome = false;
-            MyApplication.historyPage = false;
-            MyApplication.favoritePage = false;
+        if(!MyApplication.newsPage)
+            replaceFragment(NewsListFragment.class);
+        MyApplication.newsPage = true;
+        MyApplication.searchPage = false;
+        MyApplication.userPage = false;
+        MyApplication.detailsPageFromNews = false;
+        MyApplication.historyPage = false;
+        MyApplication.favoritePage = false;
 
-            tabs.setVisibility(View.VISIBLE);
+        tabs.setVisibility(View.VISIBLE);
 
-            if (MyApplication.detailsPageFromSearch) {
-                NewsListFragment.reloadNews();
-                FetchFromAPIManager.reset();
-            }
-            MyApplication.detailsPageFromSearch = false;
-
-            return true;
-        } else if (item.getItemId() == R.id.search) {
-            if(!MyApplication.searchPage)
-                replaceFragment(SearchFragment.class);
-            MyApplication.newsPage = false;
-            MyApplication.searchPage = true;
-            MyApplication.userPage = false;
-            MyApplication.detailsPageFromHome = false;
-            MyApplication.detailsPageFromSearch = false;
-            MyApplication.historyPage = false;
-            MyApplication.favoritePage = false;
-
-            tabs.setVisibility(View.GONE);
-
-            return true;
-        } else if (item.getItemId() == R.id.user) {
-            if(!MyApplication.userPage)
-                replaceFragment(UserPageFragment.class);
-            MyApplication.newsPage = false;
-            MyApplication.searchPage = false;
-            MyApplication.userPage = true;
-            MyApplication.detailsPageFromHome = false;
-            MyApplication.detailsPageFromSearch = false;
-            MyApplication.historyPage = false;
-            MyApplication.favoritePage = false;
-
-            tabs.setVisibility(View.GONE);
-
-            return true;
+        if (MyApplication.detailsPageFromSearch
+                || MyApplication.detailsPageFromHistory
+                || MyApplication.detailsPageFromFavorite) {
+            newsListFragment.reloadNews();
+            FetchFromAPIManager.reset();
         }
-        return false;
+        MyApplication.detailsPageFromSearch = false;
+        MyApplication.detailsPageFromHistory = false;
+        MyApplication.detailsPageFromFavorite = false;
+
+        return true;
+    } else if (item.getItemId() == R.id.search) {
+        if(!MyApplication.searchPage)
+            replaceFragment(SearchFragment.class);
+        MyApplication.newsPage = false;
+        MyApplication.searchPage = true;
+        MyApplication.userPage = false;
+        MyApplication.detailsPageFromNews = false;
+        MyApplication.detailsPageFromSearch = false;
+        MyApplication.detailsPageFromHistory = false;
+        MyApplication.detailsPageFromFavorite = false;
+        MyApplication.historyPage = false;
+        MyApplication.favoritePage = false;
+
+        tabs.setVisibility(View.GONE);
+
+        return true;
+    } else if (item.getItemId() == R.id.user) {
+        if(!MyApplication.userPage)
+            replaceFragment(UserPageFragment.class);
+        MyApplication.newsPage = false;
+        MyApplication.searchPage = false;
+        MyApplication.userPage = true;
+        MyApplication.detailsPageFromNews = false;
+        MyApplication.detailsPageFromSearch = false;
+        MyApplication.detailsPageFromHistory = false;
+        MyApplication.detailsPageFromFavorite = false;
+        MyApplication.historyPage = false;
+        MyApplication.favoritePage = false;
+
+        tabs.setVisibility(View.GONE);
+
+        return true;
     }
+    return false;
+}
 
     @Override
     public void finished() {
         if(!MyApplication.newsPage)
             replaceFragment(NewsListFragment.class);
         Log.d("finished searching Input", "detailsPageFromSearch = true");
-        MyApplication.newsPage = true;
+        MyApplication.newsPage = false;
         MyApplication.searchPage = false;
         MyApplication.userPage = false;
-        MyApplication.detailsPageFromHome = false;
+        MyApplication.detailsPageFromNews = false;
         MyApplication.detailsPageFromSearch = true;
+        MyApplication.detailsPageFromHistory = false;
+        MyApplication.detailsPageFromFavorite = false;
         MyApplication.historyPage = false;
         MyApplication.favoritePage = false;
-        NewsListFragment.reloadNews();
+        newsListFragment.reloadNews();
     }
 
     @Override
@@ -214,32 +224,47 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         Log.d("MainActivity", "news? " + MyApplication.newsPage);
         Log.d("MainActivity", "search? " + MyApplication.searchPage);
         Log.d("MainActivity", "user? " + MyApplication.userPage);
-        Log.d("MainActivity", "detailsFromHome? " + MyApplication.detailsPageFromHome);
+        Log.d("MainActivity", "detailsFromNews? " + MyApplication.detailsPageFromNews);
         Log.d("MainActivity", "detailsPageFromSearch? " + MyApplication.detailsPageFromSearch);
+        Log.d("MainActivity", "detailsPageFromHistory? " + MyApplication.detailsPageFromHistory);
+        Log.d("MainActivity", "detailsPageFromFavorite? " + MyApplication.detailsPageFromFavorite);
         Log.d("MainActivity", "history? " + MyApplication.historyPage);
         Log.d("MainActivity", "favorite? " + MyApplication.favoritePage);
 
-        if (MyApplication.detailsPageFromHome) {
+        if (MyApplication.detailsPageFromNews) {
 
-            MyApplication.detailsPageFromHome = false;
+            MyApplication.detailsPageFromNews = false;
+            MyApplication.newsPage = true;
             super.onBackPressed();
 
         } else if (MyApplication.detailsPageFromSearch) {
 
             MyApplication.detailsPageFromSearch = false;
-            Log.d("MainActivity", "&news? " + MyApplication.newsPage);
-            MyApplication.newsPage = false;
             MyApplication.searchPage = true;
+            super.onBackPressed();
+
+        } else if (MyApplication.detailsPageFromHistory) {
+
+            MyApplication.detailsPageFromHistory = false;
+            MyApplication.historyPage = true;
+            super.onBackPressed();
+
+        } else if (MyApplication.detailsPageFromFavorite) {
+
+            MyApplication.detailsPageFromFavorite = false;
+            MyApplication.favoritePage = true;
             super.onBackPressed();
 
         } else if (MyApplication.historyPage) {
 
             MyApplication.historyPage = false;
+            MyApplication.userPage = true;
             super.onBackPressed();
 
         } else if (MyApplication.favoritePage) {
 
             MyApplication.favoritePage = false;
+            MyApplication.userPage = true;
             super.onBackPressed();
 
         } else {
@@ -253,11 +278,5 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
             }
 
         }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d("MainActivity", "onStop");
     }
 }

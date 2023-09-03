@@ -63,6 +63,7 @@ public class TaskRunner {
         workers.execute(() -> {
             try {
                 final R res = task.call();
+                // TODO: 断网测试
                 uiThread.post(() -> callback.complete(Result.ofResult(res)));
             } catch (Exception e) {
                 uiThread.post(() -> callback.complete(Result.ofError(e)));

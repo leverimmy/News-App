@@ -22,7 +22,6 @@ import java.util.List;
 public class TabListFragment extends Fragment {
 
     public List<String> tabs = new ArrayList<>();
-
     private View view;
     private TabLayout tabLayout;
     private CheckBox selectMenu;

@@ -37,6 +37,7 @@ public class UserPageFragment extends Fragment {
     public void history_button_click() {
 
         Log.d("history button", "click");
+        MyApplication.userPage = false;
         MyApplication.historyPage = true;
         Bundle mode_config = new Bundle();
         mode_config.putBoolean("mode", false);
@@ -46,6 +47,7 @@ public class UserPageFragment extends Fragment {
     public void favorite_button_click() {
 
         Log.d("favorite button", "click");
+        MyApplication.userPage = false;
         MyApplication.favoritePage = true;
         Bundle mode_config = new Bundle();
         mode_config.putBoolean("mode", true);

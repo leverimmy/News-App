@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.java.xiongzeen.MyApplication;
@@ -22,18 +21,10 @@ public class SelectPaddleFragment extends Fragment {
 
     private List<Category> selected = new ArrayList<>();
     private List<Category> unselected = new ArrayList<>();
-
     private SelectPaddleAdapter selected_adapter;
     private SelectPaddleAdapter unselected_adapter;
-
     private SelectPaddleAdapter.Interface listener;
-
     private onSelectPaddleListener mListener;
-
-
-    public SelectPaddleFragment() {
-
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,13 +42,6 @@ public class SelectPaddleFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        upload();
-        mListener.selectPaddleConfirmed();
-    }
-
     public void upload() {
         MyApplication.myUser.selected = selected;
         MyApplication.myUser.unselected = unselected;
@@ -70,7 +54,7 @@ public class SelectPaddleFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
+    public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof onSelectPaddleListener) {
             mListener = (onSelectPaddleListener) context;

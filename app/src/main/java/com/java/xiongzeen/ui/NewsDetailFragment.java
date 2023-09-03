@@ -93,7 +93,29 @@ public class NewsDetailFragment extends Fragment {
         }
 
         Log.d("detailsPage", "true");
-        MyApplication.detailsPageFromHome = true;
+
+        if (MyApplication.newsPage) {
+
+            MyApplication.newsPage = false;
+            MyApplication.detailsPageFromNews = true;
+
+        } else if (MyApplication.searchPage) {
+
+            MyApplication.searchPage = false;
+            MyApplication.detailsPageFromSearch = true;
+
+        } else if (MyApplication.historyPage) {
+
+            MyApplication.historyPage = false;
+            MyApplication.detailsPageFromHistory = true;
+
+        } else if (MyApplication.favoritePage) {
+
+            MyApplication.favoritePage = false;
+            MyApplication.detailsPageFromFavorite = true;
+
+        }
+
         MyApplication.getBottomNavigationView().setVisibility(View.GONE);
         MyApplication.getTopFragmentContainer().setVisibility(View.GONE);
 
@@ -102,21 +124,19 @@ public class NewsDetailFragment extends Fragment {
 
     @Override
     public void onStop() {
-        // TODO:
-        super.onStop();
 
+        super.onStop();
         Log.d("detailsPage", "false");
         MyApplication.getBottomNavigationView().setVisibility(View.VISIBLE);
-        if (MyApplication.newsPage && !MyApplication.detailsPageFromSearch)
+        if (MyApplication.newsPage)
             MyApplication.getTopFragmentContainer().setVisibility(View.VISIBLE);
 
     }
 
     @Override
     public void onResume() {
-        // TODO:
-        super.onResume();
 
+        super.onResume();
         Log.d("detailsPage", "true");
         MyApplication.getBottomNavigationView().setVisibility(View.GONE);
         MyApplication.getTopFragmentContainer().setVisibility(View.GONE);

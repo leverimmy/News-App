@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,19 +23,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsListFragment extends Fragment {
-    public static final int PAGE_SIZE = 10;
-    public static final String LOG_TAG = NewsListFragment.class.getSimpleName();
-
+    public static final int PAGE_SIZE = 15;
     private List<News> newsList = new ArrayList<>();
     private RecyclerView recyclerView;
     private NewsListAdapter listAdapter;
     private EndlessRecyclerViewScrollListener listScrollListener;
-
     private Context context;
     private ProgressBar loadingBar;
     private SwipeRefreshLayout listContainer;
-    private ConstraintLayout mainArea;
-    private float mPosX, mPosY, mCurPosX, mCurPosY;
     private int page = 1;
 
 
@@ -113,7 +107,7 @@ public class NewsListFragment extends Fragment {
                 newsList.addAll(res.getResult());
                 listAdapter.notifyDataSetChanged();
             } else {
-                Log.e(LOG_TAG, "Post fetch failed due to exception", res.getError());
+                Log.e("NewsListFragment", "Post fetch failed due to exception", res.getError());
             }
         }
     }
