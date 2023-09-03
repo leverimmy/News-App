@@ -1,8 +1,8 @@
 package com.java.xiongzeen.ui;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,11 +92,10 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
             News news = newsList.get(position);
             String title = news.getTitle();
 
-            if (NewsManager.isRead(news.getNewsID())) {
-                this.title.setText(Html.fromHtml("<font color=\"#999999\">" + title + "</font>"));
-            } else {
-                this.title.setText(title);
-            }
+            if (NewsManager.isRead(news.getNewsID()) && (MyApplication.newsPage || MyApplication.searchPage))
+                this.title.setTextColor(Color.GRAY);
+
+            this.title.setText(title);
             this.description.setText(news.getPublisher() + "     " + news.getPublishTime());
             Log.d("NewsListAdapter", "Making" + title);
 
