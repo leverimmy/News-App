@@ -167,16 +167,4 @@ public class NewsDetailFragment extends Fragment {
             favoriteButton.setVisibility(View.GONE);
         }
     }
-
-    @Override
-    public void onDestroyView() {
-        if (mView != null) {
-            ViewGroup group = (ViewGroup) mView.getParent();
-
-            if (group != null) {
-                group.removeAllViews();
-            }
-        }
-        super.onDestroyView();
-    }
 }

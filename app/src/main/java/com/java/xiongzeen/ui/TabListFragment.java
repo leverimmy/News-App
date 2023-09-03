@@ -21,11 +21,12 @@ import java.util.List;
 
 public class TabListFragment extends Fragment {
 
-    private List<String> tabs = new ArrayList<>();
+    public List<String> tabs = new ArrayList<>();
     private TabLayout tabLayout;
     private CheckBox selectMenu;
     private onTabBarListener mListener;
-    private View mView = null;
+    private View mView;
+
 
     public interface onTabBarListener {
         void menuBarClicked();
@@ -101,14 +102,8 @@ public class TabListFragment extends Fragment {
     }
 
     @Override
-    public void onDestroyView() {
-        if (mView != null) {
-            ViewGroup group = (ViewGroup) mView.getParent();
-
-            if (group != null) {
-                group.removeAllViews();
-            }
-        }
-        super.onDestroyView();
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("TabListFragment", "onDestroy");
     }
 }

@@ -19,6 +19,7 @@ public final class NewsManager {
     private static Map<String, News> news = new HashMap<>();
     private static Set<String> historyNews = new HashSet<>();
     private static Set<String> favoriteNews = new HashSet<>();
+    private static boolean not_initialized = true;
 
     public static void writeFavPreference() {
         Log.d("preferenceTest","fav");
@@ -106,17 +107,14 @@ public final class NewsManager {
     }
 
     public News getNews(String newsID) {
-
         return news.get(newsID);
     }
 
     public void newsList(int offset, int pageSize, TaskRunner.Callback<List<News>> callback) {
-
         TaskRunner.getInstance().execute(() -> applyForNews(offset, pageSize), callback);
     }
 
     private List<News> applyForNews(int offset, int pageSize) {
-
         return FetchFromAPIManager.getInstance().getNews(offset, pageSize);
     }
 
@@ -129,7 +127,10 @@ public final class NewsManager {
     }
 
     public static NewsManager getInstance() {
-        initialize();
+        if (not_initialized) {
+            initialize();
+            not_initialized = false;
+        }
         return instance;
     }
 }

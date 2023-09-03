@@ -28,6 +28,7 @@ public class SelectPaddleFragment extends Fragment {
     private onSelectPaddleListener mListener;
     private View mView = null;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,14 @@ public class SelectPaddleFragment extends Fragment {
         });
     }
 
+    /*// TODO:
+    @Override
+    public void onStop() {
+
+        super.onStop();
+        upload();
+        mListener.selectPaddleConfirmed();
+    }*/
 
     public void upload() {
         MyApplication.myUser.selected = selected;
@@ -97,17 +106,5 @@ public class SelectPaddleFragment extends Fragment {
         });
 
         return mView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        if (mView != null) {
-            ViewGroup group = (ViewGroup) mView.getParent();
-
-            if (group != null) {
-                group.removeAllViews();
-            }
-        }
-        super.onDestroyView();
     }
 }

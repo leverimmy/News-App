@@ -22,6 +22,7 @@ public final class FetchFromAPIManager {
     private static String startDate = "";
     private static String endDate = "";
     private static String keyWords = "";
+
     private static List<String> categories = new ArrayList<>();
 
 
@@ -34,6 +35,7 @@ public final class FetchFromAPIManager {
     }
 
     public static void reset() {
+        Log.d("FetchFromAPI", "reset");
         startDate = "";
         endDate = getCurrentDate();
         keyWords = "";

@@ -48,7 +48,7 @@ public class TaskRunner {
         }
     }
 
-    private final static TaskRunner instance = new TaskRunner();
+    private static final TaskRunner instance = new TaskRunner();
     private final Executor workers = Executors.newSingleThreadExecutor();
     private final Handler uiThread = new Handler(Looper.getMainLooper());
 
@@ -63,11 +63,13 @@ public class TaskRunner {
         workers.execute(() -> {
             try {
                 final R res = task.call();
-                if (res != null) {
+                // TODO: 断网测试
+                uiThread.post(() -> callback.complete(Result.ofResult(res)));
+                /*if (res != null) {
                     uiThread.post(() -> callback.complete(Result.ofResult(res)));
                 } else {
                     throw new Exception();
-                }
+                }*/
             } catch (Exception e) {
                 uiThread.post(() -> callback.complete(Result.ofError(e)));
             }

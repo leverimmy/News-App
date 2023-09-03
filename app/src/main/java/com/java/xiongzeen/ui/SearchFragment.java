@@ -8,9 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
+import android.widget.DatePicker;
 import android.widget.GridLayout;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -18,13 +19,15 @@ import com.java.xiongzeen.R;
 import com.java.xiongzeen.service.FetchFromAPIManager;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
 public class SearchFragment extends Fragment implements SearchView.OnQueryTextListener{
 
     private GridLayout gridLayout;
-    private EditText startTime, endTime;
+    private DatePicker startDatePicker, endDatePicker;
     private String queryText = "";
     private OnSearchInputFinished mListener;
     private View mView = null;
@@ -43,44 +46,51 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         }
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     private void collectInformation() {
-        Log.d("SearchFragment", queryText );
+        Log.d("SearchFragment", queryText);
         List<String> categories = new ArrayList<>();
         int k = gridLayout.getChildCount();
         for(int i = 0; i < k; i++){
-            CheckBox a = (CheckBox)gridLayout.getChildAt(i);
-            if(a.isChecked()){
-                categories.add((String)a.getText());
+            CheckBox checkBox = (CheckBox) gridLayout.getChildAt(i);
+            if(checkBox.isChecked()) {
+                categories.add((String)checkBox.getText());
             }
         }
 
-        String rawStartTime = startTime.getText().toString();
-        String rawEndTime = endTime.getText().toString();
+        int startTimeRaw = startDatePicker.getYear() * 10000
+                + startDatePicker.getMonth() * 100
+                + startDatePicker.getDayOfMonth();
+        int endTimeRaw = endDatePicker.getYear() * 10000
+                + endDatePicker.getMonth() * 100
+                + endDatePicker.getDayOfMonth();
 
-        String begin_time, end_time;
-
-        if (rawStartTime.length() == 0)
-            begin_time = "";
-        else {
-            begin_time = rawStartTime.substring(0, 4) + "-" +
-                    rawStartTime.substring(4, 6) + "-" +
-                    rawStartTime.substring(6);
-        }
-        if (rawEndTime.length() == 0)
-            end_time = "";
-        else {
-            end_time = rawEndTime.substring(0, 4) + "-" +
-                    rawEndTime.substring(4, 6) + "-" +
-                    rawEndTime.substring(6);
+        if (endTimeRaw <= startTimeRaw) {
+            Toast.makeText(getContext(), "开始时间需要早于结束时间！", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        Log.d("SearchFragment", queryText + categories + begin_time + end_time);
-        FetchFromAPIManager.getInstance().handleSearch(categories, begin_time, end_time, queryText);
+        String startTime = startDatePicker.getYear()
+                + "-" +
+                (startDatePicker.getMonth() + 1 <= 9
+                        ? "0" + (startDatePicker.getMonth() + 1)
+                        : (startDatePicker.getMonth() + 1))
+                + "-" +
+                (startDatePicker.getDayOfMonth() + 1 <= 9
+                        ? "0" + startDatePicker.getDayOfMonth()
+                        : startDatePicker.getDayOfMonth());
+
+        String endTime = endDatePicker.getYear()
+                + "-" +
+                (endDatePicker.getMonth() + 1 <= 9
+                        ? "0" + (endDatePicker.getMonth() + 1)
+                        : (endDatePicker.getMonth() + 1))
+                + "-" +
+                (endDatePicker.getDayOfMonth() <= 9
+                        ? "0" + endDatePicker.getDayOfMonth()
+                        : endDatePicker.getDayOfMonth());
+
+        Log.d("SearchFragment", queryText + categories + startTime + endTime);
+        FetchFromAPIManager.getInstance().handleSearch(categories, startTime, endTime, queryText);
         mListener.finished();
     }
 
@@ -99,8 +109,12 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
         SearchView searchView = mView.findViewById(R.id.searchBar);
         gridLayout = mView.findViewById(R.id.selections);
-        startTime = mView.findViewById(R.id.editTextDateStart);
-        endTime = mView.findViewById(R.id.editTextDateEnd);
+        startDatePicker = mView.findViewById(R.id.datePicker1);
+        endDatePicker = mView.findViewById(R.id.datePicker2);
+
+        endDatePicker.setMaxDate(new Date().getTime());
+        startDatePicker.setMaxDate(new Date().getTime());
+
         Button searchButton = mView.findViewById(R.id.search_button);
         searchView.setOnQueryTextListener(this);
         searchButton.setOnClickListener(view1 -> collectInformation());
@@ -121,17 +135,5 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         queryText = s;
         Log.d("onQueryTextChange", s);
         return false;
-    }
-
-    @Override
-    public void onDestroyView() {
-        if (mView != null) {
-            ViewGroup group = (ViewGroup) mView.getParent();
-
-            if (group != null) {
-                group.removeAllViews();
-            }
-        }
-        super.onDestroyView();
     }
 }

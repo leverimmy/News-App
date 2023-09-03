@@ -33,26 +33,25 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
     private ActivityMainBinding binding;
     public BottomNavigationView navView;
+    public SearchView searchView;
     public FragmentContainerView mainArea;
     public FragmentContainerView tabs;
+    private SelectPaddleFragment selectPaddleFragment;
     private FragmentManager fragmentManager;
     private DrawerLayout drawerLayout;
     private TabListFragment tabListFragment;
-    private NewsListFragment NewsListFragment;
+    private NewsListFragment newsListFragment;
     private long firstTime = -1L;
 
 
     @Override
-    public void selectPaddleConfirmed(){
-
+    public void selectPaddleConfirmed() {
         drawerLayout.closeDrawer(Gravity.LEFT);
         tabListFragment.update_list();
-
     }
 
     @Override
     public void menuBarClicked() {
-
         Log.d("MainActivity", "menu clicked");
         drawerLayout.openDrawer(Gravity.LEFT);
 
@@ -63,13 +62,12 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
         Log.d("MainActivity", "menu tab: " + tag);
         FetchFromAPIManager.getInstance().setCategory(tag);
-        NewsListFragment.reloadNews();
+        newsListFragment.reloadNews();
 
     }
 
     @Override
     public void reportCurrent(List<Category> selected, List<Category> unselected) {
-
         MyApplication.myUser.selected = selected;
         MyApplication.myUser.unselected = unselected;
         MyApplication.myUser.writeSelectPreference();
@@ -84,7 +82,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         setContentView(binding.getRoot());
         navView = binding.navView;
 
-        tabs = binding.fragmentContainerUp;
+        tabs = binding.fragmentContainerup;
         mainArea = binding.fragmentContainer;
         navView.setOnItemSelectedListener(this::onNavItemSelected);
         MyApplication.setBottomNavigationView(navView);
@@ -92,9 +90,10 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         mainArea.setLongClickable(true);
 
         fragmentManager = getSupportFragmentManager();
+        selectPaddleFragment = (SelectPaddleFragment) fragmentManager.findFragmentById(R.id.select_paddle);
 
         tabListFragment = (TabListFragment) fragmentManager.findFragmentByTag("upper_fragment_in_container");
-        NewsListFragment = (NewsListFragment) fragmentManager.findFragmentByTag("fragment_in_container");
+        newsListFragment = (NewsListFragment) fragmentManager.findFragmentByTag("fragment_in_container");
 
         MyApplication.setTopFragmentContainer(tabs);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -102,6 +101,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED,Gravity.LEFT);
 
         drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener(){
+
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
 
@@ -151,10 +151,10 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
             tabs.setVisibility(View.VISIBLE);
 
-            if (MyApplication.detailsPageFromSearch ||
-                    MyApplication.detailsPageFromHistory ||
-                    MyApplication.detailsPageFromFavorite) {
-                NewsListFragment.reloadNews();
+            if (MyApplication.detailsPageFromSearch
+                    || MyApplication.detailsPageFromHistory
+                    || MyApplication.detailsPageFromFavorite) {
+                newsListFragment.reloadNews();
                 FetchFromAPIManager.reset();
             }
             MyApplication.detailsPageFromSearch = false;
@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         MyApplication.detailsPageFromFavorite = false;
         MyApplication.historyPage = false;
         MyApplication.favoritePage = false;
-        NewsListFragment.reloadNews();
+        newsListFragment.reloadNews();
     }
 
     @Override
@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         Log.d("MainActivity", "news? " + MyApplication.newsPage);
         Log.d("MainActivity", "search? " + MyApplication.searchPage);
         Log.d("MainActivity", "user? " + MyApplication.userPage);
-        Log.d("MainActivity", "detailsPageFromNews? " + MyApplication.detailsPageFromNews);
+        Log.d("MainActivity", "detailsFromNews? " + MyApplication.detailsPageFromNews);
         Log.d("MainActivity", "detailsPageFromSearch? " + MyApplication.detailsPageFromSearch);
         Log.d("MainActivity", "detailsPageFromHistory? " + MyApplication.detailsPageFromHistory);
         Log.d("MainActivity", "detailsPageFromFavorite? " + MyApplication.detailsPageFromFavorite);

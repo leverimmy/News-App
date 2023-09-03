@@ -3,7 +3,7 @@
     <string name="favorites">我的收藏</string>
     <string name="history">浏览记录</string>
     <string name="credit">This is Ze-en Xiong\'s homework for\nPrograming and Training(2023, Java), Tsinghua University.</string>
-    <string name="search">搜索</string>
     <string name="news">推荐</string>
+    <string name="search">搜索</string>
     <string name="user">我的</string>
 </resources>

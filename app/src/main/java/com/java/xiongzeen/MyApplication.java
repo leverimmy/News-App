@@ -30,11 +30,11 @@ public class MyApplication extends Application {
     public static DBManager dbManager;
 
 
-    public static Context getContext(){
+    public static Context getContext() {
         return context;
     }
 
-    public static BottomNavigationView getBottomNavigationView(){
+    public static BottomNavigationView getBottomNavigationView() {
         return bottomNavigationView;
     }
 

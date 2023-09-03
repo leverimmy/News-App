@@ -58,7 +58,7 @@ public class SelectPaddleAdapter extends BaseAdapter {
             view = LayoutInflater.from(mContext).inflate(R.layout.subject_box_unselected, viewGroup,false);
         }
         TextView text = view.findViewById(R.id.text_in_subject_box);
-        text.setTextSize(25);
+        text.setTextSize(20);
         text.setText("  "+list_to_show.get(i).name()+"  ");
 
         view.setOnClickListener(v ->{

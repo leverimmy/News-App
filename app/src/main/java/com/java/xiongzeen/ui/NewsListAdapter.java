@@ -3,7 +3,6 @@ package com.java.xiongzeen.ui;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +29,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
 
 
     public NewsListAdapter(Fragment fragment, Context context, List<News> newsList) {
-
         this.newsList = newsList;
         this.fragment = fragment;
         this.inflater = LayoutInflater.from(context);
@@ -42,7 +40,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     public int getItemViewType(int position) {
         return newsList.get(position).getImages().length;
     }
-
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) { //这个函数来自2022年科协暑培的代码
@@ -95,7 +92,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
             News news = newsList.get(position);
             String title = news.getTitle();
 
-            if (NewsManager.isRead(news.getNewsID()) && MyApplication.newsPage)
+            if (NewsManager.isRead(news.getNewsID()) && (MyApplication.newsPage || MyApplication.searchPage))
                 this.title.setTextColor(Color.GRAY);
             this.title.setText(title);
 
@@ -118,5 +115,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
                 Utils.replaceFragment(fragment, NewsDetailFragment.class, bundle);
             });
         }
+
     }
+
 }

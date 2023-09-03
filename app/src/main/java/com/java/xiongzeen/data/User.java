@@ -14,6 +14,7 @@ import java.util.List;
 public class User {
 
     private final String name = "DemoUser";
+
     public List<Category> selected = new ArrayList<>();
     public List<Category> unselected = new ArrayList<>();
 

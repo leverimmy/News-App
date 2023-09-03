@@ -56,16 +56,4 @@ public class UserPageFragment extends Fragment {
         mode_config.putBoolean("mode", true);
         Utils.replaceFragment(this, RecordListFragment.class ,mode_config);
     }
-
-    @Override
-    public void onDestroyView() {
-        if (mView != null) {
-            ViewGroup group = (ViewGroup) mView.getParent();
-
-            if (group != null) {
-                group.removeAllViews();
-            }
-        }
-        super.onDestroyView();
-    }
 }
