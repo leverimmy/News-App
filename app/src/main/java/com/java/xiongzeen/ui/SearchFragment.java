@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.java.xiongzeen.MyApplication;
 import com.java.xiongzeen.R;
 import com.java.xiongzeen.service.FetchFromAPIManager;
 
@@ -45,6 +46,10 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     }
 
     private void collectInformation() {
+
+        MyApplication.searchPage = false;
+        MyApplication.resultPage = true;
+
         Log.d("SearchFragment", queryText);
         List<String> categories = new ArrayList<>();
         int k = gridLayout.getChildCount();

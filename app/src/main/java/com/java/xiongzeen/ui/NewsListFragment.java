@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.java.xiongzeen.MainActivity;
 import com.java.xiongzeen.MyApplication;
 import com.java.xiongzeen.R;
 import com.java.xiongzeen.data.News;
@@ -39,8 +40,15 @@ public class NewsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         Log.d("NewsListFragment", "onCreateView");
 
-        if (MyApplication.NewsList != null)
+        if (MyApplication.NewsList != null) {
+            Log.d("NewsListFragment", "MyApplication.NewsList != null");
+
+            ViewGroup originalParent = (ViewGroup) MyApplication.NewsList.getParent();
+            if (originalParent != null)
+                originalParent.removeView(MyApplication.NewsList);
+
             return MyApplication.NewsList;
+        }
 
 
         View view = inflater.inflate(R.layout.fragment_news_list, container, false);
@@ -58,11 +66,11 @@ public class NewsListFragment extends Fragment {
         recyclerView.addOnScrollListener(listScrollListener);
 
         listAdapter = new NewsListAdapter(this, context, newsList);
+
         recyclerView.setAdapter(listAdapter);
 
         loadingBar = view.findViewById(R.id.loading_bar);
         loadingBar.setVisibility(View.VISIBLE);
-
 
         reloadNews();
 
@@ -85,6 +93,7 @@ public class NewsListFragment extends Fragment {
         Log.d("NewsListFragment","reloadNews()");
         listScrollListener.resetState();
         NewsManager.getInstance().newsList(0, PAGE_SIZE, new NewsFetchCallback(true));
+        Log.d("NewsListFragment","reloadNews() finished");
     }
 
     public class NewsFetchCallback implements TaskRunner.Callback<List<News>> { //这个函数来自2022年科协暑培的代码
@@ -111,5 +120,4 @@ public class NewsListFragment extends Fragment {
             }
         }
     }
-
 }

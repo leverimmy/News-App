@@ -25,6 +25,7 @@ public class MyApplication extends Application {
     public static boolean detailsPageFromSearch = false;
     public static boolean detailsPageFromHistory = false;
     public static boolean detailsPageFromFavorite = false;
+    public static boolean resultPage = false;
     public static boolean historyPage = false;
     public static boolean favoritePage = false;
     public static MySQLiteOpenHelper mySQLiteOpenHelper;

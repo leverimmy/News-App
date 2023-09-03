@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         setContentView(binding.getRoot());
         navView = binding.navView;
 
-        tabs = binding.fragmentContainerup;
+        tabs = binding.fragmentContainerUp;
         mainArea = binding.fragmentContainer;
         navView.setOnItemSelectedListener(this::onNavItemSelected);
         MyApplication.setBottomNavigationView(navView);
@@ -142,12 +142,13 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
     firstTime = -1;
     if (item.getItemId() == R.id.posts) {
 
-        if(!MyApplication.newsPage)
+        if(!MyApplication.newsPage && !MyApplication.resultPage)
             replaceFragment(NewsListFragment.class);
         MyApplication.newsPage = true;
         MyApplication.searchPage = false;
         MyApplication.userPage = false;
         MyApplication.detailsPageFromNews = false;
+        MyApplication.resultPage = false;
         MyApplication.historyPage = false;
         MyApplication.favoritePage = false;
 
@@ -174,6 +175,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         MyApplication.detailsPageFromSearch = false;
         MyApplication.detailsPageFromHistory = false;
         MyApplication.detailsPageFromFavorite = false;
+        MyApplication.resultPage = false;
         MyApplication.historyPage = false;
         MyApplication.favoritePage = false;
 
@@ -190,6 +192,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         MyApplication.detailsPageFromSearch = false;
         MyApplication.detailsPageFromHistory = false;
         MyApplication.detailsPageFromFavorite = false;
+        MyApplication.resultPage = false;
         MyApplication.historyPage = false;
         MyApplication.favoritePage = false;
 
@@ -202,16 +205,16 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
     @Override
     public void finished() {
-        if(!MyApplication.newsPage)
-            replaceFragment(NewsListFragment.class);
+        replaceFragment(NewsListFragment.class);
         Log.d("finished searching Input", "detailsPageFromSearch = true");
         MyApplication.newsPage = false;
         MyApplication.searchPage = false;
         MyApplication.userPage = false;
         MyApplication.detailsPageFromNews = false;
-        MyApplication.detailsPageFromSearch = true;
+        MyApplication.detailsPageFromSearch = false;
         MyApplication.detailsPageFromHistory = false;
         MyApplication.detailsPageFromFavorite = false;
+        MyApplication.resultPage = true;
         MyApplication.historyPage = false;
         MyApplication.favoritePage = false;
         newsListFragment.reloadNews();
@@ -228,6 +231,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         Log.d("MainActivity", "detailsPageFromSearch? " + MyApplication.detailsPageFromSearch);
         Log.d("MainActivity", "detailsPageFromHistory? " + MyApplication.detailsPageFromHistory);
         Log.d("MainActivity", "detailsPageFromFavorite? " + MyApplication.detailsPageFromFavorite);
+        Log.d("MainActivity", "result?" + MyApplication.resultPage);
         Log.d("MainActivity", "history? " + MyApplication.historyPage);
         Log.d("MainActivity", "favorite? " + MyApplication.favoritePage);
 
@@ -240,7 +244,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         } else if (MyApplication.detailsPageFromSearch) {
 
             MyApplication.detailsPageFromSearch = false;
-            MyApplication.searchPage = true;
+            MyApplication.resultPage = true;
             super.onBackPressed();
 
         } else if (MyApplication.detailsPageFromHistory) {
@@ -253,6 +257,12 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
             MyApplication.detailsPageFromFavorite = false;
             MyApplication.favoritePage = true;
+            super.onBackPressed();
+
+        } else if (MyApplication.resultPage) {
+
+            MyApplication.resultPage = false;
+            MyApplication.searchPage = true;
             super.onBackPressed();
 
         } else if (MyApplication.historyPage) {

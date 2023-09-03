@@ -99,9 +99,9 @@ public class NewsDetailFragment extends Fragment {
             MyApplication.newsPage = false;
             MyApplication.detailsPageFromNews = true;
 
-        } else if (MyApplication.searchPage) {
+        } else if (MyApplication.resultPage) {
 
-            MyApplication.searchPage = false;
+            MyApplication.resultPage = false;
             MyApplication.detailsPageFromSearch = true;
 
         } else if (MyApplication.historyPage) {
