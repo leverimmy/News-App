@@ -22,6 +22,7 @@ import com.java.xiongzeen.databinding.ActivityMainBinding;
 import com.java.xiongzeen.service.FetchFromAPIManager;
 import com.java.xiongzeen.ui.NewsListFragment;
 import com.java.xiongzeen.ui.SearchFragment;
+import com.java.xiongzeen.ui.SearchListFragment;
 import com.java.xiongzeen.ui.SelectPaddleFragment;
 import com.java.xiongzeen.ui.TabListFragment;
 import com.java.xiongzeen.ui.UserPageFragment;
@@ -35,17 +36,19 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
     public BottomNavigationView navView;
     public SearchView searchView;
     public FragmentContainerView mainArea;
+    public FragmentContainerView mainArea2;
     public FragmentContainerView tabs;
     private SelectPaddleFragment selectPaddleFragment;
     private FragmentManager fragmentManager;
     private DrawerLayout drawerLayout;
     private TabListFragment tabListFragment;
     private NewsListFragment newsListFragment;
+    private SearchListFragment searchListFragment;
     private long firstTime = -1L;
 
 
     @Override
-    public void selectPaddleConfirmed(){
+    public void selectPaddleConfirmed() {
         drawerLayout.closeDrawer(Gravity.LEFT);
 
         tabListFragment.updateList();
@@ -86,16 +89,22 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
         tabs = binding.fragmentContainerUp;
         mainArea = binding.fragmentContainer;
+        mainArea2 = binding.fragmentContainer2;
         navView.setOnItemSelectedListener(this::onNavItemSelected);
         MyApplication.setBottomNavigationView(navView);
 
         mainArea.setLongClickable(true);
+//        mainArea2.setLongClickable(true);
 
         fragmentManager = getSupportFragmentManager();
         selectPaddleFragment = (SelectPaddleFragment) fragmentManager.findFragmentById(R.id.select_paddle);
 
         tabListFragment = (TabListFragment) fragmentManager.findFragmentByTag("upper_fragment_in_container");
         newsListFragment = (NewsListFragment) fragmentManager.findFragmentByTag("fragment_in_container");
+        searchListFragment = (SearchListFragment) fragmentManager.findFragmentByTag("fragment_in_container2");
+
+        getSupportFragmentManager().beginTransaction()
+                .hide(searchListFragment).commit();
 
         MyApplication.setTopFragmentContainer(tabs);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -142,7 +151,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
     firstTime = -1;
     if (item.getItemId() == R.id.posts) {
 
-        if(!MyApplication.newsPage && !MyApplication.resultPage)
+        if(!MyApplication.newsPage)
             replaceFragment(NewsListFragment.class);
         MyApplication.newsPage = true;
         MyApplication.searchPage = false;
@@ -205,8 +214,12 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
     @Override
     public void finished() {
-        replaceFragment(NewsListFragment.class);
-        Log.d("finished searching Input", "detailsPageFromSearch = true");
+        replaceFragment(SearchListFragment.class);
+
+        getSupportFragmentManager().beginTransaction()
+                .show(searchListFragment).commit();
+
+        Log.d("finished searching Input", "resultPage = true");
         MyApplication.newsPage = false;
         MyApplication.searchPage = false;
         MyApplication.userPage = false;
@@ -217,7 +230,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         MyApplication.resultPage = true;
         MyApplication.historyPage = false;
         MyApplication.favoritePage = false;
-        newsListFragment.reloadNews();
+        searchListFragment.reloadNews();
     }
 
     @Override

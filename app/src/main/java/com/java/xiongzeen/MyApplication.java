@@ -17,6 +17,7 @@ public class MyApplication extends Application {
     private static BottomNavigationView bottomNavigationView;
     private static FragmentContainerView topFragmentContainer;
     public static View NewsList = null;
+    public static View SearchList = null;
     public static User myUser;
     public static boolean newsPage = true;
     public static boolean searchPage = false;
