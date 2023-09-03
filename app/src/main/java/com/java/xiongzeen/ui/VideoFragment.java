@@ -18,7 +18,6 @@ import com.java.xiongzeen.R;
 public class VideoFragment extends Fragment {
 
     private String videoWebPath = "";
-    private View mView = null;
 
 
     public VideoFragment() {
@@ -26,11 +25,11 @@ public class VideoFragment extends Fragment {
     }
 
     public static VideoFragment newInstance(String path) {
-        VideoFragment videoFragment = new VideoFragment();
+        VideoFragment fragment = new VideoFragment();
         Bundle args = new Bundle();
         args.putString("video", path);
-        videoFragment.setArguments(args);
-        return videoFragment;
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -46,16 +45,10 @@ public class VideoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        if (mView != null) {
-            ViewGroup group = (ViewGroup) mView.getParent();
-            if (group != null)
-                group.removeView(mView);
-        }
-
-        mView = inflater.inflate(R.layout.fragment_video, container, false);
+        View view = inflater.inflate(R.layout.fragment_video, container, false);
 
         try {
-            VideoView videoView = mView.findViewById(R.id.videoView);
+            VideoView videoView = view.findViewById(R.id.videoView);
             Uri uri = Uri.parse(videoWebPath);
 
             videoView.setVideoURI(uri);
@@ -67,23 +60,11 @@ public class VideoFragment extends Fragment {
             videoView.setOnErrorListener((mp, what, extra) -> false);
             videoView.start();
 
-            Log.d("VideoFragment", "isPlaying: " + videoView.isPlaying());
+            Log.d("Video View", "isPlaying: " + videoView.isPlaying());
         } catch (Exception e) {
-            Log.d("VideoFragment", "failed" );
+            Log.d("Video View", "failed." );
         }
 
-        return mView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        if (mView != null) {
-            ViewGroup group = (ViewGroup) mView.getParent();
-
-            if (group != null) {
-                group.removeAllViews();
-            }
-        }
-        super.onDestroyView();
+        return view;
     }
 }

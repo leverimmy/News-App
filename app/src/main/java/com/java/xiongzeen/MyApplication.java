@@ -16,25 +16,24 @@ public class MyApplication extends Application {
     private static Context context;
     private static BottomNavigationView bottomNavigationView;
     private static FragmentContainerView topFragmentContainer;
+    public static View NewsList = null;
     public static User myUser;
     public static boolean newsPage = true;
     public static boolean searchPage = false;
     public static boolean userPage = false;
-    public static boolean detailsPageFromNews = false;
+    public static boolean detailsPageFromHome = false;
     public static boolean detailsPageFromSearch = false;
-    public static boolean detailsPageFromHistory = false;
-    public static boolean detailsPageFromFavorite = false;
     public static boolean historyPage = false;
     public static boolean favoritePage = false;
     public static MySQLiteOpenHelper mySQLiteOpenHelper;
     public static DBManager dbManager;
 
 
-    public static Context getContext() {
+    public static Context getContext(){
         return context;
     }
 
-    public static BottomNavigationView getBottomNavigationView() {
+    public static BottomNavigationView getBottomNavigationView(){
         return bottomNavigationView;
     }
 
@@ -42,7 +41,7 @@ public class MyApplication extends Application {
         return topFragmentContainer;
     }
 
-    public static void setBottomNavigationView(BottomNavigationView bottomNavigationView) {
+    public static void setBottomNavigationView(BottomNavigationView bottomNavigationView){
         MyApplication.bottomNavigationView = bottomNavigationView;
     }
 
@@ -61,7 +60,7 @@ public class MyApplication extends Application {
     }
     @Override
     public void onTerminate() {
-        DBManager.closeDB();
         super.onTerminate();
+        DBManager.closeDB();
     }
 }

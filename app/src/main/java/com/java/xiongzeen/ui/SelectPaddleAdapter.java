@@ -12,10 +12,10 @@ import com.java.xiongzeen.data.Category;
 
 import java.util.List;
 
-public class SelectPaddleAdapter extends BaseAdapter {
+public class SelectPaddleAdapter  extends BaseAdapter {
     private final List<Category> list_to_show;
     private final Context mContext;
-    private final boolean isSelected;
+    private boolean isSelected;
     private final Interface mInterface;
 
     public SelectPaddleAdapter(Interface listener, List<Category> list_to_show, Context mContext, boolean isSelected) {
@@ -36,7 +36,7 @@ public class SelectPaddleAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        if(i >= 0 && i < list_to_show.size()) {
+        if( i >= 0 && i < list_to_show.size()){
             return list_to_show.get(i);
         }
         return null;
@@ -49,7 +49,7 @@ public class SelectPaddleAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        if (i < 0 || i > list_to_show.size()) {
+        if (i < 0 && i > list_to_show.size()) {
             return null;
         }
         if (isSelected) {
@@ -58,11 +58,11 @@ public class SelectPaddleAdapter extends BaseAdapter {
             view = LayoutInflater.from(mContext).inflate(R.layout.subject_box_unselected, viewGroup,false);
         }
         TextView text = view.findViewById(R.id.text_in_subject_box);
-        text.setTextSize(20);
+        text.setTextSize(28);
         text.setText("  "+list_to_show.get(i).name()+"  ");
 
         view.setOnClickListener(v ->{
-            mInterface.onChangeSelect(i, isSelected);
+            mInterface.onChangeSelect(i,isSelected);
         });
         return view;
     }

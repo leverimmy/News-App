@@ -26,32 +26,30 @@ public class NewsDetailFragment extends Fragment {
     private ImageView news_image, news_image2, news_image3, news_image4;
     private String newsID = null;
     private FloatingActionButton unfavoriteButton, favoriteButton;
-    private View mView = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        mView = inflater.inflate(R.layout.reading_news_one_pic, container, false);
+        View view = inflater.inflate(R.layout.reading_news_one_pic, container, false);
 
         if (getArguments() != null)
             newsID = getArguments().getString("newsID",null);
         News newsToShow = (newsID == null) ?
                 new News() : NewsManager.getInstance().getNews(newsID);
 
-        context = mView.getContext();
+        context = view.getContext();
 
-        TextView news_title = mView.findViewById(R.id.detail_title);
-        TextView news_description = mView.findViewById(R.id.detail_description);
-        TextView news_content = mView.findViewById(R.id.detail_content);
-        news_image = mView.findViewById(R.id.detail_image1);
-        news_image2 = mView.findViewById(R.id.detail_image2);
-        news_image3 = mView.findViewById(R.id.detail_image3);
-        news_image4 = mView.findViewById(R.id.detail_image4);
-        FragmentContainerView containerView = mView.findViewById(R.id.fragment_to_contain_video);
+        TextView news_title = view.findViewById(R.id.detail_title);
+        TextView news_description = view.findViewById(R.id.detail_description);
+        TextView news_content = view.findViewById(R.id.detail_content);
+        news_image = view.findViewById(R.id.detail_image1);
+        news_image2 = view.findViewById(R.id.detail_image2);
+        news_image3 = view.findViewById(R.id.detail_image3);
+        news_image4 = view.findViewById(R.id.detail_image4);
+        FragmentContainerView containerView = view.findViewById(R.id.fragment_to_contain_video);
 
-        unfavoriteButton = mView.findViewById(R.id.favoriteFloatingActionButton);
-        favoriteButton = mView.findViewById(R.id.favoriteFloatingActionButton2);
+        unfavoriteButton = view.findViewById(R.id.favoriteFloatingActionButton);
+        favoriteButton = view.findViewById(R.id.favoriteFloatingActionButton2);
         Log.d("NewsDetailFragment","open_a_news: " + newsToShow.getNewsID());
         news_title.setText(newsToShow.getTitle());
         news_description.setText(newsToShow.getPublisher() + "     " + newsToShow.getPublishTime());
@@ -95,51 +93,28 @@ public class NewsDetailFragment extends Fragment {
         }
 
         Log.d("detailsPage", "true");
-
-
-        if (MyApplication.newsPage) {
-
-            MyApplication.newsPage = false;
-            MyApplication.detailsPageFromNews = true;
-
-        } else if (MyApplication.searchPage) {
-
-            MyApplication.searchPage = false;
-            MyApplication.detailsPageFromSearch = true;
-
-        } else if (MyApplication.historyPage) {
-
-            MyApplication.historyPage = false;
-            MyApplication.detailsPageFromHistory = true;
-
-        } else if (MyApplication.favoritePage) {
-
-            MyApplication.favoritePage = false;
-            MyApplication.detailsPageFromFavorite = true;
-
-        }
-
+        MyApplication.detailsPageFromHome = true;
         MyApplication.getBottomNavigationView().setVisibility(View.GONE);
         MyApplication.getTopFragmentContainer().setVisibility(View.GONE);
 
-        return mView;
+        return view;
     }
 
     @Override
     public void onStop() {
-
+        // TODO:
         super.onStop();
 
         Log.d("detailsPage", "false");
         MyApplication.getBottomNavigationView().setVisibility(View.VISIBLE);
-        if (MyApplication.newsPage)
+        if (MyApplication.newsPage && !MyApplication.detailsPageFromSearch)
             MyApplication.getTopFragmentContainer().setVisibility(View.VISIBLE);
 
     }
 
     @Override
     public void onResume() {
-
+        // TODO:
         super.onResume();
 
         Log.d("detailsPage", "true");

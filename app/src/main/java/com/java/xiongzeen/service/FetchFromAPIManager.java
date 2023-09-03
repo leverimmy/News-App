@@ -35,7 +35,6 @@ public final class FetchFromAPIManager {
     }
 
     public static void reset() {
-        Log.d("FetchFromAPI", "reset");
         startDate = "";
         endDate = getCurrentDate();
         keyWords = "";

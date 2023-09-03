@@ -29,7 +29,7 @@ import com.java.xiongzeen.ui.UserPageFragment;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity  implements TabListFragment.onTabBarListener,
-        SelectPaddleFragment.onSelectPaddleListener, SearchFragment.OnSearchInputFinished {
+        SelectPaddleFragment.onSelectPaddleListener, SearchFragment.OnSearchInputFinished{
 
     private ActivityMainBinding binding;
     public BottomNavigationView navView;
@@ -40,14 +40,16 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
     private FragmentManager fragmentManager;
     private DrawerLayout drawerLayout;
     private TabListFragment tabListFragment;
-    private NewsListFragment newsListFragment;
+    private NewsListFragment NewsListFragment;
     private long firstTime = -1L;
 
 
     @Override
-    public void selectPaddleConfirmed() {
+    public void selectPaddleConfirmed(){
         drawerLayout.closeDrawer(Gravity.LEFT);
+
         tabListFragment.update_list();
+
     }
 
     @Override
@@ -62,8 +64,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
         Log.d("MainActivity", "menu tab: " + tag);
         FetchFromAPIManager.getInstance().setCategory(tag);
-        newsListFragment.reloadNews();
-        Log.d("MainActivity", "finished reload");
+        NewsListFragment.reloadNews();
 
     }
 
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         selectPaddleFragment = (SelectPaddleFragment) fragmentManager.findFragmentById(R.id.select_paddle);
 
         tabListFragment = (TabListFragment) fragmentManager.findFragmentByTag("upper_fragment_in_container");
-        newsListFragment = (NewsListFragment) fragmentManager.findFragmentByTag("fragment_in_container");
+        NewsListFragment = (NewsListFragment) fragmentManager.findFragmentByTag("fragment_in_container");
 
         MyApplication.setTopFragmentContainer(tabs);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -146,21 +147,17 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
             MyApplication.newsPage = true;
             MyApplication.searchPage = false;
             MyApplication.userPage = false;
-            MyApplication.detailsPageFromNews = false;
+            MyApplication.detailsPageFromHome = false;
             MyApplication.historyPage = false;
             MyApplication.favoritePage = false;
 
             tabs.setVisibility(View.VISIBLE);
 
-            if (MyApplication.detailsPageFromSearch
-                    || MyApplication.detailsPageFromHistory
-                    || MyApplication.detailsPageFromFavorite) {
-                newsListFragment.reloadNews();
+            if (MyApplication.detailsPageFromSearch) {
+                NewsListFragment.reloadNews();
                 FetchFromAPIManager.reset();
             }
             MyApplication.detailsPageFromSearch = false;
-            MyApplication.detailsPageFromHistory = false;
-            MyApplication.detailsPageFromFavorite = false;
 
             return true;
         } else if (item.getItemId() == R.id.search) {
@@ -169,10 +166,8 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
             MyApplication.newsPage = false;
             MyApplication.searchPage = true;
             MyApplication.userPage = false;
-            MyApplication.detailsPageFromNews = false;
+            MyApplication.detailsPageFromHome = false;
             MyApplication.detailsPageFromSearch = false;
-            MyApplication.detailsPageFromHistory = false;
-            MyApplication.detailsPageFromFavorite = false;
             MyApplication.historyPage = false;
             MyApplication.favoritePage = false;
 
@@ -185,10 +180,8 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
             MyApplication.newsPage = false;
             MyApplication.searchPage = false;
             MyApplication.userPage = true;
-            MyApplication.detailsPageFromNews = false;
+            MyApplication.detailsPageFromHome = false;
             MyApplication.detailsPageFromSearch = false;
-            MyApplication.detailsPageFromHistory = false;
-            MyApplication.detailsPageFromFavorite = false;
             MyApplication.historyPage = false;
             MyApplication.favoritePage = false;
 
@@ -204,16 +197,14 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         if(!MyApplication.newsPage)
             replaceFragment(NewsListFragment.class);
         Log.d("finished searching Input", "detailsPageFromSearch = true");
-        MyApplication.newsPage = false;
+        MyApplication.newsPage = true;
         MyApplication.searchPage = false;
         MyApplication.userPage = false;
-        MyApplication.detailsPageFromNews = false;
+        MyApplication.detailsPageFromHome = false;
         MyApplication.detailsPageFromSearch = true;
-        MyApplication.detailsPageFromHistory = false;
-        MyApplication.detailsPageFromFavorite = false;
         MyApplication.historyPage = false;
         MyApplication.favoritePage = false;
-        newsListFragment.reloadNews();
+        NewsListFragment.reloadNews();
     }
 
     @Override
@@ -223,47 +214,32 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         Log.d("MainActivity", "news? " + MyApplication.newsPage);
         Log.d("MainActivity", "search? " + MyApplication.searchPage);
         Log.d("MainActivity", "user? " + MyApplication.userPage);
-        Log.d("MainActivity", "detailsFromNews? " + MyApplication.detailsPageFromNews);
+        Log.d("MainActivity", "detailsFromHome? " + MyApplication.detailsPageFromHome);
         Log.d("MainActivity", "detailsPageFromSearch? " + MyApplication.detailsPageFromSearch);
-        Log.d("MainActivity", "detailsPageFromHistory? " + MyApplication.detailsPageFromHistory);
-        Log.d("MainActivity", "detailsPageFromFavorite? " + MyApplication.detailsPageFromFavorite);
         Log.d("MainActivity", "history? " + MyApplication.historyPage);
         Log.d("MainActivity", "favorite? " + MyApplication.favoritePage);
 
-        if (MyApplication.detailsPageFromNews) {
+        if (MyApplication.detailsPageFromHome) {
 
-            MyApplication.detailsPageFromNews = false;
-            MyApplication.newsPage = true;
+            MyApplication.detailsPageFromHome = false;
             super.onBackPressed();
 
         } else if (MyApplication.detailsPageFromSearch) {
 
             MyApplication.detailsPageFromSearch = false;
+            Log.d("MainActivity", "&news? " + MyApplication.newsPage);
+            MyApplication.newsPage = false;
             MyApplication.searchPage = true;
-            super.onBackPressed();
-
-        } else if (MyApplication.detailsPageFromHistory) {
-
-            MyApplication.detailsPageFromHistory = false;
-            MyApplication.historyPage = true;
-            super.onBackPressed();
-
-        } else if (MyApplication.detailsPageFromFavorite) {
-
-            MyApplication.detailsPageFromFavorite = false;
-            MyApplication.favoritePage = true;
             super.onBackPressed();
 
         } else if (MyApplication.historyPage) {
 
             MyApplication.historyPage = false;
-            MyApplication.userPage = true;
             super.onBackPressed();
 
         } else if (MyApplication.favoritePage) {
 
             MyApplication.favoritePage = false;
-            MyApplication.userPage = true;
             super.onBackPressed();
 
         } else {
@@ -277,5 +253,11 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
             }
 
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d("MainActivity", "onStop");
     }
 }

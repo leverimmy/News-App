@@ -1,8 +1,8 @@
 package com.java.xiongzeen.ui;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +23,7 @@ import com.java.xiongzeen.service.PictureLoader;
 import java.util.List;
 
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHolder> {
-    public List<News> newsList;
+    private final List<News> newsList;
     private final Fragment fragment;
     private final LayoutInflater inflater;
     private final Context mainActivity;
@@ -32,7 +33,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         this.newsList = newsList;
         this.fragment = fragment;
         this.inflater = LayoutInflater.from(context);
-        this.mainActivity = MyApplication.getContext();
+        this.mainActivity =  MyApplication.getContext();
 
     }
     
@@ -41,22 +42,22 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         return newsList.get(position).getImages().length;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) { //这个函数来自2022年科协暑培的代码
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) { //这个函数来自2022年科协暑培的代码
         View itemView;
         if(viewType == 0) {
             itemView = inflater.inflate(R.layout.news_title_no_image, parent, false);
-        } else if(viewType == 1) {
+        }else if(viewType == 1){
             itemView = inflater.inflate(R.layout.news_title_one_image, parent, false);
-        } else {
+        }else{
             itemView = inflater.inflate(R.layout.news_title_two_image, parent, false);
         }
         return new ViewHolder(itemView, viewType);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) { //这个函数来自2022年科协暑培的代码
-        Log.d("NewsListAdapter", "onBindViewHolder");
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) { //这个函数来自2022年科协暑培的代码
         holder.bindData(position);
     }
 
@@ -93,11 +94,12 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
             News news = newsList.get(position);
             String title = news.getTitle();
 
-            if (NewsManager.isRead(news.getNewsID()) && (MyApplication.newsPage || MyApplication.searchPage))
-                this.title.setTextColor(Color.GRAY);
-            this.title.setText(title);
-
-            this.description.setText(news.getPublisher() + " " + news.getPublishTime());
+            if (NewsManager.isRead(news.getNewsID())) {
+                this.title.setText(Html.fromHtml("<font color=\"#999999\">" + title + "</font>"));
+            } else {
+                this.title.setText(title);
+            }
+            this.description.setText(news.getPublisher() + "     " + news.getPublishTime());
             Log.d("NewsListAdapter", "Making" + title);
 
             if(type != 0) {

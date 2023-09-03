@@ -22,12 +22,18 @@ public class SelectPaddleFragment extends Fragment {
 
     private List<Category> selected = new ArrayList<>();
     private List<Category> unselected = new ArrayList<>();
+
     private SelectPaddleAdapter selected_adapter;
     private SelectPaddleAdapter unselected_adapter;
-    private SelectPaddleAdapter.Interface listener;
-    private onSelectPaddleListener mListener;
-    private View mView = null;
 
+    private SelectPaddleAdapter.Interface listener;
+
+    private onSelectPaddleListener mListener;
+
+
+    public SelectPaddleFragment() {
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,14 +51,12 @@ public class SelectPaddleFragment extends Fragment {
         });
     }
 
-    /*// TODO:
     @Override
     public void onStop() {
-
         super.onStop();
         upload();
         mListener.selectPaddleConfirmed();
-    }*/
+    }
 
     public void upload() {
         MyApplication.myUser.selected = selected;
@@ -83,28 +87,20 @@ public class SelectPaddleFragment extends Fragment {
         unselected = MyApplication.myUser.unselected;
 
         // Inflate the layout for this fragment
-
-        if (mView != null) {
-            ViewGroup group = (ViewGroup) mView.getParent();
-            if (group != null)
-                group.removeView(mView);
-        }
-
-        mView = inflater.inflate(R.layout.fragment_select_paddle, container, false);
-
-        GridView selected_grid_view = mView.findViewById(R.id.selected);
-        GridView unselected_grid_view = mView.findViewById(R.id.unselected);
+        View view = inflater.inflate(R.layout.fragment_select_paddle, container, false);
+        GridView selected_grid_view = view.findViewById(R.id.selected);
+        GridView unselected_grid_view = view.findViewById(R.id.unselected);
 
         selected_adapter = new SelectPaddleAdapter(listener, selected, this.getContext(), true);
         unselected_adapter = new SelectPaddleAdapter(listener, unselected, this.getContext(), false);
         selected_grid_view.setAdapter(selected_adapter);
         unselected_grid_view.setAdapter(unselected_adapter);
-        Button confirmButton = mView.findViewById(R.id.confirm_button);
+        Button confirmButton = view.findViewById(R.id.confirm_button);
         confirmButton.setOnClickListener(v -> {
             upload();
             mListener.selectPaddleConfirmed();
         });
 
-        return mView;
+        return view;
     }
 }

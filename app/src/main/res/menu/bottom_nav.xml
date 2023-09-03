@@ -3,13 +3,13 @@
     <item
         android:id="@+id/posts"
         android:icon="@drawable/ic_baseline_article_24"
-        android:title="@string/news" />
+        android:title="News" />
     <item
         android:id="@+id/search"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/search" />
+        android:title="Search" />
     <item
         android:id="@+id/user"
         android:icon="@drawable/ic_baseline_account_circle_24"
-        android:title="@string/user" />
+        android:title="User" />
 </menu>

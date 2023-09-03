@@ -22,10 +22,11 @@ import java.util.List;
 public class TabListFragment extends Fragment {
 
     public List<String> tabs = new ArrayList<>();
+
+    private View view;
     private TabLayout tabLayout;
     private CheckBox selectMenu;
     private onTabBarListener mListener;
-    private View mView;
 
 
     public interface onTabBarListener {
@@ -42,17 +43,22 @@ public class TabListFragment extends Fragment {
         }
     }
 
+
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        Log.d("TabListFragment", "onCreateView");
-
-        mView = inflater.inflate(R.layout.fragment_tab_list, container, false);
-
-        tabLayout = mView.findViewById(R.id.subject_tabs);
-        selectMenu = mView.findViewById(R.id.edit_menu);
+        view = inflater.inflate(R.layout.fragment_tab_list, container, false);
+        tabLayout = view.findViewById(R.id.subject_tabs);
+        selectMenu = view.findViewById(R.id.edit_menu);
 
         selectMenu.setOnClickListener(view -> {
             if(mListener != null) {
@@ -78,7 +84,7 @@ public class TabListFragment extends Fragment {
         });
 
         update_list();
-        return mView;
+        return view;
     }
 
     public void update_list() {
@@ -96,5 +102,11 @@ public class TabListFragment extends Fragment {
             tab.setText(tabs.get(i));
             tabLayout.addTab(tab);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("TabListFragment", "onDestroy");
     }
 }
