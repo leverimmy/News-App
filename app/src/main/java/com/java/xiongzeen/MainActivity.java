@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
     private FragmentManager fragmentManager;
     private DrawerLayout drawerLayout;
     private TabListFragment tabListFragment;
-    private NewsListFragment newsListFragment;
-    private SearchListFragment searchListFragment;
+    public NewsListFragment newsListFragment;
+    public SearchListFragment searchListFragment;
     private long firstTime = -1L;
 
 
@@ -151,8 +151,11 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
     firstTime = -1;
     if (item.getItemId() == R.id.posts) {
 
-        if(!MyApplication.newsPage)
+        if(!MyApplication.newsPage) {
             replaceFragment(NewsListFragment.class);
+            getSupportFragmentManager().beginTransaction()
+                    .hide(searchListFragment).commit();
+        }
         MyApplication.newsPage = true;
         MyApplication.searchPage = false;
         MyApplication.userPage = false;

@@ -15,8 +15,10 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.java.xiongzeen.MainActivity;
 import com.java.xiongzeen.MyApplication;
 import com.java.xiongzeen.R;
+import com.java.xiongzeen.data.Category;
 import com.java.xiongzeen.service.FetchFromAPIManager;
 
 import java.util.ArrayList;
@@ -56,7 +58,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         for(int i = 0; i < k; i++){
             CheckBox checkBox = (CheckBox) gridLayout.getChildAt(i);
             if(checkBox.isChecked()) {
-                categories.add((String)checkBox.getText());
+                categories.add((String) checkBox.getText());
             }
         }
 

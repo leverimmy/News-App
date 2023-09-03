@@ -4,6 +4,7 @@ package com.java.xiongzeen.service;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
@@ -64,9 +65,12 @@ public class TaskRunner {
         workers.execute(() -> {
             try {
                 final R res = task.call();
-                // TODO: 断网测试
-                uiThread.post(() -> callback.complete(Result.ofResult(res)));
-                Log.d("TaskRunner", "News fetch succeeded.");
+                if (res != null) {
+                    uiThread.post(() -> callback.complete(Result.ofResult(res)));
+                    Log.d("TaskRunner", "News fetch succeeded.");
+                } else {
+                    throw new Exception();
+                }
             } catch (Exception e) {
                 uiThread.post(() -> callback.complete(Result.ofError(e)));
                 Log.e("TaskRunner", "News fetch failed.");

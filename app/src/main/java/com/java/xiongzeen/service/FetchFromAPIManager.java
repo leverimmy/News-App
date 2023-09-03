@@ -5,6 +5,9 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.java.xiongzeen.MyApplication;
+import com.java.xiongzeen.data.Category;
 import com.java.xiongzeen.data.News;
 
 import java.io.BufferedReader;
@@ -22,9 +25,8 @@ public final class FetchFromAPIManager {
     private static String startDate = "";
     private static String endDate = "";
     private static String keyWords = "";
-
-    private static List<String> categories = new ArrayList<>();
-
+    private static List<String> categories1 = new ArrayList<>();
+    private static List<String> categories2 = new ArrayList<>();
 
     static String getCurrentDate() {
         Calendar calendar = Calendar.getInstance();
@@ -38,7 +40,7 @@ public final class FetchFromAPIManager {
         startDate = "";
         endDate = getCurrentDate();
         keyWords = "";
-        categories.clear();
+        categories1.clear();
     }
 
     static String getNewsUrl(String startDate, String endDate, String words, List<String> categories, int page) {
@@ -78,7 +80,9 @@ public final class FetchFromAPIManager {
 
     public List<News> getNews(int offset, int pageSize) {
 
-        String url = getNewsUrl(startDate, endDate, keyWords, categories, offset / pageSize + 1);
+        String url = getNewsUrl(startDate, endDate, keyWords,
+                MyApplication.newsPage ? categories1 : categories2,
+                offset / pageSize + 1);
         Log.d("FetchFromAPIManager", "Trying to get from " + url + " .");
 
         try {
@@ -109,16 +113,16 @@ public final class FetchFromAPIManager {
     public void setCategory(String category) {
         reset();
         if (!category.equals("综合"))
-            categories.add(category);
-        Log.d("FetchFromAPIManager", "categories:" + categories);
+            categories1.add(category);
+        Log.d("FetchFromAPIManager", "categories:" + categories1);
     }
 
     public void handleSearch(List<String> categories, String startDate, String endDate, String keyWords) {
-        FetchFromAPIManager.categories = categories;
+        FetchFromAPIManager.categories2 = categories;
         FetchFromAPIManager.keyWords = keyWords;
         FetchFromAPIManager.startDate = startDate;
         FetchFromAPIManager.endDate = endDate;
-        Log.d("FetchFromAPIManager", "categories: " + categories + " key = " + keyWords +
+        Log.d("FetchFromAPIManager", "categories: " + categories2 + " key = " + keyWords +
                 " startDate = " + startDate + " endDate = " + endDate);
     }
 
