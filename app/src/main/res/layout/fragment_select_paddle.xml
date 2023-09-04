@@ -3,7 +3,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:background="@color/dark_grey">
 
 
     <TextView
@@ -31,6 +32,7 @@
         android:layout_height="wrap_content"
         android:numColumns="5"
         android:verticalSpacing="15dp"
+        android:layout_marginStart="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/space1" />
@@ -62,8 +64,9 @@
         android:id="@+id/unselected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:verticalSpacing="15dp"
         android:numColumns="5"
+        android:verticalSpacing="15dp"
+        android:layout_marginStart="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/space2" />

@@ -1,5 +1,6 @@
 package com.java.xiongzeen;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -152,10 +153,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
         if(!MyApplication.newsPage) {
             replaceFragment(NewsListFragment.class);
-
             hideSearchList();
-
-
         }
         MyApplication.newsPage = true;
         MyApplication.searchPage = false;
@@ -179,6 +177,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
         return true;
     } else if (item.getItemId() == R.id.search) {
+
         if(!MyApplication.searchPage)
             replaceFragment(SearchFragment.class);
         MyApplication.newsPage = false;
@@ -196,6 +195,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
         return true;
     } else if (item.getItemId() == R.id.user) {
+
         if(!MyApplication.userPage)
             replaceFragment(UserPageFragment.class);
         MyApplication.newsPage = false;
@@ -222,6 +222,12 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
                 .hide(searchListFragment).commit();
     }
 
+    private void showSearchList() {
+        mainArea2.setVisibility(View.VISIBLE);
+        getSupportFragmentManager().beginTransaction()
+                .show(searchListFragment).commit();
+    }
+
     @Override
     public void finished() {
         replaceFragment(SearchListFragment.class);
@@ -240,12 +246,6 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         MyApplication.historyPage = false;
         MyApplication.favoritePage = false;
         searchListFragment.reloadNews();
-    }
-
-    private void showSearchList() {
-        mainArea2.setVisibility(View.VISIBLE);
-        getSupportFragmentManager().beginTransaction()
-                .show(searchListFragment).commit();
     }
 
     @Override
