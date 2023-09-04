@@ -21,6 +21,7 @@ import com.java.xiongzeen.R;
 import com.java.xiongzeen.data.Category;
 import com.java.xiongzeen.service.FetchFromAPIManager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -64,40 +65,21 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
             }
         }
 
-        int startTimeRaw = startDatePicker.getYear() * 10000
-                + startDatePicker.getMonth() * 100
-                + startDatePicker.getDayOfMonth();
-        int endTimeRaw = endDatePicker.getYear() * 10000
-                + endDatePicker.getMonth() * 100
-                + endDatePicker.getDayOfMonth();
+        Calendar startTime = Calendar.getInstance();
+        startTime.set(startDatePicker.getYear(), startDatePicker.getMonth(), startDatePicker.getDayOfMonth());
 
-        if (endTimeRaw <= startTimeRaw) {
-            Toast.makeText(getContext(), "开始时间需要早于结束时间！", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        Calendar endTime = Calendar.getInstance();
+        endTime.set(endDatePicker.getYear(), endDatePicker.getMonth(), endDatePicker.getDayOfMonth());
 
-        String startTime = startDatePicker.getYear()
-                + "-" +
-                (startDatePicker.getMonth() + 1 <= 9
-                        ? "0" + (startDatePicker.getMonth() + 1)
-                        : (startDatePicker.getMonth() + 1))
-                + "-" +
-                (startDatePicker.getDayOfMonth() + 1 <= 9
-                        ? "0" + startDatePicker.getDayOfMonth()
-                        : startDatePicker.getDayOfMonth());
+        endTime.add(Calendar.DAY_OF_MONTH, 1);
 
-        String endTime = endDatePicker.getYear()
-                + "-" +
-                (endDatePicker.getMonth() + 1 <= 9
-                        ? "0" + (endDatePicker.getMonth() + 1)
-                        : (endDatePicker.getMonth() + 1))
-                + "-" +
-                (endDatePicker.getDayOfMonth() <= 9
-                        ? "0" + endDatePicker.getDayOfMonth()
-                        : endDatePicker.getDayOfMonth());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        Log.d("SearchFragment", queryText + categories + startTime + endTime);
-        FetchFromAPIManager.getInstance().handleSearch(categories, startTime, endTime, queryText);
+        String startTimeString = dateFormat.format(startTime.getTime());
+        String endTimeString = dateFormat.format(endTime.getTime());
+
+        Log.d("SearchFragment", queryText + categories + startTimeString + endTimeString);
+        FetchFromAPIManager.getInstance().handleSearch(categories, startTimeString, endTimeString, queryText);
         mListener.finished();
     }
 
@@ -117,8 +99,13 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         startDatePicker = view.findViewById(R.id.datePicker1);
         endDatePicker = view.findViewById(R.id.datePicker2);
 
-        endDatePicker.setMaxDate(new Date().getTime());
-        startDatePicker.setMaxDate(new Date().getTime());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+
+        startDatePicker.setMaxDate(calendar.getTimeInMillis());
+        startDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        endDatePicker.setMaxDate(calendar.getTimeInMillis());
+        endDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
         endDatePicker.init(endDatePicker.getYear(), endDatePicker.getMonth(), endDatePicker.getDayOfMonth(), (view12, year, monthOfYear, dayOfMonth) -> {
 
@@ -128,12 +115,12 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
             Calendar calendar2 = Calendar.getInstance();
             calendar2.set(year, monthOfYear, dayOfMonth);
 
-            if (calendar1.compareTo(calendar2) >= 0) {
-
-                calendar2.add(Calendar.DAY_OF_MONTH, -1);
-                startDatePicker.updateDate(calendar2.get(Calendar.YEAR), calendar2.get(Calendar.MONTH), calendar2.get(Calendar.DAY_OF_MONTH));
-                startDatePicker.setMaxDate(calendar2.getTimeInMillis());
+            if (calendar1.compareTo(calendar2) > 0) {
+                calendar1 = calendar2;
             }
+            startDatePicker.setMaxDate(calendar2.getTimeInMillis());
+            startDatePicker.updateDate(calendar1.get(Calendar.YEAR), calendar1.get(Calendar.MONTH), calendar1.get(Calendar.DAY_OF_MONTH));
+
         });
 
         Button searchButton = view.findViewById(R.id.search_button);

@@ -6,4 +6,6 @@
     <string name="news">推荐</string>
     <string name="search">搜索</string>
     <string name="user">我的</string>
+    <string name="begin">起始时间</string>
+    <string name="end">结束时间</string>
 </resources>
