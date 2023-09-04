@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -115,6 +116,9 @@ public class SearchListFragment extends Fragment {
                     newsList.clear();
                 }
                 newsList.addAll(res.getResult());
+                if (newsList.isEmpty())
+                    Toast.makeText(context, "无搜索结果！", Toast.LENGTH_SHORT).show();
+
                 listAdapter.notifyDataSetChanged();
             } else {
                 Log.e("NewsListFragment", "Post fetch failed due to exception", res.getError());

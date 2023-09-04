@@ -1,13 +1,11 @@
 package com.java.xiongzeen;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -113,6 +111,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
                 Log.d("MainActivity", "onDrawerOpened");
+                
                 MyApplication.newsPage = false;
                 MyApplication.selectPage = true;
                 tabs.setVisibility(View.INVISIBLE);
@@ -123,8 +122,9 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
             @Override
             public void onDrawerClosed(@NonNull View drawerView) {
                 Log.d("MainActivity", "onDrawerClosed");
-                MyApplication.newsPage = true;
+
                 MyApplication.selectPage = false;
+                MyApplication.newsPage = true;
                 tabs.setVisibility(View.VISIBLE);
                 mainArea.setVisibility(View.VISIBLE);
                 navView.setVisibility(View.VISIBLE);

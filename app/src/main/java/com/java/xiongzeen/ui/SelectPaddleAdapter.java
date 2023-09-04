@@ -4,13 +4,18 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
 
 import com.java.xiongzeen.R;
 import com.java.xiongzeen.data.Category;
 
 import java.util.List;
+import java.util.Random;
 
 public class SelectPaddleAdapter  extends BaseAdapter {
     private final List<Category> list_to_show;
@@ -57,6 +62,13 @@ public class SelectPaddleAdapter  extends BaseAdapter {
         } else {
             view = LayoutInflater.from(mContext).inflate(R.layout.subject_box_unselected, viewGroup,false);
         }
+
+        Random random = new Random();
+
+        Animation shakeAnimation = AnimationUtils.loadAnimation(mContext, R.anim.shake_animation);
+//        shakeAnimation.setStartOffset(random.nextInt(1000));
+        shakeAnimation.setDuration(random.nextInt(500));
+        view.setAnimation(shakeAnimation);
         TextView text = view.findViewById(R.id.text_in_subject_box);
         text.setTextSize(20);
         text.setText("  "+list_to_show.get(i).name()+"  ");

@@ -30,6 +30,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     private GridLayout gridLayout;
     private DatePicker startDatePicker, endDatePicker;
+    private SearchView searchView;
     private String queryText = "";
     private OnSearchInputFinished mListener;
 
@@ -106,7 +107,11 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        SearchView searchView = view.findViewById(R.id.searchBar);
+        searchView = view.findViewById(R.id.searchBar);
+
+        searchView.setQueryHint("请输入搜索的关键词");
+        searchView.onActionViewExpanded();
+
         gridLayout = view.findViewById(R.id.selections);
         startDatePicker = view.findViewById(R.id.datePicker1);
         endDatePicker = view.findViewById(R.id.datePicker2);

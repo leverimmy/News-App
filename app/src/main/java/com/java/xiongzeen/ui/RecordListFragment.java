@@ -6,13 +6,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.java.xiongzeen.R;
+import com.java.xiongzeen.data.News;
 import com.java.xiongzeen.service.NewsManager;
+
+import java.util.List;
 
 public class RecordListFragment extends Fragment {
 
@@ -41,9 +45,14 @@ public class RecordListFragment extends Fragment {
         llm.setStackFromEnd(true);
         llm.setReverseLayout(true);
         recyclerView.setLayoutManager(llm);
-        listAdapter = new NewsListAdapter(this, context, NewsManager.getInstance().getRecords(mode));
+
+        List<News> recordList = NewsManager.getInstance().getRecords(mode);
+        listAdapter = new NewsListAdapter(this, context, recordList);
+        if (recordList.isEmpty())
+            Toast.makeText(context, "无记录！", Toast.LENGTH_SHORT).show();
         recyclerView.setAdapter(listAdapter);
         listAdapter.notifyDataSetChanged();
+
         return view;
     }
 

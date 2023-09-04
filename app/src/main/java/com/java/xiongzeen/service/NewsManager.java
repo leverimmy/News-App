@@ -2,6 +2,7 @@ package com.java.xiongzeen.service;
 
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.java.xiongzeen.MyApplication;
 import com.java.xiongzeen.data.News;
