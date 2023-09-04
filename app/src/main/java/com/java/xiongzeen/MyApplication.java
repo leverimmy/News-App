@@ -29,15 +29,16 @@ public class MyApplication extends Application {
     public static boolean resultPage = false;
     public static boolean historyPage = false;
     public static boolean favoritePage = false;
+    public static boolean selectPage = false;
     public static MySQLiteOpenHelper mySQLiteOpenHelper;
     public static DBManager dbManager;
 
 
-    public static Context getContext(){
+    public static Context getContext() {
         return context;
     }
 
-    public static BottomNavigationView getBottomNavigationView(){
+    public static BottomNavigationView getBottomNavigationView() {
         return bottomNavigationView;
     }
 
@@ -45,7 +46,7 @@ public class MyApplication extends Application {
         return topFragmentContainer;
     }
 
-    public static void setBottomNavigationView(BottomNavigationView bottomNavigationView){
+    public static void setBottomNavigationView(BottomNavigationView bottomNavigationView) {
         MyApplication.bottomNavigationView = bottomNavigationView;
     }
 

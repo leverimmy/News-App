@@ -36,7 +36,7 @@ public class SelectPaddleAdapter  extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        if( i >= 0 && i < list_to_show.size()){
+        if (i >= 0 && i < list_to_show.size()) {
             return list_to_show.get(i);
         }
         return null;
@@ -61,9 +61,7 @@ public class SelectPaddleAdapter  extends BaseAdapter {
         text.setTextSize(20);
         text.setText("  "+list_to_show.get(i).name()+"  ");
 
-        view.setOnClickListener(v ->{
-            mInterface.onChangeSelect(i,isSelected);
-        });
+        view.setOnClickListener(v -> mInterface.onChangeSelect(i, isSelected));
         return view;
     }
 }

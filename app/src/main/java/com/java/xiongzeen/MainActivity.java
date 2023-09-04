@@ -35,11 +35,9 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
     private ActivityMainBinding binding;
     public BottomNavigationView navView;
-    public SearchView searchView;
     public FragmentContainerView mainArea;
     public FragmentContainerView mainArea2;
     public FragmentContainerView tabs;
-    private SelectPaddleFragment selectPaddleFragment;
     private FragmentManager fragmentManager;
     private DrawerLayout drawerLayout;
     private TabListFragment tabListFragment;
@@ -50,17 +48,16 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
     @Override
     public void selectPaddleConfirmed() {
+
         drawerLayout.closeDrawer(Gravity.LEFT);
-
         tabListFragment.updateList();
-
     }
 
     @Override
     public void menuBarClicked() {
+
         Log.d("MainActivity", "menu clicked");
         drawerLayout.openDrawer(Gravity.LEFT);
-
     }
 
     @Override
@@ -69,7 +66,6 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         Log.d("MainActivity", "menu tab: " + tag);
         FetchFromAPIManager.getInstance().setCategory(tag);
         newsListFragment.reloadNews();
-
     }
 
     @Override
@@ -94,11 +90,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         navView.setOnItemSelectedListener(this::onNavItemSelected);
         MyApplication.setBottomNavigationView(navView);
 
-        mainArea.setLongClickable(true);
-        mainArea2.setLongClickable(true);
-
         fragmentManager = getSupportFragmentManager();
-        selectPaddleFragment = (SelectPaddleFragment) fragmentManager.findFragmentById(R.id.select_paddle);
 
         tabListFragment = (TabListFragment) fragmentManager.findFragmentByTag("upper_fragment_in_container");
         newsListFragment = (NewsListFragment) fragmentManager.findFragmentByTag("fragment_in_container");
@@ -109,9 +101,9 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         MyApplication.setTopFragmentContainer(tabs);
         drawerLayout = findViewById(R.id.drawer_layout);
 
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED,Gravity.LEFT);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.LEFT);
 
-        drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener(){
+        drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
 
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
@@ -120,13 +112,23 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
-
+                Log.d("MainActivity", "onDrawerOpened");
+                MyApplication.newsPage = false;
+                MyApplication.selectPage = true;
+                tabs.setVisibility(View.INVISIBLE);
+                mainArea.setVisibility(View.INVISIBLE);
+                navView.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onDrawerClosed(@NonNull View drawerView) {
-                drawerLayout.setDrawerLockMode(
-                        DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.LEFT);
+                Log.d("MainActivity", "onDrawerClosed");
+                MyApplication.newsPage = true;
+                MyApplication.selectPage = false;
+                tabs.setVisibility(View.VISIBLE);
+                mainArea.setVisibility(View.VISIBLE);
+                navView.setVisibility(View.VISIBLE);
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.LEFT);
             }
 
             @Override
@@ -162,6 +164,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         MyApplication.resultPage = false;
         MyApplication.historyPage = false;
         MyApplication.favoritePage = false;
+        MyApplication.selectPage = false;
 
         tabs.setVisibility(View.VISIBLE);
 
@@ -190,6 +193,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         MyApplication.resultPage = false;
         MyApplication.historyPage = false;
         MyApplication.favoritePage = false;
+        MyApplication.selectPage = false;
 
         tabs.setVisibility(View.GONE);
 
@@ -208,6 +212,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         MyApplication.resultPage = false;
         MyApplication.historyPage = false;
         MyApplication.favoritePage = false;
+        MyApplication.selectPage = false;
 
         tabs.setVisibility(View.GONE);
 
@@ -245,6 +250,8 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         MyApplication.resultPage = true;
         MyApplication.historyPage = false;
         MyApplication.favoritePage = false;
+        MyApplication.selectPage = false;
+
         searchListFragment.reloadNews();
     }
 
@@ -262,6 +269,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         Log.d("MainActivity", "result?" + MyApplication.resultPage);
         Log.d("MainActivity", "history? " + MyApplication.historyPage);
         Log.d("MainActivity", "favorite? " + MyApplication.favoritePage);
+        Log.d("MainActivity", "select? " + MyApplication.selectPage);
 
         if (MyApplication.detailsPageFromNews) {
 
@@ -304,6 +312,10 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
             MyApplication.favoritePage = false;
             MyApplication.userPage = true;
             super.onBackPressed();
+
+        } else if (MyApplication.selectPage) {
+
+            drawerLayout.closeDrawer(Gravity.LEFT);
 
         } else {
 
