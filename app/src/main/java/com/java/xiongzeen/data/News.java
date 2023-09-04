@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -77,7 +79,17 @@ public class News {
 
             String list = data.getString("image");
             list = list.substring(1, list.length() - 1);
-            images = list.split(", ");
+            String[] images_temp = list.split(", ");
+
+
+            List<String> nonEmptyImages = new ArrayList<>();
+            for (String image : images_temp) {
+                if (!image.isEmpty()) {
+                    nonEmptyImages.add(image);
+                }
+            }
+
+            images = nonEmptyImages.toArray(new String[0]);
 
             video = data.getString("video");
             newsID = data.getString("newsID");

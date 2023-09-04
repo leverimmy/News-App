@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         MyApplication.setBottomNavigationView(navView);
 
         mainArea.setLongClickable(true);
-//        mainArea2.setLongClickable(true);
+        mainArea2.setLongClickable(true);
 
         fragmentManager = getSupportFragmentManager();
         selectPaddleFragment = (SelectPaddleFragment) fragmentManager.findFragmentById(R.id.select_paddle);
@@ -103,8 +103,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         newsListFragment = (NewsListFragment) fragmentManager.findFragmentByTag("fragment_in_container");
         searchListFragment = (SearchListFragment) fragmentManager.findFragmentByTag("fragment_in_container2");
 
-        getSupportFragmentManager().beginTransaction()
-                .hide(searchListFragment).commit();
+        hideSearchList();
 
         MyApplication.setTopFragmentContainer(tabs);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -153,8 +152,10 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
 
         if(!MyApplication.newsPage) {
             replaceFragment(NewsListFragment.class);
-            getSupportFragmentManager().beginTransaction()
-                    .hide(searchListFragment).commit();
+
+            hideSearchList();
+
+
         }
         MyApplication.newsPage = true;
         MyApplication.searchPage = false;
@@ -215,12 +216,17 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
     return false;
 }
 
+    private void hideSearchList() {
+        mainArea2.setVisibility(View.GONE);
+        getSupportFragmentManager().beginTransaction()
+                .hide(searchListFragment).commit();
+    }
+
     @Override
     public void finished() {
         replaceFragment(SearchListFragment.class);
 
-        getSupportFragmentManager().beginTransaction()
-                .show(searchListFragment).commit();
+        showSearchList();
 
         Log.d("finished searching Input", "resultPage = true");
         MyApplication.newsPage = false;
@@ -234,6 +240,12 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         MyApplication.historyPage = false;
         MyApplication.favoritePage = false;
         searchListFragment.reloadNews();
+    }
+
+    private void showSearchList() {
+        mainArea2.setVisibility(View.VISIBLE);
+        getSupportFragmentManager().beginTransaction()
+                .show(searchListFragment).commit();
     }
 
     @Override
