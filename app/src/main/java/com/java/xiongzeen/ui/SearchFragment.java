@@ -22,6 +22,7 @@ import com.java.xiongzeen.data.Category;
 import com.java.xiongzeen.service.FetchFromAPIManager;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -118,6 +119,22 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
         endDatePicker.setMaxDate(new Date().getTime());
         startDatePicker.setMaxDate(new Date().getTime());
+
+        endDatePicker.init(endDatePicker.getYear(), endDatePicker.getMonth(), endDatePicker.getDayOfMonth(), (view12, year, monthOfYear, dayOfMonth) -> {
+
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.set(startDatePicker.getYear(), startDatePicker.getMonth(), startDatePicker.getDayOfMonth());
+
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.set(year, monthOfYear, dayOfMonth);
+
+            if (calendar1.compareTo(calendar2) >= 0) {
+
+                calendar2.add(Calendar.DAY_OF_MONTH, -1);
+                startDatePicker.updateDate(calendar2.get(Calendar.YEAR), calendar2.get(Calendar.MONTH), calendar2.get(Calendar.DAY_OF_MONTH));
+                startDatePicker.setMaxDate(calendar2.getTimeInMillis());
+            }
+        });
 
         Button searchButton = view.findViewById(R.id.search_button);
         searchView.setOnQueryTextListener(this);
