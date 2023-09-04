@@ -97,7 +97,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
                 this.title.setTextColor(Color.GRAY);
 
             this.title.setText(title);
-            this.description.setText(news.getPublisher() + "     " + news.getPublishTime());
+            this.description.setText(news.getPublisher() + " " + news.getPublishTime());
             Log.d("NewsListAdapter", "Making" + title);
 
             if(type != 0) {

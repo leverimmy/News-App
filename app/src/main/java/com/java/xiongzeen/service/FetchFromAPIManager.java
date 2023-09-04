@@ -92,11 +92,6 @@ public final class FetchFromAPIManager {
             for (int i = 0; i < data.length(); i++) {
                 JSONObject jsonObject = data.getJSONObject(i);
 
-                String newsID = (String) jsonObject.get("newsID");
-
-                jsonObject.put("isFavorites", NewsManager.isFavorites(newsID));
-                jsonObject.put("beenRead", NewsManager.isRead(newsID));
-
                 newsFeed.add(new News(jsonObject));
             }
 

@@ -20,8 +20,6 @@ public class News {
     private String video = "";
     private String newsID = "";
     private String url = "";
-    private boolean isFavorites = false;
-    private boolean beenRead = false;
 
 
     public String getTitle() {
@@ -95,9 +93,6 @@ public class News {
             newsID = data.getString("newsID");
             url = data.getString("url");
 
-            isFavorites = data.getBoolean("isFavorites");
-            beenRead = data.getBoolean("beenRead");
-
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -126,8 +121,7 @@ public class News {
             jsonObject.put("video", video);
             jsonObject.put("newsID", newsID);
             jsonObject.put("url", url);
-            jsonObject.put("isFavorites", isFavorites);
-            jsonObject.put("beenRead", beenRead);
+
 
         } catch (JSONException e) {
             e.printStackTrace();

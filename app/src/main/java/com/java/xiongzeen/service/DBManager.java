@@ -26,18 +26,18 @@ public final class DBManager {
         helper.onCreate(db);
     }
 
-    public static void add(News currentNews) {
+    public static void modify(News currentNews) {
 
-        Log.d("DBManager", "Trying to add a record.");
+        Log.d("DBManager", "Trying to modify a record.");
 
         String newsID = currentNews.getNewsID();
 
         db.beginTransaction();
-        db.execSQL("insert OR IGNORE into myNews VALUES(?,?)", new Object[]{newsID.hashCode(), currentNews.toString()});
+        db.execSQL("REPLACE into myNews VALUES(?,?)", new Object[]{newsID.hashCode(), currentNews.toString()});
         db.setTransactionSuccessful();
         db.endTransaction();
 
-        Log.d("DBManager", "Added a record successfully.");
+        Log.d("DBManager", "Added(or Updated) a record successfully.");
     }
 
     public static List<News> query() {
