@@ -67,7 +67,7 @@ public class SelectPaddleAdapter  extends BaseAdapter {
 
         Animation shakeAnimation = AnimationUtils.loadAnimation(mContext, R.anim.shake_animation);
 //        shakeAnimation.setStartOffset(random.nextInt(1000));
-        shakeAnimation.setDuration(random.nextInt(500));
+        shakeAnimation.setDuration(random.nextInt(200) + 300);
         view.setAnimation(shakeAnimation);
         TextView text = view.findViewById(R.id.text_in_subject_box);
         text.setTextSize(20);
