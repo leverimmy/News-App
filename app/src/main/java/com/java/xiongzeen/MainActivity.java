@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         navView.setOnItemSelectedListener(this::onNavItemSelected);
         MyApplication.setBottomNavigationView(navView);
 
+        mainArea.setLongClickable(true);
+
         fragmentManager = getSupportFragmentManager();
 
         tabListFragment = (TabListFragment) fragmentManager.findFragmentByTag("upper_fragment_in_container");

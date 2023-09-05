@@ -16,7 +16,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.java.xiongzeen.MyApplication;
 import com.java.xiongzeen.R;
-import com.java.xiongzeen.data.Category;
 import com.java.xiongzeen.data.News;
 import com.java.xiongzeen.service.NewsManager;
 import com.java.xiongzeen.service.TaskRunner;
@@ -26,7 +25,6 @@ import java.util.List;
 
 public class SearchListFragment extends Fragment {
     public static final int PAGE_SIZE = 15;
-    private List<Category> categories = new ArrayList<>();
     private List<News> newsList = new ArrayList<>();
     private RecyclerView recyclerView;
     private NewsListAdapter listAdapter;
@@ -126,11 +124,4 @@ public class SearchListFragment extends Fragment {
         }
     }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
-    }
-
-    public List<Category> getCategories() {
-        return categories;
-    }
 }

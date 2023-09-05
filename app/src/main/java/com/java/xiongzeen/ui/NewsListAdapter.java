@@ -93,8 +93,13 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
             News news = newsList.get(position);
             String title = news.getTitle();
 
-            if (NewsManager.isRead(news.getNewsID()) && (MyApplication.newsPage || MyApplication.searchPage))
+            if (NewsManager.isRead(news.getNewsID()) && (MyApplication.newsPage || MyApplication.searchPage)) {
+                Log.d("NewsListAdapter", "read: " + news.getNewsID());
                 this.title.setTextColor(Color.GRAY);
+            } else {
+                Log.d("NewsListAdapter", "not read: " + news.getNewsID());
+                this.title.setTextColor(Color.BLACK);
+            }
 
             this.title.setText(title);
             this.description.setText(news.getPublisher() + " " + news.getPublishTime());
