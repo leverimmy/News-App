@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +18,7 @@ import com.java.xiongzeen.R;
 import com.java.xiongzeen.data.News;
 import com.java.xiongzeen.service.NewsManager;
 import com.java.xiongzeen.service.PictureLoader;
+import com.java.xiongzeen.service.Utils;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.java.xiongzeen.MyApplication;
-import com.java.xiongzeen.ui.Utils;
+import com.java.xiongzeen.service.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
