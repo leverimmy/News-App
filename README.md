@@ -22,31 +22,35 @@
 ```mermaid
 flowchart LR
     A{{NewsApp}} --> B(data)
-    B --> C(service)
-    B --> D(ui)
-    B --> E[MainActivity.java]
-    B --> F[MyApplication.java]
+    A --> C(service)
+    A --> D(ui)
+    A --> E[MainActivity.java]
+    A --> F[MyApplication.java]
 
-    C --> G[DBManager.java]
-    C --> H[FetchFromAPIManager.java]
-    C --> I[MySQLiteOpenHelper.java]
-    C --> J[NewsManager.java]
-    C --> K[PictureLoader.java]
-    C --> L[TaskRunner.java]
-    C --> M[Utils.java]
+    B --> G[Category.java]
+    B --> H[News.java]
+    B --> I[User.java]
 
-    D --> N[EndlessRecyclerViewScrollListener.java]
-    D --> O[NewsDetailFragment.java]
-    D --> P[NewsListAdapter.java]
-    D --> Q[NewsListFragment.java]
-    D --> R[RecordListFragment.java]
-    D --> S[SearchFragment.java]
-    D --> T[SearchListFragment.java]
-    D --> U[SelectPaddleAdapter.java]
-    D --> V[SelectPaddleFragment.java]
-    D --> W[TabListFragment.java]
-    D --> X[UserPageFragment.java]
-    D --> Y[VideoFragment.java]
+    C --> J[DBManager.java]
+    C --> K[FetchFromAPIManager.java]
+    C --> L[MySQLiteOpenHelper.java]
+    C --> M[NewsManager.java]
+    C --> N[PictureLoader.java]
+    C --> O[TaskRunner.java]
+    C --> P[Utils.java]
+
+    D --> Q[EndlessRecyclerViewScrollListener.java]
+    D --> R[NewsDetailFragment.java]
+    D --> S[NewsListAdapter.java]
+    D --> T[NewsListFragment.java]
+    D --> U[RecordListFragment.java]
+    D --> V[SearchFragment.java]
+    D --> W[SearchListFragment.java]
+    D --> X[SelectPaddleAdapter.java]
+    D --> Y[SelectPaddleFragment.java]
+    D --> Z[TabListFragment.java]
+    D --> AA[UserPageFragment.java]
+    D --> AB[VideoFragment.java]
 ```
 
 ## 具体实现
