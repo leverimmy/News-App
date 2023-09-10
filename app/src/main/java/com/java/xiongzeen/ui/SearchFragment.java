@@ -11,14 +11,11 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.GridLayout;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.java.xiongzeen.MainActivity;
 import com.java.xiongzeen.MyApplication;
 import com.java.xiongzeen.R;
-import com.java.xiongzeen.data.Category;
 import com.java.xiongzeen.data.Page;
 import com.java.xiongzeen.service.FetchFromAPIManager;
 
@@ -92,7 +89,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
         searchView = view.findViewById(R.id.searchBar);
 
-        searchView.setQueryHint("请输入搜索的关键词");
+        searchView.setQueryHint("请输入搜索的关键词，多个关键词请用“,”（半角逗号）隔开");
         searchView.onActionViewExpanded();
 
         gridLayout = view.findViewById(R.id.selections);
