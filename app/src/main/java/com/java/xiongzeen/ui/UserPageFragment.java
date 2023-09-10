@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.java.xiongzeen.MyApplication;
 import com.java.xiongzeen.R;
+import com.java.xiongzeen.data.Page;
 import com.java.xiongzeen.service.Utils;
 
 
@@ -38,8 +39,7 @@ public class UserPageFragment extends Fragment {
     public void historyButtonClicked() {
 
         Log.d("UserPageFragment", "historyButtonClicked");
-        MyApplication.userPage = false;
-        MyApplication.historyPage = true;
+        MyApplication.page = Page.HISTORY;
         Bundle mode_config = new Bundle();
         mode_config.putBoolean("mode", false);
         Utils.replaceFragment(this, RecordListFragment.class, mode_config);
@@ -48,8 +48,7 @@ public class UserPageFragment extends Fragment {
     public void favoriteButtonClicked() {
 
         Log.d("UserPageFragment", "favoriteButtonClicked");
-        MyApplication.userPage = false;
-        MyApplication.favoritePage = true;
+        MyApplication.page = Page.FAVORITE;
         Bundle mode_config = new Bundle();
         mode_config.putBoolean("mode", true);
         Utils.replaceFragment(this, RecordListFragment.class ,mode_config);

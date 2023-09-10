@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import com.java.xiongzeen.MyApplication;
 import com.java.xiongzeen.data.News;
+import com.java.xiongzeen.data.Page;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -80,7 +81,7 @@ public final class FetchFromAPIManager {
     public List<News> getNews(int offset, int pageSize) {
 
         String url = getNewsUrl(startDate, endDate, keyWords,
-                MyApplication.newsPage ? categoriesOfNews : categoriesOfSearch,
+                MyApplication.page == Page.NEWS ? categoriesOfNews : categoriesOfSearch,
                 offset / pageSize + 1);
         Log.d("FetchFromAPIManager", "Trying to get from " + url + " .");
 

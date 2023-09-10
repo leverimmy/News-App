@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.java.xiongzeen.MyApplication;
 import com.java.xiongzeen.R;
 import com.java.xiongzeen.data.News;
+import com.java.xiongzeen.data.Page;
 import com.java.xiongzeen.service.NewsManager;
 import com.java.xiongzeen.service.PictureLoader;
 import com.java.xiongzeen.service.Utils;
@@ -93,7 +94,8 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
             News news = newsList.get(position);
             String title = news.getTitle();
 
-            if (NewsManager.isRead(news.getNewsID()) && (MyApplication.newsPage || MyApplication.searchPage)) {
+            if (NewsManager.isRead(news.getNewsID())
+                    && (MyApplication.page == Page.NEWS || MyApplication.page == Page.SEARCH)) {
                 Log.d("NewsListAdapter", "read: " + news.getNewsID());
                 this.title.setTextColor(Color.GRAY);
             } else {

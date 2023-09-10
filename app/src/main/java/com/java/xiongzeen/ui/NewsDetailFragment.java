@@ -17,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.java.xiongzeen.MyApplication;
 import com.java.xiongzeen.R;
 import com.java.xiongzeen.data.News;
+import com.java.xiongzeen.data.Page;
 import com.java.xiongzeen.service.NewsManager;
 import com.java.xiongzeen.service.PictureLoader;
 
@@ -94,25 +95,21 @@ public class NewsDetailFragment extends Fragment {
 
         Log.d("NewsDetailFragment", "detailsPageFrom... = true");
 
-        if (MyApplication.newsPage) {
+        if (MyApplication.page == Page.NEWS) {
 
-            MyApplication.newsPage = false;
-            MyApplication.detailsPageFromNews = true;
+            MyApplication.page = Page.DETAILS_FROM_NEWS;
 
-        } else if (MyApplication.resultPage) {
+        } else if (MyApplication.page == Page.RESULT) {
 
-            MyApplication.resultPage = false;
-            MyApplication.detailsPageFromSearch = true;
+            MyApplication.page = Page.DETAILS_FROM_SEARCH;
 
-        } else if (MyApplication.historyPage) {
+        } else if (MyApplication.page == Page.HISTORY) {
 
-            MyApplication.historyPage = false;
-            MyApplication.detailsPageFromHistory = true;
+            MyApplication.page = Page.DETAILS_FROM_HISTORY;
 
-        } else if (MyApplication.favoritePage) {
+        } else if (MyApplication.page == Page.FAVORITE) {
 
-            MyApplication.favoritePage = false;
-            MyApplication.detailsPageFromFavorite = true;
+            MyApplication.page = Page.DETAILS_FROM_FAVORITE;
 
         }
 
@@ -128,7 +125,7 @@ public class NewsDetailFragment extends Fragment {
         super.onStop();
         Log.d("NewsDetailFragment", "onStop");
         MyApplication.getBottomNavigationView().setVisibility(View.VISIBLE);
-        if (MyApplication.newsPage)
+        if (MyApplication.page == Page.NEWS)
             MyApplication.getTopFragmentContainer().setVisibility(View.VISIBLE);
 
     }

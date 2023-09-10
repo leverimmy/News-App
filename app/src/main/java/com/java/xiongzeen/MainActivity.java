@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.java.xiongzeen.data.Category;
+import com.java.xiongzeen.data.Page;
 import com.java.xiongzeen.databinding.ActivityMainBinding;
 import com.java.xiongzeen.service.FetchFromAPIManager;
 import com.java.xiongzeen.ui.NewsListFragment;
@@ -113,9 +114,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
                 Log.d("MainActivity", "onDrawerOpened");
-                
-                MyApplication.newsPage = false;
-                MyApplication.selectPage = true;
+                MyApplication.page = Page.SELECT;
                 tabs.setVisibility(View.INVISIBLE);
                 mainArea.setVisibility(View.INVISIBLE);
                 navView.setVisibility(View.INVISIBLE);
@@ -124,9 +123,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
             @Override
             public void onDrawerClosed(@NonNull View drawerView) {
                 Log.d("MainActivity", "onDrawerClosed");
-
-                MyApplication.selectPage = false;
-                MyApplication.newsPage = true;
+                MyApplication.page = Page.NEWS;
                 tabs.setVisibility(View.VISIBLE);
                 mainArea.setVisibility(View.VISIBLE);
                 navView.setVisibility(View.VISIBLE);
@@ -155,66 +152,37 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
     firstTime = -1;
     if (item.getItemId() == R.id.posts) {
 
-        if(!MyApplication.newsPage) {
+        if(MyApplication.page != Page.NEWS) {
             replaceFragment(NewsListFragment.class);
             hideSearchList();
         }
-        MyApplication.newsPage = true;
-        MyApplication.searchPage = false;
-        MyApplication.userPage = false;
-        MyApplication.detailsPageFromNews = false;
-        MyApplication.resultPage = false;
-        MyApplication.historyPage = false;
-        MyApplication.favoritePage = false;
-        MyApplication.selectPage = false;
 
         tabs.setVisibility(View.VISIBLE);
 
-        if (MyApplication.detailsPageFromSearch
-                || MyApplication.detailsPageFromHistory
-                || MyApplication.detailsPageFromFavorite) {
+        if (MyApplication.page == Page.DETAILS_FROM_SEARCH
+                || MyApplication.page == Page.DETAILS_FROM_HISTORY
+                || MyApplication.page == Page.DETAILS_FROM_FAVORITE) {
             newsListFragment.reloadNews();
             FetchFromAPIManager.reset();
         }
-        MyApplication.detailsPageFromSearch = false;
-        MyApplication.detailsPageFromHistory = false;
-        MyApplication.detailsPageFromFavorite = false;
+
+        MyApplication.page = Page.NEWS;
 
         return true;
     } else if (item.getItemId() == R.id.search) {
 
-        if(!MyApplication.searchPage)
+        if(MyApplication.page != Page.SEARCH)
             replaceFragment(SearchFragment.class);
-        MyApplication.newsPage = false;
-        MyApplication.searchPage = true;
-        MyApplication.userPage = false;
-        MyApplication.detailsPageFromNews = false;
-        MyApplication.detailsPageFromSearch = false;
-        MyApplication.detailsPageFromHistory = false;
-        MyApplication.detailsPageFromFavorite = false;
-        MyApplication.resultPage = false;
-        MyApplication.historyPage = false;
-        MyApplication.favoritePage = false;
-        MyApplication.selectPage = false;
+        MyApplication.page = Page.SEARCH;
 
         tabs.setVisibility(View.GONE);
 
         return true;
     } else if (item.getItemId() == R.id.user) {
 
-        if(!MyApplication.userPage)
+        if(MyApplication.page != Page.USER)
             replaceFragment(UserPageFragment.class);
-        MyApplication.newsPage = false;
-        MyApplication.searchPage = false;
-        MyApplication.userPage = true;
-        MyApplication.detailsPageFromNews = false;
-        MyApplication.detailsPageFromSearch = false;
-        MyApplication.detailsPageFromHistory = false;
-        MyApplication.detailsPageFromFavorite = false;
-        MyApplication.resultPage = false;
-        MyApplication.historyPage = false;
-        MyApplication.favoritePage = false;
-        MyApplication.selectPage = false;
+        MyApplication.page = Page.USER;
 
         tabs.setVisibility(View.GONE);
 
@@ -242,17 +210,7 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
         showSearchList();
 
         Log.d("finished searching Input", "resultPage = true");
-        MyApplication.newsPage = false;
-        MyApplication.searchPage = false;
-        MyApplication.userPage = false;
-        MyApplication.detailsPageFromNews = false;
-        MyApplication.detailsPageFromSearch = false;
-        MyApplication.detailsPageFromHistory = false;
-        MyApplication.detailsPageFromFavorite = false;
-        MyApplication.resultPage = true;
-        MyApplication.historyPage = false;
-        MyApplication.favoritePage = false;
-        MyApplication.selectPage = false;
+        MyApplication.page = Page.RESULT;
 
         searchListFragment.reloadNews();
     }
@@ -261,62 +219,45 @@ public class MainActivity extends AppCompatActivity  implements TabListFragment.
     public void onBackPressed() {
 
         Log.d("MainActivity", "onBackPressed");
-        Log.d("MainActivity", "news? " + MyApplication.newsPage);
-        Log.d("MainActivity", "search? " + MyApplication.searchPage);
-        Log.d("MainActivity", "user? " + MyApplication.userPage);
-        Log.d("MainActivity", "detailsFromNews? " + MyApplication.detailsPageFromNews);
-        Log.d("MainActivity", "detailsPageFromSearch? " + MyApplication.detailsPageFromSearch);
-        Log.d("MainActivity", "detailsPageFromHistory? " + MyApplication.detailsPageFromHistory);
-        Log.d("MainActivity", "detailsPageFromFavorite? " + MyApplication.detailsPageFromFavorite);
-        Log.d("MainActivity", "result?" + MyApplication.resultPage);
-        Log.d("MainActivity", "history? " + MyApplication.historyPage);
-        Log.d("MainActivity", "favorite? " + MyApplication.favoritePage);
-        Log.d("MainActivity", "select? " + MyApplication.selectPage);
+        Log.d("MainActivity", "page = " + MyApplication.page.name());
 
-        if (MyApplication.detailsPageFromNews) {
+        if (MyApplication.page == Page.DETAILS_FROM_NEWS) {
 
-            MyApplication.detailsPageFromNews = false;
-            MyApplication.newsPage = true;
+            MyApplication.page = Page.NEWS;
             super.onBackPressed();
 
-        } else if (MyApplication.detailsPageFromSearch) {
+        } else if (MyApplication.page == Page.DETAILS_FROM_SEARCH) {
 
-            MyApplication.detailsPageFromSearch = false;
-            MyApplication.resultPage = true;
+            MyApplication.page = Page.RESULT;
             super.onBackPressed();
 
-        } else if (MyApplication.detailsPageFromHistory) {
+        } else if (MyApplication.page == Page.DETAILS_FROM_HISTORY) {
 
-            MyApplication.detailsPageFromHistory = false;
-            MyApplication.historyPage = true;
+            MyApplication.page = Page.HISTORY;
             super.onBackPressed();
 
-        } else if (MyApplication.detailsPageFromFavorite) {
+        } else if (MyApplication.page == Page.DETAILS_FROM_FAVORITE) {
 
-            MyApplication.detailsPageFromFavorite = false;
-            MyApplication.favoritePage = true;
+            MyApplication.page = Page.FAVORITE;
             super.onBackPressed();
 
-        } else if (MyApplication.resultPage) {
+        } else if (MyApplication.page == Page.RESULT) {
 
-            MyApplication.resultPage = false;
-            MyApplication.searchPage = true;
+            MyApplication.page = Page.SEARCH;
             super.onBackPressed();
 
-        } else if (MyApplication.historyPage) {
+        } else if (MyApplication.page == Page.HISTORY) {
 
-            MyApplication.historyPage = false;
-            MyApplication.userPage = true;
+            MyApplication.page = Page.USER;
             super.onBackPressed();
 
-        } else if (MyApplication.favoritePage) {
+        } else if (MyApplication.page == Page.FAVORITE) {
 
-            MyApplication.favoritePage = false;
-            MyApplication.userPage = true;
+            MyApplication.page = Page.USER;
             super.onBackPressed();
 
-        } else if (MyApplication.selectPage) {
-
+        } else if (MyApplication.page == Page.SELECT) {
+            // TODO:
             drawerLayout.closeDrawer(Gravity.LEFT);
 
         } else {

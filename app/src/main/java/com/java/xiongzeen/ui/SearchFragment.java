@@ -19,6 +19,7 @@ import com.java.xiongzeen.MainActivity;
 import com.java.xiongzeen.MyApplication;
 import com.java.xiongzeen.R;
 import com.java.xiongzeen.data.Category;
+import com.java.xiongzeen.data.Page;
 import com.java.xiongzeen.service.FetchFromAPIManager;
 
 import java.text.SimpleDateFormat;
@@ -52,8 +53,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     private void collectInformation() {
 
-        MyApplication.searchPage = false;
-        MyApplication.resultPage = true;
+        MyApplication.page = Page.RESULT;
 
         Log.d("SearchFragment", queryText);
         List<String> categories = new ArrayList<>();
