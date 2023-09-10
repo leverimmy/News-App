@@ -4,7 +4,6 @@ package com.java.xiongzeen.service;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;

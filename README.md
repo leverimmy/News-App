@@ -120,7 +120,7 @@ static JSONObject getUrlResponse(String url) {
 }
 ```
 
-由于我在 `data/News.java` 这个类中重载了由 JSONObject 构造 `News` 的构造函数，所以可以在之后的过程中，直接由获取到的 JSONObject 中的 data 项构造每条新闻：
+由于我在 `data/News.java` 这个类中重载了由 `JSONObject` 构造 `News` 的构造函数，所以可以在之后的过程中，直接由获取到的 JSONObject 中的 data 项构造每条新闻：
 
 ```java
 try {
@@ -139,7 +139,7 @@ try {
 
 ### 新闻列表上拉刷新下划加载
 
-在 `ui/EndlessRecyclerViewScrollListener.java` 中，通过重载 `onScrolled` 函数，来实现下划加载更多新闻的功能。
+在 `ui/EndlessRecyclerViewScrollListener.java` 中，通过重载 `onScrolled()` 方法，来实现下划加载更多新闻的功能。
 
 ```java
 @Override
@@ -259,7 +259,7 @@ view.setAnimation(shakeAnimation);
 
 具体的新闻详情使用 SQLite 数据库进行存储，`service/DBManager.java` 展示了这一过程。
 
-程序使用 SharedPreference 来本地存储一个从新闻列表的 `newsID` 到最近一次访问它们的时间戳的 `Map`，`service/NewsManager.java` 中展示了这一过程。而通过一个新闻的 `newsID`，就可以在数据库中读取的数据中通过另一个 `Map` 来找到对应它新闻详情。
+程序使用 SharedPreference 来本地存储一个从新闻列表的 `newsID` 到最近一次访问/收藏它们的时间戳的 Map，`service/NewsManager.java` 中展示了这一过程。而通过一个新闻的 `newsID`，就可以在数据库中读取的数据中通过另一个 Map 来找到对应它新闻详情。
 
 ```java
 private static Map<String, News> news = new HashMap<>(); // 从 newsID 到新闻的 Map
@@ -267,7 +267,7 @@ private static Map<String, Long> historyNews = new HashMap<>(); // 从 newsID �
 private static Map<String, Long> favoriteNews = new HashMap<>(); // 从 newsID 到时间戳的 Map
 ```
 
-在展示这两个列表的时候，就按照这两个 `Map` 的 `key` 升序添加到列表中（那么就是降序从上到下展示的）即可。
+应用实现了按照最后一次访问时间降序来排列浏览记录，按照最后一次收藏时间来排列收藏夹。在展示这两个列表的时候，就按照这两个 Map 的 key 升序添加到列表中（那么就是降序从上到下展示的）即可。
 
 ```java
 public List<News> getRecords(boolean mode) { // 0 for history, 1 for favorite
@@ -292,7 +292,7 @@ public List<News> getRecords(boolean mode) { // 0 for history, 1 for favorite
 
 在 `app/MainAcitivity.java` 中，我重载了 `onBackButtonClicked()` 函数，用于处理在各个页面中按下“返回键”这一行为的处理方法。它的前提是，我使用 `MyApplication.page` 维护了当前页面是哪个页面。
 
-对于推荐页面、搜索页面、用户页面，按下“返回键”会提示“再按一次返回键退出”，它能通过检查在此情况下 2 秒内连续两次按下返回键之间的时间间隔来判断是否应该退出程序。在 `app/MainActivity.java` 中维护了第一次按下“返回键”的时间戳 `firstTime`。
+对于推荐页面、搜索页面、用户页面，**按下“返回键”会提示“再按一次返回键退出”**，它能通过检查在此情况下 2 秒内连续两次按下返回键之间的时间间隔来判断是否应该退出程序。在 `app/MainActivity.java` 中维护了第一次按下“返回键”的时间戳 `firstTime`。
 
 ```java
 long secondTime = System.currentTimeMillis();
@@ -403,10 +403,10 @@ public void onResume() {
 
 整个开发过程中，我将代码托管在了 GitHub 上 [LeverImmy/NewsApp](https://github.com/LeverImmy/NewsApp/)，并使用 Git 作为版本控制工具。临近开发结束时，我的程序出现了闪退的 bug，并且我逐步排查 Logcat 也毫无头绪。
 
-虽然当时我没有找到解决办法，但幸亏我每次 commit 的信息都写得比较清楚，我最终选择 **直接回滚到一个没有出现这个 bug 的版本**，然后重新对比代码进行复查。最后我发现这是由于线程进度不同使得一个 Listener 没有得到 Notify 导致的。
+虽然当时我没有找到解决办法，但幸亏我每次 commit 的信息都写得比较清楚，我最终选择 **直接回滚到一个没有出现这个 bug 的版本**，然后重新对比代码进行复查。最后我发现这是由于线程进度不同使得一个 Listener 没有得到 notify 导致的。
 
 ## 总结和心得
 
 在整个开发过程中，我遇到了 [许多困难](#遇到的问题及其解决方法)，但能够一步一步地在网络上查找资料并且最终摸索出解决办法的经历，是十分有教育意义的。通过这次大作业，我增加了对 Java 的熟练程度，并且初步认识到了 Android 应用开发的过程。在找身边的同学、朋友试用我的 App 并且反馈 bug 的过程中，我体会到了测试的重要性~~以及调试代码的艰辛~~。
 
-感谢 [许斌老师](http://keg.cs.tsinghua.edu.cn/persons/xubin/) 的指导，助教们在微信群中的答疑，以及 [知识工程研究室](https://keg.cs.tsinghua.edu.cn/) 提供的 [新闻搜索接口](https://api2.newsminer.net/svc/news/queryNewsList?size=&startDate=&endDate=&words=&categories=&page=)。
+感谢清华大学计算机系 [许斌](http://keg.cs.tsinghua.edu.cn/persons/xubin/) 老师的指导，助教们在微信群中的答疑，以及 [清华大学计算机系知识工程研究室](https://keg.cs.tsinghua.edu.cn/) 提供的 [新闻搜索接口](https://api2.newsminer.net/svc/news/queryNewsList?size=&startDate=&endDate=&words=&categories=&page=)。

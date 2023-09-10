@@ -31,18 +31,6 @@ public class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollList
         this.onLoadMore = onLoadMore;
     }
 
-    public EndlessRecyclerViewScrollListener(GridLayoutManager layoutManager, OnLoadMoreListener onLoadMore) { //这个函数来自2022年科协暑培的代码
-        this.mLayoutManager = layoutManager;
-        visibleThreshold = visibleThreshold * layoutManager.getSpanCount();
-        this.onLoadMore = onLoadMore;
-    }
-
-    public EndlessRecyclerViewScrollListener(StaggeredGridLayoutManager layoutManager, OnLoadMoreListener onLoadMore) { //这个函数来自2022年科协暑培的代码
-        this.mLayoutManager = layoutManager;
-        visibleThreshold = visibleThreshold * layoutManager.getSpanCount();
-        this.onLoadMore = onLoadMore;
-    }
-
     public int getLastVisibleItem(int[] lastVisibleItemPositions) { //这个函数来自2022年科协暑培的代码
         int maxSize = 0;
         for (int i = 0; i < lastVisibleItemPositions.length; i++) {

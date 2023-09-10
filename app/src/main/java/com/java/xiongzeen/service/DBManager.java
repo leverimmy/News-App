@@ -19,7 +19,7 @@ public final class DBManager {
 
     private static MySQLiteOpenHelper helper;
     private static SQLiteDatabase db;
-    private static final Map<String, News> news_already = new HashMap<>();
+
     public DBManager() {
         helper = new MySQLiteOpenHelper(MyApplication.getContext());
         db = helper.getWritableDatabase();

@@ -9,8 +9,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
-
 import com.java.xiongzeen.R;
 import com.java.xiongzeen.data.Category;
 
